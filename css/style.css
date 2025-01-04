@@ -23,11 +23,12 @@ header {
 }
 
 .header {
-    display: flex; /* Make header a flex container */
-    align-items: left; /* Align items vertically in the center */
-    justify-content: left; /* Align the content horizontally in the center */
-    gap: 20px; /* Optional: add space between the logo and the text */
-    padding-left: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding-left: 2%;
+    flex-wrap: wrap; /* Ensures content wraps on small screens */
 }
 
 header h1 {
@@ -36,39 +37,11 @@ header h1 {
     font-weight: lighter;
 }
 
-header h2 {
-    margin: 0;
-    font-size: 1.5em;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: lighter;
-}
-
-header p {
-    margin: 5px 0 20px;
-}
-
 /* Adjusting the logo size for better fit */
 .big-icon {
     width: 120px;  /* Adjust logo width */
     height: 120px; /* Adjust logo height */
     display: inline-block;
-}
-
-
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
 }
 
 /* Section Styling */
@@ -136,7 +109,6 @@ footer {
     margin: 0;
     font-size: 48px;
 }
-/* Content Wrapper for Inline Layout */
 /* Content Wrapper for Inline Layout */
 .content-wrapper {
     display: flex;
@@ -247,13 +219,13 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .content-wrapper {
-        flex-direction: column;
-        gap: 20px;
-    }
-
     .gallery-container {
-        max-width: 80%;
+        max-width: 100%; /* Make gallery full width */
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    .text-content {
+        min-width: 100%;
     }
 }
 
@@ -267,17 +239,20 @@ footer {
     margin-top: 100px;
     font-size: 1.5em;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #4CAF50;  /* Default background color */
+    background-color: rgb(69, 69, 69);  /* Default background color */
     color: white;
     transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth color transition */
 }
 
 .button:hover {
-    background-color: #287555;  /* Background color on hover */
+    background-color: rgb(39, 39, 39);  /* Background color on hover */
 }
 
 .button:active {
-    background-color: #1e6035;  /* Background color when the button is clicked */
+    background-color:#287555 ;  /* Background color when the button is clicked */
     transform: scale(0.98);  /* Optional: adds a slight shrink effect when clicked */
+}
+.button:focus, .arrow:focus {
+    outline: 3px solid #ffbf47; /* Adds a visible focus outline */
 }
 
