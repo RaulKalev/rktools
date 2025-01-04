@@ -1,32 +1,59 @@
 /* General Styles */
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight:lighter;
     line-height: 1.6;
 }
 
 .container {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
+    width: 75%;
+    padding-left: 150px;
+    padding-top: 0px;
+    text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Header Section */
 header {
-    background: #4CAF50;
-    color: #fff;
+    background: rgb(39, 39, 39);
+    color: #ffffff;
     padding: 20px 0;
-    text-align: center;
+    text-align: left;
+}
+
+.header {
+    display: flex; /* Make header a flex container */
+    align-items: left; /* Align items vertically in the center */
+    justify-content: left; /* Align the content horizontally in the center */
+    gap: 20px; /* Optional: add space between the logo and the text */
+    padding-left: 50px;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2.5em;
+    font-size: 4.5em;
+    font-weight: lighter;
+}
+
+header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: lighter;
 }
 
 header p {
     margin: 5px 0 20px;
 }
+
+/* Adjusting the logo size for better fit */
+.big-icon {
+    width: 120px;  /* Adjust logo width */
+    height: 120px; /* Adjust logo height */
+    display: inline-block;
+}
+
 
 nav ul {
     list-style: none;
@@ -85,3 +112,172 @@ footer {
     padding: 10px 0;
     margin-top: 20px;
 }
+.nav-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.title-with-icon {
+    display: flex;
+    align-items:baseline;    
+    gap: 15px;              
+    margin-bottom: 20px;
+}
+
+.title-with-icon img.big-icon {
+    width: 120px;
+    height: 120px;
+    display: block;
+}
+
+.title-with-icon h2 {
+    margin: 0;
+    font-size: 48px;
+}
+/* Content Wrapper for Inline Layout */
+/* Content Wrapper for Inline Layout */
+.content-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+/* Text Content */
+.text-content {
+    flex: 1;
+    min-width: 65%;
+    max-width: 70%;
+}
+
+.text-content h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.text-content p {
+    margin-bottom: 10px;
+}
+
+.text-content ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+/* Title with Icon */
+.title-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.title-with-icon img.big-icon {
+    width: 120px;
+    height: 120px;
+    display: block;
+}
+
+.title-with-icon h2 {
+    margin: 0;
+    font-size: 48px;
+}
+
+/* Gallery Container */
+.gallery-container {
+    flex: 1;
+    min-width: 46.7%;
+    max-width: 100px;
+    overflow: hidden;
+    position: relative;
+    margin-left: 100px;
+    margin-top: 200px;
+}
+
+/* Hide Radio Buttons */
+.gallery-container input {
+    display: none;
+}
+
+/* Image Slider */
+.gallery {
+    display: flex;
+    width: 100%;
+    transition: transform 0.5s ease-in-out;
+    margin-left: 200px;
+
+}
+
+.gallery-image {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Slide Control */
+#img1:checked ~ .gallery {
+    transform: translateX(0%);
+}
+#img2:checked ~ .gallery {
+    transform: translateX(-100%);
+}
+
+/* Navigation Arrows */
+.arrows label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: rgb(0, 0, 0);
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.arrow.left-arrow {
+    left: 170px;
+}
+
+.arrow.right-arrow {
+    left: 543px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .gallery-container {
+        max-width: 80%;
+    }
+}
+
+.button {
+    width: 250px;
+    height: 50px;
+    border: #333;
+    border-radius: 10px;
+    border-width: 4px;
+    margin-left: 250px;
+    margin-top: 100px;
+    font-size: 1.5em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #4CAF50;  /* Default background color */
+    color: white;
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth color transition */
+}
+
+.button:hover {
+    background-color: #287555;  /* Background color on hover */
+}
+
+.button:active {
+    background-color: #1e6035;  /* Background color when the button is clicked */
+    transform: scale(0.98);  /* Optional: adds a slight shrink effect when clicked */
+}
+
