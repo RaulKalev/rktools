@@ -8,7 +8,7 @@ body {
 
 .container {
     width: 75%;
-    padding-left: 150px;
+    padding-left: 7.8%;
     padding-top: 0px;
     text-align: left;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -75,15 +75,15 @@ section h2 {
 
 #contact {
     background: #f4f4f4;
+    margin-top: 5%;
 }
 
 /* Footer */
 footer {
-    background: #333;
+    background: rgb(39, 39, 39);
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    margin-top: 20px;
 }
 .nav-icon {
     width: 32px;
@@ -232,11 +232,11 @@ footer {
 .button {
     width: 250px;
     height: 50px;
+    margin-top: 1%;
+    margin-left: 10%;
     border: #333;
     border-radius: 10px;
     border-width: 4px;
-    margin-left: 250px;
-    margin-top: 100px;
     font-size: 1.5em;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: rgb(69, 69, 69);  /* Default background color */
@@ -252,7 +252,20 @@ footer {
     background-color:#287555 ;  /* Background color when the button is clicked */
     transform: scale(0.98);  /* Optional: adds a slight shrink effect when clicked */
 }
-.button:focus, .arrow:focus {
-    outline: 3px solid #ffbf47; /* Adds a visible focus outline */
+.button:focus {
+    outline: none; /* Remove the blue outline */
+}
+
+.download1{
+    margin-left: 60%;
+}
+
+.manual1{
+    margin-left: 10%;
+}
+
+a {
+    display: inline-block; /* Make the link behave like a block element */
+    text-decoration: none;  /* Remove any underline (if you want) */
 }
 
