@@ -268,4 +268,8 @@ a {
     display: inline-block; /* Make the link behave like a block element */
     text-decoration: none;  /* Remove any underline (if you want) */
 }
+a:focus {
+    outline: none; /* Remove the blue outline */
+}
+
 
