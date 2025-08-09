@@ -1,0 +1,363 @@
+
+/* =====================
+   Base, Theme & Glass
+   ===================== */
+:root {
+  --ink: #0e1318;
+  --bg-1: #0f141a;
+  --bg-2: #131a22;
+  --text: #eaf1f6;
+  --muted: #9fb0c1;
+  --teal: #4aa8b5;
+  --coral: #ff8c8c;
+  --peach: #ffb0a3;
+  --foam: #b9f3e0;
+  --accent: #4aa8b5;
+  --card: rgba(20, 26, 34, 0.6);
+  --stroke: rgba(255,255,255,.12);
+  --shadow: rgba(0,0,0,.45);
+  --glass-blur: 16px;
+  --glass-sat: 145%;
+  --expand-duration: 260ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+.light {
+  --bg-1: #f6f8fb;
+  --bg-2: #ffffff;
+  --text: #0f141a;
+  --muted: #546475;
+  --card: rgba(255,255,255,.7);
+  --stroke: rgba(0,0,0,.1);
+  --shadow: rgba(17,24,39,.08);
+  --accent: #2e7f8c;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: var(--bg-2);
+  overflow-x: hidden;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; height: auto; }
+
+/* Continuous fixed background (no seams) */
+.bg { position: fixed; inset: -20vmax; z-index: -1; pointer-events: none; background:
+    radial-gradient(120vmax 80vmax at 10% 10%, rgba(74,168,181,.18), transparent 60%),
+    radial-gradient(90vmax 70vmax at 85% 15%, rgba(255,140,140,.16), transparent 60%),
+    radial-gradient(90vmax 70vmax at 20% 90%, rgba(185,243,224,.12), transparent 60%),
+    linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  background-repeat: no-repeat; background-attachment: fixed; will-change: transform; }
+
+/* Glass utility */
+.glass { background: var(--card); border: 1px solid var(--stroke); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat)); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat)); box-shadow: 0 10px 30px var(--shadow); position: relative; }
+.glass:before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,0) 35%, rgba(255,255,255,.08) 70%); mix-blend-mode: overlay; }
+
+/* =====================
+   Container & Layout
+   ===================== */
+.container { width: 75%; max-width: 1200px; margin: 0 auto; padding: 24px; }
+header.header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 24px 0 8px; }
+.topnav { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.header-left { display: flex; align-items: center; gap: 16px; }
+.big-icon {
+  width: 128px;
+  height: 128px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Default site logo */
+.big-icon.logo-main {
+  background-image: url("resources/LogoRK.png");
+}
+header h1 { margin: 0; font-size: 28px; letter-spacing: .2px; }
+.sub { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+
+/* Icon links */
+.icon-links { display:flex; gap:10px; align-items:center; }
+.icon-btn { width: 36px; height: 36px; border-radius: 50%; display:grid; place-items:center; border:1px solid var(--stroke); background: rgba(255,255,255,.04); }
+.icon-btn svg { width: 18px; height: 18px; fill: currentColor; color: var(--text); }
+
+/* Buttons — neutral */
+.button { width: 250px; height: 50px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--stroke); background: rgba(255,255,255,.04); color: var(--text); font-weight: 600; box-shadow: 0 6px 18px var(--shadow); transition: transform .08s ease, box-shadow .2s ease, opacity .2s ease, background .2s ease, border-color .2s ease; text-decoration: none; }
+.button:hover { transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18); }
+.button:active { transform: translateY(0); opacity: .95; }
+.button.secondary { background: transparent; border-color: var(--stroke); }
+.chip { height: 36px; padding: 0 12px; border-radius: 999px; display:inline-flex; align-items:center; gap:8px; border: 1px solid var(--stroke); background: rgba(255,255,255,.04); color: var(--text); }
+
+.button-container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+
+/* Section styling */
+section { padding: 50px 0; }
+section h2 { margin: 0 0 12px; font-size: 24px; }
+section p { margin: 0 0 16px; }
+
+/* Content Layout */
+.content-wrapper { display: flex; gap: 30px; align-items: flex-start; }
+.text-content { flex: 1; min-width: 260px; }
+
+/* Cards / Work */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+.card { border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.card h3 { margin: 0; font-size: 18px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--stroke); color: var(--muted); background: rgba(255,255,255,.04); }
+
+/* Downloads expand-in-grid */
+.moreinfo-card { position: relative; overflow: hidden; }
+.moreinfo-card .expand-panel { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; margin-top: 10px; opacity: 0; max-height: 0; transition: max-height var(--expand-duration) var(--ease), opacity var(--expand-duration) var(--ease); }
+.moreinfo-card .gallery { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
+.moreinfo-card .gallery .ph { aspect-ratio: 16/10; border-radius: 12px; background: rgba(255,255,255,.06); border:1px dashed rgba(255,255,255,.15); display:grid; place-items:center; color: var(--muted); }
+
+.moreinfo-card.expanded { grid-column: span 3; }
+.moreinfo-card.expanded .expand-panel { opacity: 1; max-height: 1000px; }
+
+/* Language dropdown */
+.lang { position: relative; }
+.lang button.lang-toggle { display:flex; align-items:center; gap:8px; border:1px solid var(--stroke); background: rgba(255,255,255,.04); color: var(--text); padding: 6px 10px; border-radius: 999px; cursor:pointer; }
+.flag { font-size: 16px; line-height: 1; }
+.lang-menu { position:absolute; top:115%; right:0; background: rgba(20,26,34,.9); border:1px solid var(--stroke); border-radius:12px; padding:6px; display:none; box-shadow: 0 10px 30px var(--shadow); backdrop-filter: blur(10px) saturate(140%); }
+.lang-menu.open { display:block; }
+.lang-menu button { display:flex; align-items:center; gap:8px; padding:8px 10px; width:100%; border:1px solid transparent; background:transparent; color:var(--text); border-radius:10px; cursor:pointer; }
+.lang-menu button:hover { background: rgba(255,255,255,.06); }
+
+/* iOS-like theme switch */
+.switch { position:relative; width:56px; height:32px; border-radius:999px; background: rgba(255,255,255,.08); border:1px solid var(--stroke); display:flex; align-items:center; padding:2px; cursor:pointer; }
+.switch .knob { position:absolute; top:2px; width:28px; height:28px; border-radius:50%; background:#fff; color:#0b1116; display:grid; place-items:center; box-shadow: 0 4px 14px rgba(0,0,0,.35); transition: transform 180ms var(--ease); }
+.switch .icon { width:16px; height:16px; fill: currentColor; }
+.switch[data-state="dark"] .knob { transform: translateX(0); }
+.switch[data-state="light"] .knob { transform: translateX(24px); }
+.switch .labels { width:100%; display:flex; justify-content:space-between; padding:0 8px; color:var(--muted); font-size:12px; }
+
+/* Footer */
+footer { background: #0a0e13; color: var(--muted); text-align: center; padding: 24px; border-top: 1px solid var(--stroke); }
+
+/* Responsive */
+@media (max-width: 1024px) { .container { width: 85%; } .grid { grid-template-columns: repeat(2, 1fr); } .moreinfo-card.expanded { grid-column: span 2; } .moreinfo-card .expand-panel { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { header.header { justify-content: center; text-align: center; } .content-wrapper { flex-direction: column; } .grid { grid-template-columns: 1fr; } .button { width: 100%; } .moreinfo-card.expanded { grid-column: span 1; } }
+@media (max-width: 480px) { .container { width: 92%; } header h1 { font-size: 22px; } }
+
+/* Position the controls in the header's top-right corner */
+.header.glass { position: relative; } /* glass already sets position:relative, but safe */
+.header-controls {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Make nav sit centered on its own line at the bottom of header */
+.topnav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-size: 20px;
+  width: 100%;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-header h3 {
+  margin: 0;
+}
+
+.card-icon-wrapper {
+  background: rgb(255, 255, 255); /* light white overlay */
+  border-radius: 8px; /* rounded corners */
+  padding: 6px; /* space around icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+}
+.moreinfo-card .gallery .ph {
+  aspect-ratio: 16/10;
+  overflow: hidden; /* make cover behave nicely */
+}
+.moreinfo-card .gallery .ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+/* Carousel */
+/* Make the gallery fill the column but center its contents */
+.gallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--stroke);
+  display: grid;
+  place-items: center;
+}
+
+.gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* fill container, crop if necessary */
+  object-position: left; /* center the image */
+  display: block;
+}
+
+
+
+/* Prev/Next buttons */
+.gallery .nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--stroke);
+  background: rgba(0,0,0,.25);
+  backdrop-filter: blur(6px);
+  display: grid; place-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.gallery .nav:hover { background: rgba(0,0,0,.35); }
+.gallery .prev { left: 8px; }
+.gallery .next { right: 8px; }
+
+.gallery .nav svg { width: 18px; height: 18px; fill: #fff; }
+
+/* Dots */
+.gallery .dots {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 6px;
+}
+.gallery .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  border: 1px solid var(--stroke);
+}
+.gallery .dot.active { background: rgba(255,255,255,.9); }
+
+/* 1) Give the gallery a real height (pick a size you like) */
+.expand-panel .gallery { 
+  min-height: 520px;            /* or use aspect-ratio: 9/16; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2) Make the image fill height, keep aspect, and center */
+.expand-panel .gallery img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;          /* no cropping */
+  object-position: center;
+  display: block;
+}
+
+/* 3) IMPORTANT: remove/override the old cropping rule */
+.gallery img { 
+  width: auto !important; 
+  height: 100% !important; 
+  object-fit: contain !important; 
+}
+
+/* Hide Download button by default */
+.moreinfo-card .button[data-i18n="download"] {
+  display: none;
+}
+
+/* Show it when card is expanded */
+.moreinfo-card.expanded .button[data-i18n="download"] {
+  display: inline-flex; /* matches your .button layout */
+}
+
+/* Contact card */
+.contact-box.glass {
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 14px;
+}
+
+/* Form layout */
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr auto auto; /* name | email | message | send | mailto */
+  gap: 12px;
+  align-items: center;
+}
+
+/* Inputs */
+.form input,
+.form textarea {
+  width: 100%;
+  height: 44px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.form textarea {
+  height: 44px;           /* keeps row height aligned with inputs */
+  resize: vertical;       /* still allows expand */
+  min-height: 44px;
+  max-height: 240px;
+}
+
+/* Placeholder */
+.form input::placeholder,
+.form textarea::placeholder { color: var(--muted); }
+
+/* Focus */
+.form input:focus,
+.form textarea:focus {
+  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.06);
+}
+
+/* Buttons inside the form: override global fixed width */
+.form .button,
+.form .button.secondary {
+  width: auto;
+  height: 44px;
+  padding: 0 22px;
+  white-space: nowrap;
+}
+
+/* Responsive: stack nicely */
+@media (max-width: 900px) {
+  .form { grid-template-columns: 1fr; }
+  .form textarea { min-height: 120px; height: auto; }
+  .form .button,
+  .form .button.secondary { width: 100%; }
+}
+
