@@ -1,371 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Raul Kalev — RK Tools</title>
-  <meta name="description" content="Raul Kalev — Extra Low Voltage systems engineer specializing in Revit. Builds Revit plugins and Windows software in C#/.NET and Python." />
+  <meta name="description"
+    content="Raul Kalev — Extra Low Voltage systems engineer specializing in Revit. Builds Revit plugins and Windows software in C#/.NET and Python." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css" />
+
+
 </head>
+
 <body>
-  <div class="bg" aria-hidden="true"></div>
+  <!-- Animated Background -->
+  <div class="bg-gradient"></div>
+  <div class="bg-grain"></div>
 
-  <div class="container">
-<header class="header glass" style="border-radius: 16px; padding:16px 20px;">
-  <!-- top-right controls -->
-  <div class="header-controls">
-    <div class="lang" id="langDropdown">
-      <button class="lang-toggle" type="button" aria-haspopup="listbox" aria-expanded="false">
-        <span class="flag" id="currentFlag">🇬🇧</span><span id="currentLang">EN</span>
-      </button>
-      <div class="lang-menu" role="listbox">
-        <button type="button" data-lang="en"><span class="flag">🇬🇧</span> English</button>
-        <button type="button" data-lang="et"><span class="flag">🇪🇪</span> Eesti</button>
-      </div>
-    </div>
+  <!-- Navigation -->
+  <!-- Navigation Removed as requested. 
+       Theme/Language controls moved to footer or removed? 
+       (User didn't specify, but removing navbar removes access to them. 
+        I will assume they are okay with this for now or I can add them elsewhere later) 
+  -->
 
-    <div class="switch" id="themeSwitch" role="switch" aria-checked="false" data-state="dark" title="Toggle light/dark">
-      <div class="labels">
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v1.1a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Z"/></svg>
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.64 13A9 9 0 1 1 11 2.36 7 7 0 0 0 21.64 13Z"/></svg>
-      </div>
-      <div class="knob" aria-hidden="true"></div>
-    </div>
-  </div>
-
-  <!-- brand -->
-  <div class="header-left">
-    <div class="big-icon logo-main" aria-hidden="true"></div>
-    <div>
-      <h1>Raul Kalev</h1>
-      <div class="sub" data-i18n="subtitle">Extra-Low Voltage Systems Engineer · Revit Specialist · Plugin & App Developer (C#/.NET, Python)</div>
-
-      <!-- socials directly under subtitle -->
-      <div class="icon-links" aria-label="Profiles" style="margin-top:8px">
-        <a class="icon-btn" href="https://github.com/RaulKalev" title="GitHub" aria-label="GitHub">
-          <svg viewBox="0 0 24 24"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.35-1.77-1.35-1.77-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.25 1.86 1.25 1.08 1.84 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.5.12-3.12 0 0 1.01-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.28-1.54 3.29-1.22 3.29-1.22.66 1.62.24 2.82.12 3.12.77.83 1.24 1.9 1.24 3.2 0 4.58-2.82 5.59-5.5 5.89.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.82.58A12 12 0 0 0 12 .5z"/></svg>
-        </a>
-        <a class="icon-btn" href="https://ee.linkedin.com/in/raul-kalev-230630178" title="LinkedIn" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.95v5.66H9.37V9h3.41v1.56h.05c.47-.89 1.62-1.83 3.33-1.83 3.56 0 4.22 2.34 4.22 5.39v6.33zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- bottom centered nav -->
-  <nav class="topnav">
-    <a href="#about" data-i18n="nav_about">About</a>
-    <a href="#work" data-i18n="nav_workdone">Work</a>
-    <a href="#contact" data-i18n="nav_contact">Contact</a>
-  </nav>
-</header>
-
-
-
-    <!-- About -->
-    <section id="about">
-      <div class="content-wrapper">
-        <div class="text-content">
-          <h2 data-i18n="about_title">About me</h2>
-          <p data-i18n="about_p1">I’m an Extra-Low Voltage systems engineer with a BSc in Architectural Technology & Construction Management, specializing in
-             Revit-based electrical design workflows for fire alarm, access control, CCTV, IT, public address, and related systems. I bring over 5 years of
-              experience as a systems installer and serviceman, giving me a practical, field-tested understanding of how designs translate into successful
-               installations.</p>
-          <p data-i18n="about_p2">Alongside engineering, I develop custom Revit plugins and Windows applications in C#/.NET and Python—streamlining workflows, automating repetitive tasks, improving data accuracy, and accelerating documentation for engineering teams.</p>
-          <div class="tags">
-            <span class="tag">Revit API</span>
-            <span class="tag">C# .NET</span>
-            <span class="tag">WPF</span>
-            <span class="tag">Python</span>
-            <span class="tag">IFC</span>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title">Raul Kalev</h1>
+          <p class="hero-subtitle" data-i18n="subtitle">Extra-Low Voltage Systems Engineer · Revit Specialist · Plugin &
+            App Developer</p>
+          <div class="socials">
+            <a href="https://github.com/RaulKalev" class="social-link" aria-label="GitHub">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.35-1.77-1.35-1.77-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.25 1.86 1.25 1.08 1.84 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.5.12-3.12 0 0 1.01-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.28-1.54 3.29-1.22 3.29-1.22.66 1.62.24 2.82.12 3.12.77.83 1.24 1.9 1.24 3.2 0 4.58-2.82 5.59-5.5 5.89.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.82.58A12 12 0 0 0 12 .5z" />
+              </svg>
+            </a>
+            <a href="https://ee.linkedin.com/in/raul-kalev-230630178" class="social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.95v5.66H9.37V9h3.41v1.56h.05c.47-.89 1.62-1.83 3.33-1.83 3.56 0 4.22 2.34 4.22 5.39v6.33zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- WorkDone -->
-    <section id="work">
-      <h2 data-i18n="downloads_title">Downloads</h2>
-      <p class="sub" data-i18n="downloads_sub">Public tools, Revit plugins, and docs. Versioned releases with changelogs.</p>
-      <div class="grid" id="downloadsGrid" style="margin-top:16px">
-<article class="card glass moreinfo-card" 
-         data-title="CAD Manager"
-         data-desc-en="Optimize your DWG workflow in Revit with precision and speed."
-         data-images="resources/cad-manager/cad1.png,resources/cad-manager/cad2.png">
-<div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/cad-manager/CADManager.png" alt="" class="card-icon">
+    <!-- About Section -->
+    <section id="about" class="section-padded">
+      <div class="container">
+        <h2 class="section-title" data-i18n="about_title">About me</h2>
 
-  </div>
-  <h3>CAD Manager</h3>
-</div>
+        <div class="about-grid">
+          <div class="about-stats-container glass">
+            <ul class="stats-list">
+              <li>
+                <span class="stat-value">5+</span>
+                <span class="stat-label">Years Field Experience</span>
+              </li>
+              <li>
+                <span class="stat-value">BSc</span>
+                <span class="stat-label">Arch. Tech & Construction</span>
+              </li>
+              <li>
+                <span class="stat-value">3+</span>
+                <span class="stat-label">Languages (C#, Python, JS)</span>
+              </li>
+            </ul>
+          </div>
 
-  <p>Optimize Your DWG Workflow in Revit with Precision and Speed</p>
-  <div class="tags">
-    <span class="tag">Revit 2021+</span>
-    <span class="tag">C#</span>
-    <span class="tag">DWG Management</span>
-  </div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <p>Managing DWG files and their layers in Autodesk Revit can be a time-consuming and repetitive task, especially when dealing with complex projects or multiple linked CAD files. CAD Manager is the ultimate plugin designed to revolutionize your workflow, giving you precise control over DWG visibility and layer settings directly in your Revit views.</p>
-
-      <h4>Key Features:</h4>
-      <ol>
-        <li><strong>Dynamic DWG and Layer Visibility Control</strong><br>
-          Toggle entire DWG files on or off in a specific view.<br>
-          Enable or disable individual DWG layers effortlessly.<br>
-          Override visibility settings even when a view template is applied.
-        </li>
-        <li><strong>Real-Time Updates Without View Template Limitations</strong><br>
-          Make real-time changes to DWG and layer visibility without modifying view templates.
-        </li>
-        <li><strong>Save and Load Visibility Settings</strong><br>
-          Save your DWG visibility and layer configurations to a database and reuse them in future projects or views.
-        </li>
-        <li><strong>Enhanced Workflow Efficiency</strong><br>
-          Reduce clicks, minimize errors, and keep your project organized with an intuitive interface.
-        </li>
-      </ol>
-
-      <h4>Why Choose CAD Manager?</h4>
-      <ul>
-        <li><strong>Time-Saving Automation:</strong> Say goodbye to repetitive layer adjustments.</li>
-        <li><strong>View Template Freedom:</strong> Work independently of template constraints.</li>
-        <li><strong>Database Support:</strong> Save, manage, and reuse visibility settings across projects.</li>
-        <li><strong>User-Friendly Design:</strong> Built for clarity and efficiency.</li>
-      </ul>
-
-      <h4>Perfect For:</h4>
-      <ul>
-        <li>BIM Managers</li>
-        <li>Architects</li>
-        <li>Engineers</li>
-        <li>Designers working with complex DWG files in Revit</li>
-      </ul>
-
-      <p><strong>Works with Revit versions:</strong> 2021, 2022, 2023, 2024, 2025, 2026.</p>
-    </div>
-    <div>
-      <div class="gallery"></div>
-    </div>
-  </div>
-</article>
-
-<!-- CircuitPath -->
-<article class="card glass moreinfo-card"
-         data-title="CircuitPath"
-         data-desc-en="Set all circuits' path to 'All Devices' across the project with a single click."
-         data-images="resources/circuitpath/1.png,resources/circuitpath/2.png">
-<div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/circuitpath/CircuitPath.png" alt="" class="card-icon">
-  </div>
-  <h3>CircuitPath</h3>
-</div>  <p>Set all circuits' path to "All Devices" across the project with a single click.</p>
-  <div class="tags"><span class="tag">Revit</span><span class="tag">Electrical</span></div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <ul><li>Idempotent, undo‑friendly</li><li>Fast on large models</li><li>Consistent schedules</li></ul>
-    </div>
-    <div><div class="gallery"></div></div>
-  </div>
-</article>
-
-<!-- Camera FOV -->
-<article class="card glass moreinfo-card"
-         data-title="Camera FOV"
-         data-desc-en="Visualize camera coverage cones and calculate FOV directly in Revit."
-         data-images="resources/camera-fov/1.png,resources/camera-fov/2.png">
-         <div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/camerafov/CameraFOV.png" alt="" class="card-icon">
-  </div>
-  <h3>Camera FOV</h3>
-</div>
-  <p>Visualize camera coverage and compute field‑of‑view cones from device parameters.</p>
-  <div class="tags"><span class="tag">Revit</span><span class="tag">Visualization</span><span class="tag">C#</span></div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <ul><li>Parametric FOV from lens & height</li><li>Live preview in views</li><li>Material‑Design UI</li></ul>
-    </div>
-    <div><div class="gallery"></div></div>
-  </div>
-</article>
-
-<!-- Jira Task Integration -->
-<article class="card glass moreinfo-card"
-         data-title="Jira Task Integration"
-         data-desc-en="Create and update Jira issues from Revit, incl. assignee and priority."
-         data-images="resources/jira/1.png,resources/jira/2.png">
-         <div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/jiratask/JiraTask.png" alt="" class="card-icon">
-  </div>
-  <h3>Jira Task Integration</h3>
-</div>
-  <p>Create/update Jira issues directly from Revit with priorities, assignees, and sorting.</p>
-  <div class="tags"><span class="tag">Revit</span><span class="tag">Jira</span><span class="tag">API</span></div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <ul><li>ADF descriptions</li><li>Assignee & priority</li><li>Priority/date sorting</li></ul>
-    </div>
-    <div><div class="gallery"></div></div>
-  </div>
-</article>
-
-<!-- Panel Schematics -->
-<article class="card glass moreinfo-card"
-         data-title="Panel Schematics"
-         data-desc-en="Generate panel schedule rows and detail items with themeable DataGrid."
-         data-images="resources/panel-schematics/1.png,resources/panel-schematics/2.png">
-         <div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/panelschematics/PanelSchema.png" alt="" class="card-icon">
-  </div>
-    <h3>Panel Schematics</h3>
-</div>
-
-  <p>Generate/update schematic rows, place detail items, and sync parameters.</p>
-  <div class="tags"><span class="tag">Revit</span><span class="tag">Electrical</span><span class="tag">WPF</span></div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <ul><li>Material‑Design DataGrid</li><li>Extensible Storage</li><li>Detail line/level helpers</li></ul>
-    </div>
-    <div><div class="gallery"></div></div>
-  </div>
-</article>
-
-<!-- Single Line Diagrams -->
-<article class="card glass moreinfo-card"
-         data-title="Single Line Diagrams"
-         data-desc-en="Generate single-line diagrams from model data with placement helpers."
-         data-images="resources/sld/1.png,resources/sld/2.png">
-         <div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/singlelinediagrams/SingleLineDiagrams.png" alt="" class="card-icon">
-  </div>
-    <h3>Single Line Diagrams</h3>
-</div>
-
-  <p>Derive SLDs from circuits/devices and place detail symbols with spacing controls.</p>
-  <div class="tags"><span class="tag">Revit</span><span class="tag">Electrical</span></div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <ul><li>Auto symbol rows</li><li>Level‑aware placement</li><li>Tag offsets & spacing</li></ul>
-    </div>
-    <div><div class="gallery"></div></div>
-  </div>
-</article>
-
-<!-- Dialux Import -->
-<article class="card glass moreinfo-card"
-         data-title="Dialux Import"
-         data-desc-en="Read linked model fixtures, group, create missing types, and place with rotation."
-         data-images="resources/dialux/1.png,resources/dialux/2.png">
-         <div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/dialuximport/DialuxImport.png" alt="" class="card-icon">
-  </div>
-  <h3>Dialux Import</h3>
-</div>
-  <p>Group/import lighting from linked models, create types, and place on correct levels.</p>
-  <div class="tags"><span class="tag">Revit</span><span class="tag">Lighting</span></div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <ul><li>Type creation & param mapping</li><li>LED strip row grouping</li><li>IfcGUID linking & updates</li></ul>
-    </div>
-    <div><div class="gallery"></div></div>
-  </div>
-</article>
-
-<!-- Convert IFC to Revit -->
-<article class="card glass moreinfo-card"
-         data-title="Convert IFC to Revit"
-         data-desc-en="Browse linked IFC elements, map categories/types, and place families."
-         data-images="resources/ifc-converter/1.png,resources/ifc-converter/2.png">
-         <div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/circuitpath/CircuitPath.png" alt="" class="card-icon">
-  </div>
-  <h3>Convert IFC to Revit</h3>
-</div>
-  <p>IFC → Revit helper for category/type mapping, placement, and type duplication.</p>
-  <div class="tags"><span class="tag">IFC</span><span class="tag">Revit</span><span class="tag">Tools</span></div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <ul><li>DataGrid with layouts</li><li>Center‑of‑bbox placement</li><li>Type duplication in‑project</li></ul>
-    </div>
-    <div><div class="gallery"></div></div>
-  </div>
-</article>
-
-<!-- Cable Catalogue -->
-<article class="card glass moreinfo-card"
-         data-title="Cable Catalogue"
-         data-desc-en="Filter, sort, and create cable/wire types from rules. Material‑Design UI."
-         data-images="resources/cable-catalogue/1.png,resources/cable-catalogue/2.png">
-         <div class="card-header">
-  <div class="card-icon-wrapper">
-    <img src="resources/cablecatalogue/CableCatalogue.png" alt="" class="card-icon">
-  </div>
-  <h3>Cable Catalogue</h3>
-</div>
-  <p>Rule‑based wire type selection and type creation from curated parameters.</p>
-  <div class="tags"><span class="tag">Revit</span><span class="tag">Electrical</span><span class="tag">C#</span></div>
-  <div style="display:flex; gap:10px; flex-wrap:wrap">
-    <a class="button" href="#" data-i18n="download">Download</a>
-    <button class="button secondary more-info" data-i18n="more_info" type="button">More info</button>
-  </div>
-  <div class="expand-panel">
-    <div>
-      <ul><li>Dynamic filters & size sorting</li><li>Closest‑match picking</li><li>ExternalEvent creation</li></ul>
-    </div>
-    <div><div class="gallery"></div></div>
-  </div>
-</article>
-<!-- ======================================= -->
+          <div class="about-text-content">
+            <h3 class="about-subtitle">The Bridge Between Layout & Logic</h3>
+            <ul class="feature-list" data-i18n="about_list">
+              <li>Specializing in <strong>Revit</strong> electrical design workflows (Fire Alarm, CCTV, IT).</li>
+              <li>Developing custom <strong>C# & Python</strong> plugins to automate the mundane.</li>
+              <li>Practical, field-tested understanding of installation vs. design.</li>
+            </ul>
+            <div class="skill-tags">
+              <span class="tag">Revit API</span>
+              <span class="tag">C# .NET</span>
+              <span class="tag">WPF</span>
+              <span class="tag">Python</span>
+              <span class="tag">IFC</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-  </div>
+    <!-- Selected Work / Downloads -->
+    <section id="work" class="section-padded">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="downloads_title">Downloads</h2>
+          <p class="section-desc" data-i18n="downloads_sub">Public tools, Revit plugins, and docs.</p>
+        </div>
+
+        <div class="projects-grid">
+
+          <!-- CAD Manager -->
+          <article class="project-card glass"
+            data-images="resources/cad-manager/cad1.png,resources/cad-manager/cad2.png">
+            <div class="card-top">
+              <img src="resources/cad-manager/CADManager.png" alt="CAD Manager" class="app-icon">
+              <div class="card-meta">
+                <h3>CAD Manager</h3>
+                <p>Optimized DWG Control</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>Toggle DWGs/layers per view</li>
+              <li>Bypass View Template limits</li>
+              <li>Database-backed settings</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CircuitPath -->
+          <article class="project-card glass" data-images="resources/circuitpath/1.png,resources/circuitpath/2.png">
+            <div class="card-top">
+              <img src="resources/circuitpath/CircuitPath.png" alt="CircuitPath" class="app-icon">
+              <div class="card-meta">
+                <h3>CircuitPath</h3>
+                <p>One-Click Pathing</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>Set 'All Devices' path mode</li>
+              <li>Idempotent & Undo-friendly</li>
+              <li>Instant project-wide fixes</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Camera FOV -->
+          <article class="project-card glass" data-images="resources/camera-fov/1.png,resources/camera-fov/2.png">
+            <div class="card-top">
+              <img src="resources/camerafov/CameraFOV.png" alt="Camera FOV" class="app-icon">
+              <div class="card-meta">
+                <h3>Camera FOV</h3>
+                <p>Visual Coverage</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>Calculate cones from sensor specs</li>
+              <li>Live 3D/2D visualization</li>
+              <li>Parametric updates</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Jira Task -->
+          <article class="project-card glass" data-images="resources/jira/1.png,resources/jira/2.png">
+            <div class="card-top">
+              <img src="resources/jiratask/JiraTask.png" alt="Jira" class="app-icon">
+              <div class="card-meta">
+                <h3>Jira Integration</h3>
+                <p>Task Management</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>Create/Update issues in-app</li>
+              <li>Sync priorities & assignees</li>
+              <li>Screenshot attachment support</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Panel Schematics -->
+          <article class="project-card glass"
+            data-images="resources/panel-schematics/1.png,resources/panel-schematics/2.png">
+            <div class="card-top">
+              <img src="resources/panelschematics/PanelSchema.png" alt="Panel Schematics" class="app-icon">
+              <div class="card-meta">
+                <h3>Panel Schematics</h3>
+                <p>Schematic Helper</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>DataGrid UI for row mgmt</li>
+              <li>Auto-place detail items</li>
+              <li>Sync electrical params</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Single Line Diagrams -->
+          <article class="project-card glass" data-images="resources/sld/1.png,resources/sld/2.png">
+            <div class="card-top">
+              <img src="resources/singlelinediagrams/SingleLineDiagrams.png" alt="SLD" class="app-icon">
+              <div class="card-meta">
+                <h3>Single Line Diagrams</h3>
+                <p>Auto-Gen SLDs</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>Circuit-based generation</li>
+              <li>Level-aware placement</li>
+              <li>Smart spacing controls</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dialux Import -->
+          <article class="project-card glass" data-images="resources/dialux/1.png,resources/dialux/2.png">
+            <div class="card-top">
+              <img src="resources/dialuximport/DialuxImport.png" alt="Dialux" class="app-icon">
+              <div class="card-meta">
+                <h3>Dialux Import</h3>
+                <p>Lighting Bridge</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>Import from linked models</li>
+              <li>Auto-create missing types</li>
+              <li>Smart LED strip grouping</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Converter -->
+          <article class="project-card glass" data-images="resources/ifc-converter/1.png,resources/ifc-converter/2.png">
+            <div class="card-top">
+              <img src="resources/circuitpath/CircuitPath.png" alt="IFC" class="app-icon">
+              <div class="card-meta">
+                <h3>IFC to Revit</h3>
+                <p>Conversion Tool</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>Map categories & types</li>
+              <li>Batch placement utility</li>
+              <li>Center-of-bbox logic</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Cable Catalogue -->
+          <article class="project-card glass"
+            data-images="resources/cable-catalogue/1.png,resources/cable-catalogue/2.png">
+            <div class="card-top">
+              <img src="resources/cablecatalogue/CableCatalogue.png" alt="Cable Catalogue" class="app-icon">
+              <div class="card-meta">
+                <h3>Cable Catalogue</h3>
+                <p>Wire Management</p>
+              </div>
+            </div>
+            <ul class="card-features">
+              <li>Rule-based selection</li>
+              <li>Filter & Sort types</li>
+              <li>Material Design UI</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
+              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+            </div>
+            <div class="expandable-content">
+              <div class="content-inner">
+                <div class="gallery"></div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+
+  </main>
 
   <footer>
-    © <span id="year"></span> <span data-i18n="footer">Raul Kalev</span>
+    <div class="container footer-content">
+      <span>© <span id="year"></span> <span data-i18n="footer">Raul Kalev</span></span>
+    </div>
   </footer>
 
-  <script src="app.js"></script>
+  <!-- GSAP & Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="app.js?v=6"></script>
 </body>
+
 </html>

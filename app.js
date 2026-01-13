@@ -1,219 +1,496 @@
+// Register GSAP ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
 
-// ===== Theme toggle (switch) =====
-const themeSwitch = document.getElementById('themeSwitch');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const savedTheme = localStorage.getItem('rk-theme');
-if (savedTheme === 'light') document.documentElement.classList.add('light');
-if (!savedTheme && !prefersDark) document.documentElement.classList.add('light');
+// Initialize Lenis Smooth Scroll
+let lenis;
 
-function updateSwitchState() {
-  const isLight = document.documentElement.classList.contains('light');
-  themeSwitch.dataset.state = isLight ? 'light' : 'dark';
-  themeSwitch.setAttribute('aria-checked', String(isLight));
+// Force Scroll to Top on Refresh (Aggressive)
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
 }
-updateSwitchState();
+window.scrollTo(0, 0);
 
-themeSwitch.addEventListener('click', () => {
-  document.documentElement.classList.toggle('light');
-  const isLight = document.documentElement.classList.contains('light');
-  localStorage.setItem('rk-theme', isLight ? 'light' : 'dark');
-  updateSwitchState();
-});
-
-// Year
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// ===== i18n: EN / ET =====
-const strings = {
-  en: {
-    subtitle: 'Extra-Low Voltage Systems Engineer · Revit Specialist · Plugin & App Developer (C#/.NET, Python)',
-    nav_about: 'About', nav_work: 'Work', nav_downloads: 'Downloads', nav_contact: 'Contact',
-    about_title: 'About me',
-    about_p1:
-      "I’m an Extra-Low Voltage systems engineer with a BSc in Architectural Technology & Construction Management, specializing in <strong>Revit</strong>-based electrical design workflows for fire alarm, access control, CCTV, IT, public address, and related systems. I bring over 5 years of experience as a systems installer and serviceman, giving me a practical, field-tested understanding of how designs translate into successful installations.",
-    about_p2:
-      "Alongside engineering, I develop custom <strong>Revit plugins</strong> and Windows applications in <strong>C#/.NET</strong> and <strong>Python</strong>—streamlining workflows, automating repetitive tasks, improving data accuracy, and accelerating documentation for engineering teams.",
-    cta_contact: 'Get in touch', cta_downloads: 'Browse downloads',
-    work_title: 'Selected work', work_sub: 'Deep dives & case studies (Revit automation, ELV design tooling, data pipelines).',
-    work_issue: 'Manage Jira issues without leaving Revit. A modeless WPF pane syncs issues, uploads view screenshots, and tracks assignees and priorities.',
-    work_dialux: 'Parses linked elements, groups fixtures, creates family types, and places/rotates instances with parameter mapping + round/strip logic.',
-    work_panel: 'Material Design DataGrids to manage circuit rows, update parameters (incl. virtual rows), and place detail items with level-aware logic.',
-    read_more: 'Read more',
-    downloads_title: 'Work Done', downloads_sub: 'Public tools, Revit plugins, and docs. Versioned releases with changelogs.',
-    dl_revctrl: 'Set and manage sheet revision numbers with a clean WPF UI and modeless flow.',
-    dl_circuit: 'Set all circuits\' path to "All Devices" across the project with a single click.',
-    dl_dwg: 'Exports & combines DWG Layout1 files, auto-sorts, and prompts for cleanup.',
-    download: 'Download', more_info: 'More info',
-    contact_title: 'Contact', contact_p: 'For consulting, custom plugins, or support, reach out below.',
-    name_placeholder: 'Your name', email_placeholder: 'Email', message_placeholder: 'How can I help?',
-    send: 'Send', open_email: 'Open in email client', elsewhere: 'Elsewhere',
-    footer: 'Raul Kalev'
-  },
-  et: {
-    subtitle: 'Nõrkvoolusüsteemide insener · Revit-spetsialist · Pluginate ja rakenduste arendaja (C#/.NET, Python)',
-    nav_about: 'Minust', nav_work: 'Tööd', nav_downloads: 'Allalaadimised', nav_contact: 'Kontakt',
-    about_title: 'Minust',
-    about_p1:
-      'Olen nõrkvoolusüsteemide insener, kellel on bakalaureusekraad arhitektuuri tehnoloogia ja ehitusjuhtimise erialal. Spetsialiseerun <strong>Revit</strong>-põhistele elektriprojektide töövoogudele: tulekahjusignalisatsioon, läbipääs, CCTV, IT, valjuhääldus ja muud süsteemid. Mul on üle 5 aasta kogemust süsteemide paigaldaja ja hooldustehnikuna, mis annab mulle praktilise ja reaalses elus testitud arusaama sellest, kuidas projekte edukalt ellu viia.',
-    about_p2:
-      'Lisaks inseneritööle loon kohandatud <strong>Revit-i pluginaid</strong> ja Windowsi tööriistu <strong>C#/.NET</strong>-i ja <strong>Pythoni</strong> abil—töövoogude sujuvamaks muutmiseks, kordustöö automatiseerimiseks, andmekvaliteedi parandamiseks ja dokumentatsiooni kiirendamiseks.',
-    cta_contact: 'Võta ühendust', cta_downloads: 'Laadi alla / vaata',
-    work_title: 'Valik projekte', work_sub: 'Süvavaated ja juhtumiuuringud (Revit-i automatiseerimine, ELV tööriistad, andmevood).',
-    work_issue: 'Halda Jira ülesandeid lahkumata Revitist. Modeless-paneel sünkroonib isikud, laadib üles vaadete ekraanipilte ning jälgib määramisi ja prioriteete.',
-    work_dialux: 'Töötleb seotud mudeleid, rühmitab valgustid, loob tüübid ja paigutab/pöörab instantsid koos parameetrite kaardistusega (ka ümar/LED-riba loogika).',
-    work_panel: 'Material Designi DataGridid skeemiridade haldamiseks, parameetrite uuendamiseks (sh virtuaalread) ja detailide paigutamiseks tasemete loogikaga.',
-    read_more: 'Loe lähemalt',
-    downloads_title: 'Tehtud tööd', downloads_sub: 'Avalikud tööriistad, Revit-i pluginad ja dokumentatsioon. Versioonid koos muudatuste logidega.',
-    dl_revctrl: 'Lehtede versiooninumbrite seadmine ja haldus puhta WPF-i kasutajaliidesega.',
-    dl_circuit: 'Määrab kõigi vooluahelate teeraja väärtuseks "All Devices" ühe klikiga.',
-    dl_dwg: 'Ekspordib ja ühendab DWG Layout1 failid, sorteerib automaatselt ning pakub puhastust.',
-    download: 'Laadi alla', more_info: 'Rohkem infot',
-    contact_title: 'Kontakt', contact_p: 'Konsultatsioon, eritellimuspluginad või tugi — kirjuta allpool.',
-    name_placeholder: 'Sinu nimi', email_placeholder: 'E-post', message_placeholder: 'Kuidas saan aidata?',
-    send: 'Saada', open_email: 'Ava e-posti kliendis', elsewhere: 'Mujal',
-    footer: 'Raul Kalev'
-  }
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
 };
 
+// Reinforce after load
+window.addEventListener('load', () => {
+    setTimeout(() => window.scrollTo(0, 0), 10);
+});
 
-// Language dropdown logic
+document.addEventListener("DOMContentLoaded", () => {
+    // Set Current Year
+    const yearEl = document.getElementById('year');
+    if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+    }
+    // Check if Lenis loaded
+    if (typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Sync GSAP with Lenis
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+    } else {
+        console.warn('Lenis not loaded');
+    }
+});
+
+
+// ============================================
+// Extreme Kinetics Animations
+// ============================================
+
+// 1. Text Splitter Helper
+function splitTextToSpans(element) {
+    const text = element.innerText;
+    element.innerHTML = '';
+    const words = text.split(' ');
+
+    words.forEach(word => {
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'word';
+        wordSpan.style.display = 'inline-block';
+        wordSpan.style.overflow = 'hidden';
+        wordSpan.style.verticalAlign = 'top';
+        wordSpan.style.marginRight = '0.3em';
+
+        const innerSpan = document.createElement('span');
+        innerSpan.className = 'char-inner';
+        innerSpan.innerText = word;
+        innerSpan.style.display = 'inline-block';
+
+        wordSpan.appendChild(innerSpan);
+        element.appendChild(wordSpan);
+    });
+}
+
+// 2. Logic: Theme, Lang, Interaction (Executed FIRST to set up DOM)
+// ============================================
+
+// Theme Switch
+const themeBtn = document.getElementById('themeSwitch');
+const savedTheme = localStorage.getItem('rk-theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+if (savedTheme === 'light') {
+    document.documentElement.classList.add('light');
+} else if (!savedTheme && !prefersDark) {
+    document.documentElement.classList.add('light');
+}
+
+if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light');
+        const isLight = document.documentElement.classList.contains('light');
+        localStorage.setItem('rk-theme', isLight ? 'light' : 'dark');
+    });
+}
+
+
+// Language Logic
+const strings = {
+    en: {
+        subtitle: 'Extra-Low Voltage Systems Engineer · Revit Specialist · Plugin & App Developer',
+        nav_about: 'About', nav_workdone: 'Work', nav_contact: 'Contact',
+        about_title: 'About me',
+        about_list: `
+        <li>Specializing in <strong>Revit</strong> electrical design workflows (Fire Alarm, CCTV, IT).</li>
+        <li>Developing custom <strong>C# & Python</strong> plugins to automate the mundane.</li>
+        <li>Practical, field-tested understanding of installation vs. design.</li>
+    `,
+        downloads_title: 'Work & Downloads', downloads_sub: 'Public tools, Revit plugins, and docs.',
+        download: 'Download', more_info: 'Expand', close_info: 'Close',
+        contact_title: 'Contact',
+        footer: 'Raul Kalev',
+        send: 'Send'
+    },
+    et: {
+        subtitle: 'Nõrkvoolusüsteemide insener · Revit-spetsialist · Pluginate ja rakenduste arendaja',
+        nav_about: 'Minust', nav_workdone: 'Tööd', nav_contact: 'Kontakt',
+        about_title: 'Minust',
+        about_list: `
+        <li>Spetsialiseerun <strong>Revit</strong>-põhistele elektriprojektidele (ATS, Valve, IT).</li>
+        <li>Arendan <strong>C# & Python</strong> pluginaid rutiini automatiseerimiseks.</li>
+        <li>Praktiline ja objektil testitud kogemus paigalduse vallas.</li>
+    `,
+        downloads_title: 'Tehtud tööd', downloads_sub: 'Tööriistad ja dokumendid.',
+        download: 'Laadi alla', more_info: 'Ava', close_info: 'Sulge',
+        contact_title: 'Kontakt',
+        footer: 'Raul Kalev',
+        send: 'Saada'
+    }
+};
+
 const langRoot = document.getElementById('langDropdown');
-const langBtn = langRoot.querySelector('.lang-toggle');
-const langMenu = langRoot.querySelector('.lang-menu');
+const langBtn = langRoot ? langRoot.querySelector('.lang-btn') : null;
+const langMenu = langRoot ? langRoot.querySelector('.lang-menu') : null;
 const currentFlag = document.getElementById('currentFlag');
-const currentLang = document.getElementById('currentLang');
-
-const savedLang2 = localStorage.getItem('rk-lang') || (navigator.language?.startsWith('et') ? 'et' : 'en');
+const savedLang = localStorage.getItem('rk-lang') || (navigator.language?.startsWith('et') ? 'et' : 'en');
 
 function applyLang(lang) {
-  const dict = strings[lang] || strings.en;
-  document.documentElement.lang = lang;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (dict[key] !== undefined) el.innerHTML = dict[key];
-  });
-  document.querySelectorAll('[data-i18n-attr]').forEach(el => {
-    const spec = el.getAttribute('data-i18n-attr');
-    const [attr, key] = spec.split(':');
-    if (dict[key] !== undefined) el.setAttribute(attr, dict[key]);
-  });
-  localStorage.setItem('rk-lang', lang);
-  currentLang.textContent = lang.toUpperCase();
-  currentFlag.textContent = lang === 'et' ? '🇪🇪' : '🇬🇧';
+    const dict = strings[lang] || strings.en;
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+
+        if (dict[key]) {
+            // Special Handler for List (HTML Content)
+            if (key === 'about_list') {
+                el.innerHTML = dict[key];
+                // Re-split the children LIs for animation
+                el.querySelectorAll('li').forEach(li => splitTextToSpans(li));
+            }
+            // Handler for Split Text Elements
+            else if (el.querySelectorAll('.word').length > 0) {
+                el.setAttribute('data-original-text', dict[key]);
+                el.innerText = dict[key];
+                splitTextToSpans(el);
+            }
+            // Simple Text
+            else {
+                el.innerHTML = dict[key];
+            }
+        }
+    });
+
+    localStorage.setItem('rk-lang', lang);
+    if (currentFlag) {
+        currentFlag.textContent = lang === 'et' ? '🇪🇪' : '🇬🇧';
+    }
+
+    // Update button states
+    document.querySelectorAll('.project-card.expanded .more-info').forEach(btn => {
+        btn.textContent = dict.close_info;
+    });
+    document.querySelectorAll('.project-card:not(.expanded) .more-info').forEach(btn => {
+        btn.textContent = dict.more_info;
+    });
 }
 
-applyLang(savedLang2);
+// Language Interaction
+if (langBtn) {
+    langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langMenu.classList.toggle('open');
+    });
+}
+if (langMenu) {
+    langMenu.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-lang]');
+        if (!btn) return;
+        applyLang(btn.getAttribute('data-lang'));
+        langMenu.classList.remove('open');
+        // Reload page to reset GSAP animations with new text nodes?
+        // Or implement complex kill/refresh logic. For now, simple reload is robust.
+        // window.location.reload(); // Optional, but cleaner for animations
+    });
+}
+document.addEventListener('click', () => langMenu.classList.remove('open'));
 
-langBtn.addEventListener('click', () => {
-  const open = langMenu.classList.toggle('open');
-  langBtn.setAttribute('aria-expanded', String(open));
+
+// Apply Language (Sets up DOM)
+applyLang(savedLang);
+
+
+// 3. Initial Setup: Split Text (Generic for non-i18n elements)
+// Note: We don't animate the Hero Title characters here anymore because the 
+// whole container zooms. We only split for potential hover effects or later use.
+document.querySelectorAll('h2, .stat-value, .about-subtitle').forEach(el => {
+    // Skip if already split by applyLang
+    if (el.querySelector('.word')) return;
+
+    const originalText = el.innerText;
+    el.setAttribute('data-original-text', originalText);
+    splitTextToSpans(el);
 });
-langMenu.addEventListener('click', (e) => {
-  const btn = e.target.closest('button[data-lang]');
-  if (!btn) return;
-  const code = btn.getAttribute('data-lang');
-  applyLang(code);
-  langMenu.classList.remove('open');
-  langBtn.setAttribute('aria-expanded', 'false');
+
+
+// ============================================
+// 4. Extreme Kinetics Animations (GSAP)
+// ============================================
+
+// 5. Hero "Focus" Entry (Zoom/Scale) - SCROLL DRIVEN
+// The user sees the name HUGE first, then scrolling shrinks it and reveals content.
+const heroTl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "+=1200", // More scroll distance for drama
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1
+    },
+    defaults: { ease: 'none' }
 });
+
+// Set initial state (Massive Name, Hidden Content)
+gsap.set('.hero-title', {
+    scale: 3, // 3x Zoom (Requested)
+    filter: 'blur(0px)', // Clear text
+    transformOrigin: 'center center',
+    y: 0
+});
+gsap.set('.hero-subtitle', { y: 50, opacity: 0 });
+gsap.set('.socials .social-link', { y: 30, opacity: 0, scale: 0.5 }); // Target links individually
+
+// Animation Sequence linked to scroll
+heroTl
+    // Step 1: Shrink Name
+    .to('.hero-title', {
+        scale: 1,
+        duration: 2
+    })
+    // Step 2: Reveal Info
+    .to('.hero-subtitle', {
+        y: 0,
+        opacity: 1,
+        duration: 1
+    }, '-=0.5') // Overlap
+    // Step 3: Socials Pop In
+    .to('.socials .social-link', {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        stagger: 0.2,
+        ease: 'back.out(2)'
+    }, '-=0.2');
+
+
+// 4. Section Headers "Explode" or Slide Up with Skew
+document.querySelectorAll('.section-title').forEach(title => {
+    gsap.from(title, {
+        scrollTrigger: {
+            trigger: title,
+            start: 'top 90%',
+        },
+        y: 100,
+        skewY: 10,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out'
+    });
+});
+
+
+// 5. "About" Stats - 3D Slot Machine Rotation
+// 5. "About" Stats - 3D Cube Reveal
+gsap.from('.about-stats-container', {
+    scrollTrigger: {
+        trigger: '.about-stats-container',
+        start: 'top 85%'
+    },
+    rotationX: -90, // Start flat (perpendicular to screen)
+    opacity: 0,
+    y: 100,
+    transformOrigin: 'top center -100px', // Hinge from top-back
+    duration: 1.5,
+    ease: 'elastic.out(1, 0.7)' // Bouncy arrival
+});
+
+// Animate numbers *after* the card lands
+// Animate numbers *after* the card lands
+// Train Station Clock / Split-Flap Effect
+const statChars = document.querySelectorAll('.stat-value .char-inner');
+gsap.from(statChars, {
+    scrollTrigger: {
+        trigger: '.about-stats-container',
+        start: 'top 70%',
+        end: 'bottom top', // Allow reversing when scrolling back up
+        toggleActions: 'play reverse play reverse'
+    },
+    rotationX: -90, // Flip from top
+    opacity: 0,
+    y: -20, // Slight slide from top
+    stagger: 0.05,
+    duration: 0.8,
+    ease: 'back.out(1.7)',
+    transformOrigin: 'center center'
+});
+
+// "The Bridge Between..." & List Items - Liquid Typing Effect
+const liquidChars = document.querySelectorAll('.about-subtitle .char-inner, .feature-list li .char-inner');
+gsap.from(liquidChars, {
+    scrollTrigger: {
+        trigger: '.about-text-content',
+        start: 'top 80%',
+        end: 'bottom 20%', // Wider range to allow full reverse
+        toggleActions: 'play reverse play reverse'
+    },
+    x: -20, // Slide from left
+    y: 0,
+    opacity: 0,
+    filter: 'blur(4px)', // Liquid feel
+    stagger: 0.04, // Slower typing speed
+    duration: 0.8,
+    ease: 'power2.out'
+});
+
+
+// 6. Project Cards - Unique Reversible Animations
+const projectCards = document.querySelectorAll('.project-card');
+projectCards.forEach((card, i) => {
+    // Define varied start states based on index
+    let startState = {};
+
+    switch (i % 5) {
+        case 0: // Slide In Left & Rotate
+            startState = { x: -150, rotation: -15, opacity: 0, scale: 0.8 };
+            break;
+        case 1: // Slide In Right & Rotate
+            startState = { x: 150, rotation: 15, opacity: 0, scale: 0.8 };
+            break;
+        case 2: // 3D Flip Down (Garage Door)
+            startState = { rotationX: -90, y: -50, opacity: 0, transformPerspective: 1000 };
+            break;
+        case 3: // Zoom Pop
+            startState = { scale: 0, rotation: -360, opacity: 0 };
+            break;
+        case 4: // Skew Slide Up
+            startState = { y: 100, skewY: 20, opacity: 0 };
+            break;
+    }
+
+    gsap.fromTo(card,
+        startState,
+        {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                end: 'bottom top', // Allow full reverse
+                toggleActions: 'play reverse play reverse'
+            },
+            x: 0,
+            y: 0,
+            rotation: 0,
+            rotationX: 0,
+            scale: 1,
+            skewY: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: 'power3.out',
+            overwrite: 'auto'
+        }
+    );
+});
+
+// Force refresh after a moment to ensure layout is settled
+setTimeout(() => ScrollTrigger.refresh(), 500);
+setTimeout(() => ScrollTrigger.refresh(), 2000);
+
+
+// 7. Magnetic Buttons (Preserved)
+const magneticBtns = document.querySelectorAll('.btn-primary, .social-link, .more-info, .nav-links a');
+magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        gsap.to(btn, {
+            x: x * 0.3,
+            y: y * 0.3,
+            duration: 0.3,
+            ease: 'power2.out'
+        });
+    });
+
+    btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: 'elastic.out(1, 0.4)'
+        });
+    });
+});
+
+
+// 8. Card Glow & Parallax (Preserved)
+projectCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--x', `${x}px`);
+        card.style.setProperty('--y', `${y}px`);
+
+        // Tilt
+        const xCenter = rect.width / 2;
+        const yCenter = rect.height / 2;
+        const xOffset = (e.clientX - rect.left) - xCenter;
+        const yOffset = (e.clientY - rect.top) - yCenter;
+
+        gsap.to(card, {
+            rotationY: xOffset * 0.02,
+            rotationX: -yOffset * 0.02,
+            duration: 0.4,
+            ease: 'power2.out'
+        });
+    });
+
+    card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+            rotationY: 0,
+            rotationX: 0,
+            duration: 0.6,
+            ease: 'power2.out'
+        });
+    });
+});
+
+
+
+// Expandable Cards Logic
 document.addEventListener('click', (e) => {
-  if (!langRoot.contains(e.target)) { langMenu.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false'); }
+    if (e.target.classList.contains('more-info')) {
+        const card = e.target.closest('.project-card');
+        const isExp = card.classList.toggle('expanded');
+        const lang = localStorage.getItem('rk-lang') || 'en';
+        const dict = strings[lang] || strings.en;
+
+        e.target.textContent = isExp ? dict.close_info : dict.more_info;
+
+        if (isExp) {
+            populateGallery(card);
+            // Wait for transition then scroll
+            setTimeout(() => {
+                if (lenis) lenis.scrollTo(card, { offset: -100 });
+            }, 300);
+        }
+    }
 });
 
-function renderCarousel(gallery, imgs, startIndex = 0) {
-  const safeImgs = imgs.map(src => (src.includes(' ') ? encodeURI(src) : src));
-  // Build markup
-  gallery.innerHTML = `
-    <img class="slide" src="${safeImgs[startIndex]}" alt="">
-    <button class="nav prev" aria-label="Previous image" type="button">
-      <svg viewBox="0 0 24 24"><path d="M15.5 19 8.5 12l7-7"/></svg>
-    </button>
-    <button class="nav next" aria-label="Next image" type="button">
-      <svg viewBox="0 0 24 24"><path d="M8.5 5 15.5 12l-7 7"/></svg>
-    </button>
-    <div class="dots">${safeImgs.map((_,i)=>`<div class="dot${i===startIndex?' active':''}"></div>`).join('')}</div>
-  `;
-  gallery.dataset.index = String(startIndex);
-  gallery.dataset.count = String(safeImgs.length);
 
-  const imgEl = gallery.querySelector('.slide');
-  const dots = [...gallery.querySelectorAll('.dot')];
-
-  function show(i) {
-    const count = safeImgs.length;
-    const idx = (i + count) % count;   // wrap
-    gallery.dataset.index = String(idx);
-    imgEl.src = safeImgs[idx];
-    dots.forEach((d,k)=>d.classList.toggle('active', k===idx));
-  }
-
-  gallery.querySelector('.prev').addEventListener('click', () => {
-    show(Number(gallery.dataset.index) - 1);
-  });
-  gallery.querySelector('.next').addEventListener('click', () => {
-    show(Number(gallery.dataset.index) + 1);
-  });
-  dots.forEach((d,i)=>d.addEventListener('click', ()=>show(i)));
-
-  // Optional: keyboard nav when focused
-  gallery.tabIndex = 0;
-  gallery.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') show(Number(gallery.dataset.index) - 1);
-    if (e.key === 'ArrowRight') show(Number(gallery.dataset.index) + 1);
-  });
-}
-
+// Gallery Logic (Simple Grid)
 function populateGallery(card) {
-  const gallery = card.querySelector('.gallery');
-  if (!gallery || gallery.childElementCount) return;
+    const gallery = card.querySelector('.gallery');
+    if (!gallery || gallery.children.length > 0) return; // already populated
 
-  const imgs = (card.getAttribute('data-images') || '')
-    .split(',')
-    .map(s => s.trim())
-    .filter(Boolean);
+    const imagesStr = card.getAttribute('data-images') || '';
+    const images = imagesStr.split(',').map(s => s.trim()).filter(Boolean);
 
-  if (!imgs.length) {
-    gallery.innerHTML = '<div class="ph">No images yet</div>';
-    return;
-  }
+    if (images.length === 0) return;
 
-  renderCarousel(gallery, imgs, 0);
+    images.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = "Project screenshot";
+        gallery.appendChild(img);
+    });
 }
-
-
-function toggleExpand(card) {
-  const btn = card.querySelector('.more-info');
-  const lang = localStorage.getItem('rk-lang') || 'en';
-  const isOpen = card.classList.toggle('expanded');
-
-  if (isOpen) {
-    populateGallery(card);
-    btn.textContent = lang === 'et' ? 'Sulge' : 'Close';
-    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } else {
-    btn.textContent = (strings[lang]?.more_info) || 'More info';
-  }
-}
-
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('.more-info');
-  if (btn) {
-    e.preventDefault();
-    const card = btn.closest('.moreinfo-card');
-    if (!card) return;
-    toggleExpand(card);
-  }
-});
-
-// ===== Contact form (no inline onsubmit) =====
-const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const lang = localStorage.getItem('rk-lang') || 'en';
-  const name = encodeURIComponent(document.getElementById('name').value.trim());
-  const email = encodeURIComponent(document.getElementById('email').value.trim());
-  const message = encodeURIComponent(document.getElementById('message').value.trim());
-  const subject = lang === 'et' ? `Portfoolio päring: ${name}` : `Portfolio inquiry from ${name}`;
-  const body = lang === 'et' ? `Nimi: ${name}%0D%0AE-post: ${email}%0D%0A%0D%0A${message}` : `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
-  window.location.href = `mailto:hello@example.com?subject=${subject}&body=${body}`;
-});
