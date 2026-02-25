@@ -494,3 +494,130 @@ function populateGallery(card) {
         gallery.appendChild(img);
     });
 }
+
+
+// ============================================
+// Pulse Canvas — Fixed Top-Right Heartbeat Circle + Particles
+// ============================================
+(function initPulseCanvas() {
+    const canvas = document.getElementById('pulse-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Centre of canvas so the full circle is always visible
+    const cx = () => canvas.width / 2;
+    const cy = () => canvas.height / 2;
+
+    // ── Heartbeat timing (lub-dub) — 1 cycle per second ─────
+    const BEAT_OFFSET = 200;   // ms between lub and dub
+    const CYCLE_MS = 3000;  // 1 beat per 3 seconds
+    const BASE_RADIUS = 28;    // resting circle radius (2x smaller)
+    const PEAK_SCALE = 1.38;
+    const PEAK_SCALE2 = 1.22;
+    const DECAY = 8;
+
+    let beatScale = 1;
+    let beatAlpha = 0.03; // 2x more transparent resting
+
+    const particles = [];
+
+    class Particle {
+        constructor(burst) {
+            this.burst = burst;
+            const angle = Math.random() * Math.PI * 2;
+            // Spawn from the circle edge
+            const r = BASE_RADIUS + (Math.random() - 0.5) * 6;
+            this.x = cx() + Math.cos(angle) * r;
+            this.y = cy() + Math.sin(angle) * r;
+            const speed = (this.burst ? 0.4 : 0.25) + Math.random() * 0.3;
+            this.vx = Math.cos(angle) * speed;
+            this.vy = Math.sin(angle) * speed;
+            this.radius = 0.7 + Math.random() * (this.burst ? 1.2 : 0.8);
+            this.life = 0;
+            this.maxLife = 190 + Math.random() * 20; // ~200 frames → 90% faded by next beat (3s)
+            this.dead = false;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life++;
+            if (this.life >= this.maxLife) this.dead = true;
+        }
+
+        draw() {
+            // Linear fade-out: full at start, zero at end
+            const t = this.life / this.maxLife;
+            const alpha = (1 - t) * (this.burst ? 0.22 : 0.15);
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+            ctx.fill();
+        }
+    }
+
+
+    // ── Heartbeat scheduler ─────────────────────────────────
+    function spawnBurst(strong) {
+        const count = strong ? 8 : 5;
+        for (let i = 0; i < count; i++) particles.push(new Particle(strong));
+        beatScale = strong ? PEAK_SCALE : PEAK_SCALE2;
+        beatAlpha = strong ? 0.07 : 0.05;
+    }
+
+    function scheduleCycle() {
+        spawnBurst(true);                                    // lub
+        setTimeout(() => spawnBurst(false), BEAT_OFFSET);   // dub
+        setTimeout(scheduleCycle, CYCLE_MS);                // next cycle
+    }
+    scheduleCycle();
+
+    // ── Draw the central transparent circle ─────────────────
+    function drawCenter() {
+        const r = BASE_RADIUS * beatScale;
+
+        // Soft outer glow
+        const grd = ctx.createRadialGradient(cx(), cy(), r * 0.3, cx(), cy(), r * 1.6);
+        grd.addColorStop(0, `rgba(255,255,255,${beatAlpha * 0.4})`);
+        grd.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.beginPath();
+        ctx.arc(cx(), cy(), r * 1.6, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        // Core circle — more opaque white fill + bright stroke
+        ctx.beginPath();
+        ctx.arc(cx(), cy(), r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${beatAlpha * 0.6})`;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(255,255,255,${beatAlpha * 2.0})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Smooth decay toward resting values
+        beatScale = 1 + (beatScale - 1) * (1 - 1 / (DECAY * 1.5));
+        beatAlpha = 0.03 + (beatAlpha - 0.03) * (1 - 1 / (DECAY * 2));
+    }
+
+    // ── Main loop ────────────────────────────────────────────
+    function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawCenter();
+        for (const p of particles) { p.update(); p.draw(); }
+        // Remove dead particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+            if (particles[i].dead) particles.splice(i, 1);
+        }
+        requestAnimationFrame(loop);
+    }
+    loop();
+})();
+

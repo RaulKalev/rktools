@@ -101,6 +101,35 @@ body::-webkit-scrollbar {
 }
 
 /* =====================
+   Pulse Canvas
+   ===================== */
+#pulse-canvas {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 210px;
+  height: 210px;
+  z-index: 0;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Clickable overlay centred on the pulse circle */
+.pulse-link {
+  position: fixed;
+  /* canvas top(30) + centre(105) - hitRadius(45) = 90 */
+  top: 90px;
+  /* canvas right(30) + centre(105) - hitRadius(45) = 90 */
+  right: 90px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  z-index: 10;
+  cursor: pointer;
+  display: block;
+}
+
+/* =====================
    Utilities
    ===================== */
 .container {
