@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pulse by RK Tools — Design with clarity.</title>
+  <meta name="description"
+    content="Pulse by RK Tools is a Revit-first control center for addressable building systems. Design with clarity." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles.css" />
+
+  <style>
+    /* ── Pulse page–specific overrides ─────────────────────── */
+
+    /* Back link */
+    .back-link {
+      position: fixed;
+      top: 32px;
+      left: 36px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--text); }
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Hero */
+    .pulse-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 80px;
+    }
+    .pulse-hero-inner { max-width: 780px; }
+
+    .pulse-eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(180,251,240,0.25);
+      background: var(--accent-dim);
+      padding: 6px 16px;
+      border-radius: 99px;
+      margin-bottom: 28px;
+    }
+
+    .pulse-hero-title {
+      font-size: clamp(4rem, 11vw, 8rem);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text) 40%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .pulse-tagline {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .pulse-oneliner {
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 32px;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-weight: 600;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: background 0.3s var(--ease-expo), border-color 0.3s;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .btn-outline:hover {
+      background: var(--accent-dim);
+      border-color: rgba(180,251,240,0.35);
+    }
+
+    .pulse-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      opacity: 0.6;
+    }
+    .pulse-meta span { margin: 0 8px; }
+
+    /* Section shared */
+    .pulse-section { padding: 120px 0; }
+    .pulse-section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .pulse-section-lead {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 680px;
+      line-height: 1.75;
+      margin-bottom: 0;
+    }
+
+    /* What Pulse Is */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .what-left { display: flex; flex-direction: column; gap: 24px; }
+    .what-left p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+    .what-left p strong { color: var(--text); }
+    .what-right { padding-top: 8px; }
+
+    .quote-block {
+      border-left: 2px solid var(--accent);
+      padding: 20px 28px;
+      border-radius: 0 16px 16px 0;
+      background: var(--accent-dim);
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.75;
+      font-style: italic;
+    }
+
+    /* Feature cards — 5-col grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 60px;
+    }
+    .feature-card {
+      border-radius: 20px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.3s;
+    }
+    .feature-card:hover { border-color: rgba(180,251,240,0.3); }
+    .feature-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--accent-dim);
+      display: grid;
+      place-items: center;
+    }
+    .feature-card-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .feature-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Modules */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 60px;
+    }
+    .module-card {
+      border-radius: 24px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .module-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 99px;
+      width: fit-content;
+    }
+    .badge-fire {
+      background: rgba(255, 90, 70, 0.12);
+      color: #ff6b55;
+      border: 1px solid rgba(255, 90, 70, 0.25);
+    }
+    .badge-access {
+      background: rgba(100, 200, 255, 0.1);
+      color: #64c8ff;
+      border: 1px solid rgba(100, 200, 255, 0.2);
+    }
+    .module-card h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .module-mission {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.65;
+      margin: 0;
+    }
+    .module-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .future-modules {
+      border-radius: 20px;
+      padding: 32px;
+      margin-top: 28px;
+      grid-column: 1 / -1;
+    }
+    .future-modules h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .future-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .future-list li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding: 8px 18px;
+      border-radius: 99px;
+      border: 1px solid var(--card-border);
+    }
+
+    /* Proposals */
+    .proposals-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .proposals-left { display: flex; flex-direction: column; gap: 24px; }
+    .proposals-left p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+    .proposals-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .proposals-list li {
+      position: relative;
+      padding-left: 28px;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .proposals-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .proposals-note {
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .proposals-note h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text);
+    }
+    .proposals-note p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* Footer CTA */
+    .pulse-footer-cta {
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+    .pulse-footer-cta h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text) 40%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .pulse-footer-cta p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.75;
+    }
+
+    /* Site footer override for this page */
+    .pulse-page footer {
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 32px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .what-grid,
+      .modules-grid,
+      .proposals-inner {
+        grid-template-columns: 1fr;
+      }
+      .future-modules { grid-column: 1; }
+      .back-link { top: 20px; left: 20px; }
+    }
+  </style>
+</head>
+
+<body class="pulse-page">
+  <!-- Animated Background -->
+  <div class="bg-gradient"></div>
+  <div class="bg-grain"></div>
+
+  <!-- Back to home -->
+  <a href="../index.html" class="back-link" aria-label="Back to RK Tools">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    RK Tools
+  </a>
+
+  <main>
+
+    <!-- ── 1. HERO ─────────────────────────────────────────── -->
+    <section class="pulse-hero" id="home">
+      <div class="pulse-hero-inner">
+        <span class="pulse-eyebrow">by RK Tools</span>
+        <h1 class="pulse-hero-title">Pulse</h1>
+        <p class="pulse-tagline">Design with clarity.</p>
+        <p class="pulse-oneliner">
+          A Revit-first system dashboard for electrical and low-current design —
+          built for clarity, shipped in stages, and shaped by the community.
+        </p>
+        <div class="hero-cta-row">
+          <a href="#roadmap" class="btn-primary">View roadmap</a>
+          <a href="#proposals" class="btn-outline">Pulse Proposals</a>
+        </div>
+        <p class="pulse-meta">
+          <span>Revit-first</span>·<span>Community-driven</span>·<span>Ships in stages</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 2. WHAT PULSE IS ───────────────────────────────── -->
+    <section class="pulse-section" id="about">
+      <div class="container">
+        <div class="what-grid">
+          <div class="what-left">
+            <h2 class="pulse-section-title">What Pulse is</h2>
+            <p>
+              Pulse helps electrical and low-current designers <strong>understand, validate, and refine</strong>
+              their systems faster — by making structure, health, and intent visible in one place inside Revit.
+            </p>
+            <p>
+              Pulse by RK Tools is a Revit-first control center for addressable building systems.
+              It refines everyday workflows by turning system logic into something you can clearly see, review,
+              and maintain — without getting buried in property panels, schedules, and scattered views.
+            </p>
+            <p>
+              Pulse ships in stages, starting with a small set of modules and expanding over time.
+              Development is community-driven through <strong>Pulse Proposals</strong>, ensuring the roadmap
+              stays grounded in real projects and real pain points.
+            </p>
+          </div>
+          <div class="what-right">
+            <blockquote class="quote-block">
+              "Pulse is not here to do the work for you. You still design and place the devices,
+              make decisions, and build the model. Pulse helps you understand what you've built:
+              how it's structured, where the weak spots are, and what needs attention —
+              so you can improve the design with confidence."
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- 5 feature cards -->
+        <div class="features-grid">
+
+          <div class="feature-card glass">
+            <div class="feature-card-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12h3M19 12h3M12 2v3M12 19v3"/></svg>
+            </div>
+            <h4>See the system instantly</h4>
+            <p>Your entire addressable system — panels, loops, zones, devices — in one clear view.</p>
+          </div>
+
+          <div class="feature-card glass">
+            <div class="feature-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <h4>Validate as you go</h4>
+            <p>Gaps and inconsistencies surface early — before they reach review or site.</p>
+          </div>
+
+          <div class="feature-card glass">
+            <div class="feature-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h4>Visualize design intent</h4>
+            <p>Turn dry Revit data into readable structure that communicates your design decisions.</p>
+          </div>
+
+          <div class="feature-card glass">
+            <div class="feature-card-icon">
+              <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <h4>Confident refinement</h4>
+            <p>Iterate through revisions knowing exactly what changed and what still needs attention.</p>
+          </div>
+
+          <div class="feature-card glass">
+            <div class="feature-card-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h4>Consistent across systems</h4>
+            <p>The same clear experience whether you're working on fire alarm, access control, or beyond.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. MODULES ─────────────────────────────────────── -->
+    <section class="pulse-section" id="modules">
+      <div class="container">
+        <h2 class="pulse-section-title">Modules</h2>
+        <p class="pulse-section-lead">
+          Pulse ships one focused module at a time. Each one targets a specific system type
+          and expands the dashboard without adding noise to the others.
+        </p>
+
+        <div class="modules-grid">
+
+          <!-- Pulse Fire -->
+          <article class="module-card glass">
+            <span class="module-badge badge-fire">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 6-6 8-6 14a6 6 0 0 0 12 0c0-6-6-8-6-14z"/></svg>
+              Fire Alarm
+            </span>
+            <h3>Pulse Fire</h3>
+            <p class="module-mission">
+              Pulse Fire keeps fire alarm system structure and health clear throughout the project —
+              so design and review stay confident as changes accumulate.
+            </p>
+            <p class="module-desc">
+              Pulse Fire helps you see panels, loops, zones, and devices as a complete system,
+              keeping gaps and inconsistencies visible early. It supports faster reviews,
+              clearer intent, and steadier progress through revisions — while you remain
+              fully in control of the design.
+            </p>
+          </article>
+
+          <!-- Pulse Access -->
+          <article class="module-card glass">
+            <span class="module-badge badge-access">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Access Control
+            </span>
+            <h3>Pulse Access</h3>
+            <p class="module-mission">
+              Pulse Access helps keep access control design consistent and easy to audit —
+              door by door, revision by revision.
+            </p>
+            <p class="module-desc">
+              Pulse Access brings clarity to repetitive, detail-heavy work by keeping system
+              structure visible and reviewable. It reduces manual detective work and makes it
+              easier to maintain consistent decisions across the project.
+            </p>
+          </article>
+
+          <!-- Future modules -->
+          <div class="future-modules glass">
+            <h4>Coming in future stages</h4>
+            <ul class="future-list">
+              <li>Pulse Light — Emergency Lighting</li>
+              <li>Pulse Secure — Security &amp; Intrusion</li>
+              <li>Pulse Net — Structured Cabling &amp; Networks</li>
+              <li>Pulse Audio — PA / Voice Alarm / Sound</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. PULSE PROPOSALS ────────────────────────────── -->
+    <section class="pulse-section" id="proposals">
+      <div class="container">
+        <div class="proposals-inner">
+          <div class="proposals-left">
+            <h2 class="pulse-section-title">Pulse Proposals</h2>
+            <p>
+              Pulse is developed as a public product, guided by the people who use it.
+              Pulse Proposals are the way the community helps shape the roadmap.
+            </p>
+            <ul class="proposals-list">
+              <li>Submit ideas and pain points</li>
+              <li>Discuss real-world use cases</li>
+              <li>Vote on what matters most</li>
+              <li>See what's planned, in progress, and shipped</li>
+            </ul>
+            <div>
+              <a href="#proposals" class="btn-primary">Join Pulse Proposals</a>
+            </div>
+          </div>
+
+          <div class="proposals-note glass">
+            <h4>Open by design, closed by source</h4>
+            <p>
+              Pulse will remain closed-source for now, while still being transparent and
+              community-driven through public proposals and staged releases.
+            </p>
+            <p>
+              Open-sourcing may be considered later, once the platform is mature and the
+              release model is established. The roadmap — and your voice in it — will always be public.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. FOOTER CTA ─────────────────────────────────── -->
+    <section class="pulse-footer-cta" id="roadmap">
+      <div class="container">
+        <h2>Design with clarity.</h2>
+        <p>
+          Pulse by RK Tools is a Revit-first control center for addressable building systems.
+          It doesn't replace your work — it helps you understand and visualize the systems
+          you design, with clear feedback and faster review.
+        </p>
+        <a href="#proposals" class="btn-primary">Join Pulse Proposals</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© <span id="year"></span> Pulse by RK Tools</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+
+</html>

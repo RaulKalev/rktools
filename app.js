@@ -529,24 +529,69 @@ function populateGallery(card) {
 
     const particles = [];
 
+    // Accent colour matching CSS --accent: #b4fbf0
+    const PARTICLE_COLOR = { r: 180, g: 251, b: 240 };
+
+    // At 60 fps, CYCLE_MS=3000 → ~180 frames per cycle.
+    // We want particles at 10% opacity (90% faded) when the next pulse fires,
+    // so maxLife = 180 frames and alpha decays linearly: alpha(t) = maxAlpha * (1 - t).
+    // At t=1 alpha=0; at t=0.9 alpha=maxAlpha*0.10  → exactly 90% gone.
+    const FRAMES_PER_CYCLE = Math.round(CYCLE_MS / (1000 / 60)); // ≈180
+
     class Particle {
         constructor(burst) {
             this.burst = burst;
             const angle = Math.random() * Math.PI * 2;
-            // Spawn from the circle edge
-            const r = BASE_RADIUS + (Math.random() - 0.5) * 6;
+            // Spawn from the circle edge at its expanded radius
+            const edgeR = BASE_RADIUS * (burst ? PEAK_SCALE : PEAK_SCALE2);
+            const r = edgeR + Math.random() * 3;
             this.x = cx() + Math.cos(angle) * r;
             this.y = cy() + Math.sin(angle) * r;
-            const speed = (this.burst ? 0.4 : 0.25) + Math.random() * 0.3;
-            this.vx = Math.cos(angle) * speed;
-            this.vy = Math.sin(angle) * speed;
-            this.radius = 0.7 + Math.random() * (this.burst ? 1.2 : 0.8);
+
+            // Wide speed distribution: many slow drifters, some fast streakers
+            // Cube-root curve: more mid-range particles, still plenty of slow ones
+            const speedT = Math.pow(Math.random(), 1.5);
+            const maxSpeed = burst ? 1.6 : 1.0;
+            const minSpeed = 0.1;
+            const speed = minSpeed + speedT * (maxSpeed - minSpeed);
+
+            // Mostly radial but with a small random tangential wobble
+            const tangent = (Math.random() - 0.5) * 0.6;
+            this.vx = Math.cos(angle) * speed + Math.cos(angle + Math.PI / 2) * tangent;
+            this.vy = Math.sin(angle) * speed + Math.sin(angle + Math.PI / 2) * tangent;
+
+            // Low friction so particles keep drifting outward — star-explosion feel
+            this.friction = 0.985 + Math.random() * 0.012;
+
+            // Wide size range: dust specks → large blobs, power-curve biased toward small
+            const sizeRoll = Math.random();
+            if (sizeRoll < 0.55) {
+                // 55% dust specks
+                this.radius = 0.2 + Math.random() * 0.6;
+            } else if (sizeRoll < 0.80) {
+                // 25% small-medium
+                this.radius = 0.8 + Math.random() * 1.2;
+            } else if (sizeRoll < 0.94) {
+                // 14% medium-large
+                this.radius = 0.8 + Math.random() * 0.8;
+            } else {
+                // 6% large blobs
+                this.radius = 1.6 + Math.random() * 1.2;
+            }
+
             this.life = 0;
-            this.maxLife = 190 + Math.random() * 20; // ~200 frames → 90% faded by next beat (3s)
+            // Lifetime just under one cycle so they reach ~10% opacity before the next burst
+            this.maxLife = FRAMES_PER_CYCLE * 0.88 + Math.random() * (FRAMES_PER_CYCLE * 0.1);
+            // Larger particles slightly more opaque, then reduce overall by 30%
+            this.maxAlpha = (burst
+                ? 0.55 + (this.radius / 7) * 0.3
+                : 0.40 + (this.radius / 7) * 0.2) * 0.70;
             this.dead = false;
         }
 
         update() {
+            this.vx *= this.friction;
+            this.vy *= this.friction;
             this.x += this.vx;
             this.y += this.vy;
             this.life++;
@@ -554,12 +599,13 @@ function populateGallery(card) {
         }
 
         draw() {
-            // Linear fade-out: full at start, zero at end
+            // Linear fade: starts at maxAlpha, reaches 0 at maxLife
             const t = this.life / this.maxLife;
-            const alpha = (1 - t) * (this.burst ? 0.22 : 0.15);
+            const alpha = this.maxAlpha * (1 - t);
+            const { r, g, b } = PARTICLE_COLOR;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+            ctx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
             ctx.fill();
         }
     }
@@ -567,7 +613,7 @@ function populateGallery(card) {
 
     // ── Heartbeat scheduler ─────────────────────────────────
     function spawnBurst(strong) {
-        const count = strong ? 8 : 5;
+        const count = strong ? 65 : 40;
         for (let i = 0; i < count; i++) particles.push(new Particle(strong));
         beatScale = strong ? PEAK_SCALE : PEAK_SCALE2;
         beatAlpha = strong ? 0.07 : 0.05;
