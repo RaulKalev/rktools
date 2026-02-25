@@ -19,6 +19,8 @@
   <style>
     /* ── Pulse page–specific overrides ─────────────────────── */
 
+    html { scroll-behavior: smooth; }
+
     /* Back link */
     .back-link {
       position: fixed;
@@ -394,6 +396,158 @@
       padding: 32px 0;
     }
 
+    /* ── Timeline ────────────────────────────────────────── */
+    .timeline-card {
+      border-radius: 24px;
+      padding: 48px 44px;
+      margin-top: 0;
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .timeline-header h2 { margin: 0; }
+    .timeline-year-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(180,251,240,0.25);
+      padding: 5px 14px;
+      border-radius: 99px;
+    }
+
+    /* Progress bar across the top */
+    .timeline-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: calc(12.5%);
+      right: calc(12.5%);
+      height: 2px;
+      background: var(--card-border);
+      z-index: 0;
+    }
+
+    .tq {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 8px;
+    }
+
+    .tq-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+      border: 2px solid var(--card-border);
+      background: var(--bg-1);
+      transition: border-color 0.3s;
+    }
+    .tq-dot svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--muted);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .tq.done .tq-dot {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+    }
+    .tq.done .tq-dot svg { stroke: var(--accent); }
+
+    .tq.active .tq-dot {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 6px rgba(180,251,240,0.08);
+    }
+    .tq.active .tq-dot svg { stroke: var(--accent); }
+
+    .tq-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .tq.active .tq-label,
+    .tq.done .tq-label { color: var(--accent); }
+
+    .tq-period {
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-bottom: 20px;
+    }
+
+    .tq-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .tq-items li {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.45;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.02);
+    }
+    .tq.active .tq-items li,
+    .tq.done .tq-items li {
+      border-color: rgba(180,251,240,0.12);
+    }
+    .tq-items li strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.88rem;
+      margin-bottom: 2px;
+    }
+
+    .tq-status {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-top: 6px;
+    }
+    .status-done    { background: rgba(100,220,130,0.12); color: #64dc82; }
+    .status-active  { background: rgba(180,251,240,0.12); color: var(--accent); }
+    .status-planned { background: rgba(255,255,255,0.05); color: var(--muted); }
+
     /* Responsive */
     @media (max-width: 768px) {
       .what-grid,
@@ -403,6 +557,14 @@
       }
       .future-modules { grid-column: 1; }
       .back-link { top: 20px; left: 20px; }
+
+      .timeline-track {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .timeline-track::before { display: none; }
+      .timeline-card { padding: 32px 24px; }
+      .tq { align-items: flex-start; }
     }
   </style>
 </head>
@@ -617,8 +779,113 @@
       </div>
     </section>
 
-    <!-- ── 5. FOOTER CTA ─────────────────────────────────── -->
-    <section class="pulse-footer-cta" id="roadmap">
+    <!-- ── 5. ROADMAP TIMELINE ──────────────────────────── -->
+    <section class="pulse-section" id="roadmap">
+      <div class="container">
+        <div class="timeline-card glass">
+          <div class="timeline-header">
+            <h2 class="pulse-section-title" style="margin-bottom:0">Roadmap</h2>
+            <span class="timeline-year-badge">2026</span>
+          </div>
+
+          <div class="timeline-track">
+
+            <!-- Q1 -->
+            <div class="tq done">
+              <div class="tq-dot">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="tq-label">Q1</span>
+              <span class="tq-period">Jan – Mar</span>
+              <ul class="tq-items">
+                <li>
+                  <strong>Internal groundwork</strong>
+                  Architecture, tooling &amp; early prototyping
+                  <span class="tq-status status-done">Done</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Q2 -->
+            <div class="tq active">
+              <div class="tq-dot">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></svg>
+              </div>
+              <span class="tq-label">Q2</span>
+              <span class="tq-period">Apr – Jun</span>
+              <ul class="tq-items">
+                <li>
+                  <strong>Pulse foundation</strong>
+                  Core architecture, Revit integration layer, internal tooling
+                  <span class="tq-status status-active">In progress</span>
+                </li>
+                <li>
+                  <strong>Pulse Fire — Alpha</strong>
+                  Panel &amp; loop visibility, device count, early health checks
+                  <span class="tq-status status-active">In progress</span>
+                </li>
+                <li>
+                  <strong>Pulse Access — Alpha</strong>
+                  Door-by-door structure view, controller mapping, early audit helpers
+                  <span class="tq-status status-active">In progress</span>
+                </li>
+                <li>
+                  <strong>Pulse Proposals launch</strong>
+                  Public roadmap board, voting &amp; discussion open
+                  <span class="tq-status status-active">In progress</span>
+                </li>
+                <li>
+                  <strong>Pulse Fire — v1.0</strong>
+                  Zone &amp; loop review dashboard, gap detection, public release
+                  <span class="tq-status status-active">In progress</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Q3 -->
+            <div class="tq">
+              <div class="tq-dot">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke-dasharray="2 3"/></svg>
+              </div>
+              <span class="tq-label">Q3</span>
+              <span class="tq-period">Jul – Sep</span>
+              <ul class="tq-items">
+                <li>
+                  <strong>Pulse Access — v1.0</strong>
+                  Full access control dashboard, public release
+                  <span class="tq-status status-planned">Planned</span>
+                </li>
+                <li>
+                  <strong>Pulse Fire — v1.x</strong>
+                  Community-driven refinements from Proposals
+                  <span class="tq-status status-planned">Planned</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Q4 -->
+            <div class="tq">
+              <div class="tq-dot">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke-dasharray="2 3"/></svg>
+              </div>
+              <span class="tq-label">Q4</span>
+              <span class="tq-period">Oct – Dec</span>
+              <ul class="tq-items">
+                <li>
+                  <strong>Autodesk App Store release 🤞</strong>
+                  Pulse Fire &amp; Pulse Access listed on the Autodesk App Store
+                  <span class="tq-status status-planned">Planned</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. FOOTER CTA ─────────────────────────────────── -->
+    <section class="pulse-footer-cta">
       <div class="container">
         <h2>Design with clarity.</h2>
         <p>
