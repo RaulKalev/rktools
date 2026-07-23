@@ -40,7 +40,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="../styles.css?v=8" />
+  <link rel="stylesheet" href="../styles.css?v=9" />
 
   <script type="application/ld+json">
     {
@@ -600,24 +600,76 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .pulse-hero {
+        min-height: 100vh;
+        min-height: 100svh;
+        padding: 96px 18px 64px;
+      }
+
+      .pulse-hero-title {
+        font-size: clamp(3.4rem, 17vw, 4.8rem);
+      }
+
+      .pulse-tagline {
+        font-size: 1.05rem;
+      }
+
+      .hero-cta-row {
+        align-items: stretch;
+        flex-direction: column;
+        width: min(100%, 300px);
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .hero-cta-row .btn-primary,
+      .hero-cta-row .btn-outline {
+        width: 100%;
+      }
+
+      .pulse-section {
+        padding: 78px 0;
+      }
+
       .what-grid,
       .modules-grid,
       .proposals-inner {
         grid-template-columns: 1fr;
       }
+
+      .features-grid,
+      .modules-grid {
+        gap: 18px;
+        margin-top: 40px;
+      }
+
+      .feature-card,
+      .module-card {
+        padding: 26px 20px;
+      }
+
       .future-modules { grid-column: 1; }
       .back-link { top: 20px; left: 20px; }
+      .future-modules,
+      .proposals-note {
+        padding: 26px 20px;
+      }
 
       .timeline-track {
         grid-template-columns: 1fr;
         gap: 32px;
       }
       .timeline-track::before { display: none; }
-      .timeline-card { padding: 32px 24px; }
-      .tq { align-items: flex-start; }
-      .module-card-toggle { padding: 28px 24px; }
-      .accordion-body-inner { padding: 0 24px; }
+      .timeline-card { padding: 30px 20px; }
+      .timeline-header { margin-bottom: 34px; }
+      .tq { align-items: flex-start; padding: 0; }
+      .module-card-toggle { padding: 26px 20px; }
+      .accordion-body-inner { padding: 0 20px; }
       .accordion-body.is-open .accordion-body-inner { padding-bottom: 28px; }
+
+      .pulse-footer-cta {
+        padding: 72px 0 48px;
+      }
     }
 
     /* ── Accordion card ─────────────────────────────────── */

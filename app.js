@@ -2,6 +2,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
 
 // Initialize Lenis Smooth Scroll
 let lenis;
@@ -28,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         yearEl.textContent = new Date().getFullYear();
     }
     // Check if Lenis loaded
-    if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
+    if (typeof Lenis !== 'undefined' && !prefersReducedMotion && !isMobileViewport) {
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -177,7 +178,8 @@ applyLang(savedLang);
 
 // 5. Hero "Focus" Entry (Zoom/Scale) - SCROLL DRIVEN
 // The user sees the name HUGE first, then scrolling shrinks it and reveals content.
-if (!prefersReducedMotion) {
+const heroMotion = gsap.matchMedia();
+heroMotion.add('(min-width: 769px) and (prefers-reduced-motion: no-preference)', () => {
     const heroTl = gsap.timeline({
         scrollTrigger: {
             trigger: ".hero",
@@ -216,7 +218,11 @@ if (!prefersReducedMotion) {
             stagger: 0.2,
             ease: 'back.out(2)'
         }, '-=0.2');
-}
+
+    return () => {
+        gsap.set('.hero-title, .hero-subtitle, .socials .social-link', { clearProps: 'all' });
+    };
+});
 
 
 if (!prefersReducedMotion) {
@@ -361,7 +367,7 @@ function populateGallery(card) {
 // ============================================
 (function initPulseCanvas() {
     const canvas = document.getElementById('pulse-canvas');
-    if (!canvas || prefersReducedMotion) return;
+    if (!canvas || prefersReducedMotion || isMobileViewport) return;
 
     const ctx = canvas.getContext('2d');
 

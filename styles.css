@@ -1143,17 +1143,128 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .section-padded {
+    padding: 76px 0;
+  }
+
+  #pulse-canvas,
+  .pulse-link {
+    display: none;
+  }
+
   .nav-links {
     display: none;
   }
 
-  /* Could add hamburger later, but keeping simple as requested */
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 104px 0 72px;
+  }
+
+  .hero-content {
+    width: 100%;
+  }
+
   .about-grid {
-    grid-template-columns: 1fr;
+    gap: 52px;
   }
 
   .hero-title {
-    font-size: 3rem;
+    margin-bottom: 20px;
+    font-size: clamp(3rem, 15vw, 4.25rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-subtitle {
+    max-width: 340px;
+    margin-bottom: 32px;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .socials {
+    gap: 14px;
+  }
+
+  .social-link {
+    width: 46px;
+    height: 46px;
+  }
+
+  .section-title {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .about-stats-container {
+    padding: 28px 24px;
+  }
+
+  .stats-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    text-align: left;
+  }
+
+  .stats-list li {
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .stats-list li:first-child {
+    padding-top: 0;
+  }
+
+  .stats-list li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+  }
+
+  .about-subtitle {
+    margin-bottom: 24px;
+    font-size: 1.65rem;
+    line-height: 1.2;
+  }
+
+  .feature-list {
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .feature-list li {
+    padding-left: 26px;
+    font-size: 1rem;
+  }
+
+  .skill-tags {
+    gap: 8px;
+  }
+
+  .tag {
+    padding: 7px 12px;
+    font-size: 0.85rem;
+  }
+
+  .section-desc {
+    margin-bottom: 36px;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .navbar {
@@ -1166,29 +1277,64 @@ footer {
   }
 
   .projects-grid {
-    gap: 42px;
+    gap: 34px;
   }
 
   .project-card {
-    padding: 26px;
+    padding: 24px 20px;
+    border-radius: 20px;
   }
 
   .project-card::after {
-    left: 26px;
-    right: 26px;
+    left: 20px;
+    right: 20px;
+  }
+
+  .card-top {
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .app-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .card-meta h3 {
+    font-size: 1.25rem;
+  }
+
+  .card-features {
+    padding-top: 18px;
+  }
+
+  .card-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .btn-text {
+    padding: 8px 12px;
   }
 
   .footer-content {
     flex-direction: column;
   }
 
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+
   .library-header-inner {
     min-height: 68px;
+    gap: 14px;
   }
 
   .library-nav {
-    gap: 14px;
-    font-size: 0.9rem;
+    gap: 12px;
+    font-size: 0.85rem;
   }
 
   .library-nav a:last-child {
@@ -1196,7 +1342,21 @@ footer {
   }
 
   .library-hero {
-    padding: 92px 0 78px;
+    padding: 84px 0 68px;
+  }
+
+  .library-hero h1 {
+    margin-bottom: 24px;
+    font-size: clamp(2.75rem, 13vw, 4.5rem);
+    line-height: 1;
+  }
+
+  .library-lead {
+    font-size: 1.12rem;
+  }
+
+  .library-context {
+    font-size: 1rem;
   }
 
   .breadcrumbs {
@@ -1207,21 +1367,36 @@ footer {
     grid-template-columns: 1fr;
   }
 
+  .plugin-index-section {
+    padding-bottom: 72px;
+  }
+
   .plugin-library {
     padding: 80px 0 96px;
   }
 
   .plugin-detail {
-    padding: 28px 24px;
+    padding: 26px 20px;
+    border-radius: 20px;
   }
 
   .plugin-detail-header {
     align-items: flex-start;
+    gap: 14px;
   }
 
   .plugin-detail-header img {
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .plugin-summary {
+    margin-bottom: 28px;
+    font-size: 1.05rem;
+  }
+
+  .plugin-detail-grid {
+    gap: 24px;
   }
 
   .plugin-detail-grid,
@@ -1230,7 +1405,17 @@ footer {
   }
 
   .library-note {
-    padding: 32px 24px;
+    padding: 30px 20px;
+  }
+
+  .library-note-links {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .library-note-links .btn-primary,
+  .library-note-links .btn-text {
+    width: 100%;
   }
 }
 
