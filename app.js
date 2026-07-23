@@ -46,35 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ============================================
-// Extreme Kinetics Animations
-// ============================================
-
-// 1. Text Splitter Helper
-function splitTextToSpans(element) {
-    const text = element.innerText;
-    element.innerHTML = '';
-    const words = text.split(' ');
-
-    words.forEach(word => {
-        const wordSpan = document.createElement('span');
-        wordSpan.className = 'word';
-        wordSpan.style.display = 'inline-block';
-        wordSpan.style.overflow = 'hidden';
-        wordSpan.style.verticalAlign = 'top';
-        wordSpan.style.marginRight = '0.3em';
-
-        const innerSpan = document.createElement('span');
-        innerSpan.className = 'char-inner';
-        innerSpan.innerText = word;
-        innerSpan.style.display = 'inline-block';
-
-        wordSpan.appendChild(innerSpan);
-        element.appendChild(wordSpan);
-    });
-}
-
-// 2. Logic: Theme, Lang, Interaction (Executed FIRST to set up DOM)
+// Theme, language, and interaction setup
 // ============================================
 
 // Theme Switch
@@ -150,18 +122,10 @@ function applyLang(lang) {
             // Special Handler for List (HTML Content)
             if (key === 'about_list') {
                 el.innerHTML = dict[key];
-                // Re-split the children LIs for animation
-                el.querySelectorAll('li').forEach(li => splitTextToSpans(li));
-            }
-            // Handler for Split Text Elements
-            else if (el.querySelectorAll('.word').length > 0) {
-                el.setAttribute('data-original-text', dict[key]);
-                el.innerText = dict[key];
-                splitTextToSpans(el);
             }
             // Simple Text
             else {
-                el.innerHTML = dict[key];
+                el.textContent = dict[key];
             }
         }
     });
@@ -198,261 +162,153 @@ if (langMenu) {
         // window.location.reload(); // Optional, but cleaner for animations
     });
 }
-document.addEventListener('click', () => langMenu.classList.remove('open'));
+if (langMenu) {
+    document.addEventListener('click', () => langMenu.classList.remove('open'));
+}
 
 
 // Apply Language (Sets up DOM)
 applyLang(savedLang);
 
 
-// 3. Initial Setup: Split Text (Generic for non-i18n elements)
-// Note: We don't animate the Hero Title characters here anymore because the 
-// whole container zooms. We only split for potential hover effects or later use.
-document.querySelectorAll('h2, .stat-value, .about-subtitle').forEach(el => {
-    // Skip if already split by applyLang
-    if (el.querySelector('.word')) return;
-
-    const originalText = el.innerText;
-    el.setAttribute('data-original-text', originalText);
-    splitTextToSpans(el);
-});
-
-
 // ============================================
-// 4. Extreme Kinetics Animations (GSAP)
+// Motion system
 // ============================================
 
 // 5. Hero "Focus" Entry (Zoom/Scale) - SCROLL DRIVEN
 // The user sees the name HUGE first, then scrolling shrinks it and reveals content.
-const heroTl = gsap.timeline({
-    scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "+=1200", // More scroll distance for drama
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1
-    },
-    defaults: { ease: 'none' }
-});
-
-// Set initial state (Massive Name, Hidden Content)
-gsap.set('.hero-title', {
-    scale: 3, // 3x Zoom (Requested)
-    filter: 'blur(0px)', // Clear text
-    transformOrigin: 'center center',
-    y: 0
-});
-gsap.set('.hero-subtitle', { y: 50, opacity: 0 });
-gsap.set('.socials .social-link', { y: 30, opacity: 0, scale: 0.5 }); // Target links individually
-
-// Animation Sequence linked to scroll
-heroTl
-    // Step 1: Shrink Name
-    .to('.hero-title', {
-        scale: 1,
-        duration: 2
-    })
-    // Step 2: Reveal Info
-    .to('.hero-subtitle', {
-        y: 0,
-        opacity: 1,
-        duration: 1
-    }, '-=0.5') // Overlap
-    // Step 3: Socials Pop In
-    .to('.socials .social-link', {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 0.5,
-        stagger: 0.2,
-        ease: 'back.out(2)'
-    }, '-=0.2');
-
-
-// 4. Section Headers "Explode" or Slide Up with Skew
-document.querySelectorAll('.section-title').forEach(title => {
-    gsap.from(title, {
+if (!prefersReducedMotion) {
+    const heroTl = gsap.timeline({
         scrollTrigger: {
-            trigger: title,
-            start: 'top 90%',
+            trigger: ".hero",
+            start: "top top",
+            end: "+=1200",
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1
         },
-        y: 100,
-        skewY: 10,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out'
+        defaults: { ease: 'none' }
     });
-});
+
+    gsap.set('.hero-title', {
+        scale: 3,
+        transformOrigin: 'center center',
+        y: 0
+    });
+    gsap.set('.hero-subtitle', { y: 50, opacity: 0 });
+    gsap.set('.socials .social-link', { y: 30, opacity: 0, scale: 0.5 });
+
+    heroTl
+        .to('.hero-title', {
+            scale: 1,
+            duration: 2
+        })
+        .to('.hero-subtitle', {
+            y: 0,
+            opacity: 1,
+            duration: 1
+        }, '-=0.5')
+        .to('.socials .social-link', {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.5,
+            stagger: 0.2,
+            ease: 'back.out(2)'
+        }, '-=0.2');
+}
 
 
-// 5. "About" Stats - 3D Slot Machine Rotation
-// 5. "About" Stats - 3D Cube Reveal
-gsap.from('.about-stats-container', {
-    scrollTrigger: {
-        trigger: '.about-stats-container',
-        start: 'top 85%'
-    },
-    rotationX: -90, // Start flat (perpendicular to screen)
-    opacity: 0,
-    y: 100,
-    transformOrigin: 'top center -100px', // Hinge from top-back
-    duration: 1.5,
-    ease: 'elastic.out(1, 0.7)' // Bouncy arrival
-});
+if (!prefersReducedMotion) {
+    document.querySelectorAll('.section-header').forEach(header => {
+        gsap.from(header.children, {
+            scrollTrigger: {
+                trigger: header,
+                start: 'top 88%',
+                once: true
+            },
+            y: 28,
+            opacity: 0,
+            filter: 'blur(6px)',
+            stagger: 0.08,
+            duration: 0.8,
+            ease: 'power3.out',
+            clearProps: 'transform,opacity,filter'
+        });
+    });
 
-// Animate numbers *after* the card lands
-// Animate numbers *after* the card lands
-// Train Station Clock / Split-Flap Effect
-const statChars = document.querySelectorAll('.stat-value .char-inner');
-gsap.from(statChars, {
-    scrollTrigger: {
-        trigger: '.about-stats-container',
-        start: 'top 70%',
-        end: 'bottom top', // Allow reversing when scrolling back up
-        toggleActions: 'play reverse play reverse'
-    },
-    rotationX: -90, // Flip from top
-    opacity: 0,
-    y: -20, // Slight slide from top
-    stagger: 0.05,
-    duration: 0.8,
-    ease: 'back.out(1.7)',
-    transformOrigin: 'center center'
-});
+    gsap.from('.about-stats-container', {
+        scrollTrigger: {
+            trigger: '.about-stats-container',
+            start: 'top 86%',
+            once: true
+        },
+        y: 42,
+        scale: 0.985,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity'
+    });
 
-// "The Bridge Between..." & List Items - Liquid Typing Effect
-const liquidChars = document.querySelectorAll('.about-subtitle .char-inner, .feature-list li .char-inner');
-gsap.from(liquidChars, {
-    scrollTrigger: {
-        trigger: '.about-text-content',
-        start: 'top 80%',
-        end: 'bottom 20%', // Wider range to allow full reverse
-        toggleActions: 'play reverse play reverse'
-    },
-    x: -20, // Slide from left
-    y: 0,
-    opacity: 0,
-    filter: 'blur(4px)', // Liquid feel
-    stagger: 0.04, // Slower typing speed
-    duration: 0.8,
-    ease: 'power2.out'
-});
+    gsap.from('.about-text-content > *', {
+        scrollTrigger: {
+            trigger: '.about-text-content',
+            start: 'top 84%',
+            once: true
+        },
+        y: 24,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.72,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity'
+    });
+}
 
-
-// 6. Project Cards - Unique Reversible Animations
+// Plugin cards share one restrained reveal: shell first, content second.
 const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach((card, i) => {
-    // Define varied start states based on index
-    let startState = {};
-
-    switch (i % 5) {
-        case 0: // Slide In Left & Rotate
-            startState = { x: -150, rotation: -15, opacity: 0, scale: 0.8 };
-            break;
-        case 1: // Slide In Right & Rotate
-            startState = { x: 150, rotation: 15, opacity: 0, scale: 0.8 };
-            break;
-        case 2: // 3D Flip Down (Garage Door)
-            startState = { rotationX: -90, y: -50, opacity: 0, transformPerspective: 1000 };
-            break;
-        case 3: // Zoom Pop
-            startState = { scale: 0, rotation: -360, opacity: 0 };
-            break;
-        case 4: // Skew Slide Up
-            startState = { y: 100, skewY: 20, opacity: 0 };
-            break;
-    }
-
-    gsap.fromTo(card,
-        startState,
-        {
+if (!prefersReducedMotion) {
+    projectCards.forEach(card => {
+        const cardContent = card.querySelectorAll('.card-top, .card-features, .card-actions');
+        const reveal = gsap.timeline({
             scrollTrigger: {
                 trigger: card,
-                start: 'top 85%',
-                end: 'bottom top', // Allow full reverse
-                toggleActions: 'play reverse play reverse'
-            },
-            x: 0,
-            y: 0,
-            rotation: 0,
-            rotationX: 0,
-            scale: 1,
-            skewY: 0,
-            opacity: 1,
-            duration: 1.2,
-            ease: 'power3.out',
-            overwrite: 'auto'
-        }
-    );
-});
-
-// Force refresh after a moment to ensure layout is settled
-setTimeout(() => ScrollTrigger.refresh(), 500);
-setTimeout(() => ScrollTrigger.refresh(), 2000);
-
-
-// 7. Magnetic Buttons (Preserved)
-const magneticBtns = document.querySelectorAll('.btn-primary, .social-link, .more-info, .nav-links a');
-magneticBtns.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        gsap.to(btn, {
-            x: x * 0.3,
-            y: y * 0.3,
-            duration: 0.3,
-            ease: 'power2.out'
+                start: 'top 88%',
+                once: true
+            }
         });
+
+        reveal
+            .fromTo(card, {
+                autoAlpha: 0,
+                y: 46,
+                scale: 0.985,
+                filter: 'blur(8px)'
+            }, {
+                autoAlpha: 1,
+                y: 0,
+                scale: 1,
+                filter: 'blur(0px)',
+                duration: 0.88,
+                ease: 'power3.out',
+                clearProps: 'transform,opacity,visibility,filter'
+            })
+            .fromTo(cardContent, {
+                autoAlpha: 0,
+                y: 14
+            }, {
+                autoAlpha: 1,
+                y: 0,
+                stagger: 0.07,
+                duration: 0.45,
+                ease: 'power2.out',
+                clearProps: 'transform,opacity,visibility'
+            }, '-=0.48');
     });
+}
 
-    btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, {
-            x: 0,
-            y: 0,
-            duration: 0.5,
-            ease: 'elastic.out(1, 0.4)'
-        });
-    });
-});
-
-
-// 8. Card Glow & Parallax (Preserved)
-projectCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--x', `${x}px`);
-        card.style.setProperty('--y', `${y}px`);
-
-        // Tilt
-        const xCenter = rect.width / 2;
-        const yCenter = rect.height / 2;
-        const xOffset = (e.clientX - rect.left) - xCenter;
-        const yOffset = (e.clientY - rect.top) - yCenter;
-
-        gsap.to(card, {
-            rotationY: xOffset * 0.02,
-            rotationX: -yOffset * 0.02,
-            duration: 0.4,
-            ease: 'power2.out'
-        });
-    });
-
-    card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-            rotationY: 0,
-            rotationX: 0,
-            duration: 0.6,
-            ease: 'power2.out'
-        });
-    });
-});
-
-
+window.addEventListener('load', () => ScrollTrigger.refresh());
 
 // Expandable Cards Logic
 document.addEventListener('click', (e) => {
