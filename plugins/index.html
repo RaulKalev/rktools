@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Revit Electrical Plugins and BIM Tools | RK Tools</title>
+  <meta name="description"
+    content="Explore RK Tools Revit plugins for electrical design, CAD visibility, panel schematics, circuit paths, lighting coordination, cable selection, and BIM workflows." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#07131f" />
+
+  <link rel="canonical" href="https://raulkalev.github.io/rktools/plugins/" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../resources/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../resources/apple-touch-icon.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="RK Tools" />
+  <meta property="og:title" content="Revit Electrical Plugins and BIM Tools | RK Tools" />
+  <meta property="og:description"
+    content="A focused library of Revit plugins for electrical design, coordination, automation, and documentation." />
+  <meta property="og:url" content="https://raulkalev.github.io/rktools/plugins/" />
+  <meta property="og:image"
+    content="https://raulkalev.github.io/rktools/resources/rk-tools-social-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="RK Tools — Revit plugins for electrical design" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Revit Electrical Plugins and BIM Tools | RK Tools" />
+  <meta name="twitter:description"
+    content="A focused library of Revit plugins for electrical design, coordination, automation, and documentation." />
+  <meta name="twitter:image"
+    content="https://raulkalev.github.io/rktools/resources/rk-tools-social-card.png" />
+  <meta name="twitter:image:alt" content="RK Tools — Revit plugins for electrical design" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "https://raulkalev.github.io/rktools/plugins/#webpage",
+          "url": "https://raulkalev.github.io/rktools/plugins/",
+          "name": "Revit Electrical Plugins and BIM Tools",
+          "description": "A library of RK Tools plugins for Revit electrical design, BIM coordination, and documentation workflows.",
+          "isPartOf": {
+            "@id": "https://raulkalev.github.io/rktools/#website"
+          },
+          "about": {
+            "@type": "Thing",
+            "name": "Autodesk Revit electrical design automation"
+          },
+          "mainEntity": {
+            "@id": "https://raulkalev.github.io/rktools/plugins/#plugin-list"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://raulkalev.github.io/rktools/plugins/#breadcrumbs",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "RK Tools",
+              "item": "https://raulkalev.github.io/rktools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Plugin library",
+              "item": "https://raulkalev.github.io/rktools/plugins/"
+            }
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://raulkalev.github.io/rktools/plugins/#plugin-list",
+          "name": "RK Tools Revit plugin library",
+          "numberOfItems": 9,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "CAD Manager",
+              "url": "https://raulkalev.github.io/rktools/plugins/#cad-manager"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "CircuitPath",
+              "url": "https://raulkalev.github.io/rktools/plugins/#circuitpath"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Camera FOV",
+              "url": "https://raulkalev.github.io/rktools/plugins/#camera-fov"
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": "Jira Integration",
+              "url": "https://raulkalev.github.io/rktools/plugins/#jira-integration"
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "name": "Panel Schematics",
+              "url": "https://raulkalev.github.io/rktools/plugins/#panel-schematics"
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "name": "Single Line Diagrams",
+              "url": "https://raulkalev.github.io/rktools/plugins/#single-line-diagrams"
+            },
+            {
+              "@type": "ListItem",
+              "position": 7,
+              "name": "DIALux Import",
+              "url": "https://raulkalev.github.io/rktools/plugins/#dialux-import"
+            },
+            {
+              "@type": "ListItem",
+              "position": 8,
+              "name": "IFC to Revit",
+              "url": "https://raulkalev.github.io/rktools/plugins/#ifc-to-revit"
+            },
+            {
+              "@type": "ListItem",
+              "position": 9,
+              "name": "Cable Catalogue",
+              "url": "https://raulkalev.github.io/rktools/plugins/#cable-catalogue"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body class="library-page">
+  <a class="skip-link" href="#plugin-library">Skip to plugin library</a>
+  <div class="bg-gradient" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+
+  <header class="library-header">
+    <div class="container library-header-inner">
+      <a href="../" class="library-brand" aria-label="RK Tools home">
+        <img src="../resources/icon-192.png" alt="" width="42" height="42">
+        <span>RK Tools</span>
+      </a>
+      <nav class="library-nav" aria-label="Primary navigation">
+        <a href="#plugin-library">Plugins</a>
+        <a href="../pulse/">Pulse</a>
+        <a href="mailto:raul.kalev@icloud.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="library-hero">
+      <div class="container library-hero-inner">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="../">RK Tools</a>
+          <span aria-hidden="true">/</span>
+          <span>Plugin library</span>
+        </nav>
+        <p class="library-eyebrow">Revit workflow automation</p>
+        <h1>Revit plugins for electrical design and BIM coordination</h1>
+        <p class="library-lead">
+          RK Tools explores focused ways to reduce repetitive work in Autodesk Revit. The library covers CAD
+          visibility, electrical schematics, circuit routing, lighting coordination, cable selection, issue tracking,
+          and model conversion.
+        </p>
+        <p class="library-context">
+          Each tool starts from a practical design problem: make the model easier to understand, keep project data
+          consistent, and give engineers clearer control over recurring tasks.
+        </p>
+        <a class="btn-primary" href="#plugin-library">Explore the plugin library</a>
+      </div>
+    </section>
+
+    <section class="plugin-index-section" aria-labelledby="plugin-index-title">
+      <div class="container">
+        <h2 id="plugin-index-title">Browse by workflow</h2>
+        <nav class="plugin-index" aria-label="Plugin sections">
+          <a href="#cad-manager">CAD Manager</a>
+          <a href="#circuitpath">CircuitPath</a>
+          <a href="#camera-fov">Camera FOV</a>
+          <a href="#jira-integration">Jira Integration</a>
+          <a href="#panel-schematics">Panel Schematics</a>
+          <a href="#single-line-diagrams">Single Line Diagrams</a>
+          <a href="#dialux-import">DIALux Import</a>
+          <a href="#ifc-to-revit">IFC to Revit</a>
+          <a href="#cable-catalogue">Cable Catalogue</a>
+        </nav>
+      </div>
+    </section>
+
+    <section id="plugin-library" class="plugin-library" aria-labelledby="library-title">
+      <div class="container">
+        <div class="library-section-heading">
+          <p class="library-eyebrow">Plugin library</p>
+          <h2 id="library-title">Tools built around real Revit workflows</h2>
+          <p>Capabilities are described here without public distribution links. Compatibility and release details are
+            handled separately for each tool.</p>
+        </div>
+
+        <article id="cad-manager" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/cad-manager/CADManager.png" alt="CAD Manager plugin icon" width="120" height="120"
+              loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">CAD visibility and coordination</p>
+              <h2>CAD Manager</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            CAD Manager is designed for Revit projects that depend on imported or linked DWG references. It brings
+            view-level and layer-level visibility decisions into one focused workflow, helping teams control CAD
+            context without repeatedly navigating standard visibility dialogs.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Large projects can accumulate many CAD files, layers, and view-specific exceptions. CAD Manager focuses
+                on making those decisions easier to review and maintain, including cases where view-template behavior
+                does not provide enough flexibility.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Toggle DWG and layer visibility per view</li>
+                <li>Handle visibility needs beyond normal view templates</li>
+                <li>Retain project settings in a structured data store</li>
+              </ul>
+            </section>
+          </div>
+          <div class="plugin-gallery" aria-label="CAD Manager interface previews">
+            <img src="../resources/cad-manager/cad1.png" alt="CAD Manager interface showing Revit CAD controls"
+              width="350" height="800" loading="lazy" decoding="async">
+            <img src="../resources/cad-manager/cad2.png" alt="CAD Manager interface showing layer visibility settings"
+              width="350" height="800" loading="lazy" decoding="async">
+          </div>
+        </article>
+
+        <article id="circuitpath" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/circuitpath/CircuitPath.png" alt="CircuitPath plugin icon" width="120" height="120"
+              loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">Electrical circuit routing</p>
+              <h2>CircuitPath</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            CircuitPath targets repetitive electrical circuit-path corrections in Revit. Its purpose is to apply a
+            consistent path mode across selected project content while keeping the operation predictable and easy to
+            reverse through Revit's normal undo workflow.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Circuit routing settings can become inconsistent when many devices and circuits are edited over time.
+                CircuitPath provides a focused project-wide action for standardizing the intended path behavior.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Apply the “All Devices” circuit path mode</li>
+                <li>Support repeated runs without stacking unintended changes</li>
+                <li>Keep the operation compatible with normal undo</li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <article id="camera-fov" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/camerafov/CameraFOV.png" alt="Camera FOV plugin icon" width="120" height="120"
+              loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">Security-system coverage</p>
+              <h2>Camera FOV</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            Camera FOV translates camera sensor and lens information into visual coverage geometry. The goal is to
+            support CCTV planning directly in the Revit model, where designers can review coverage in both plan and
+            three-dimensional context.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Camera placement is easier to evaluate when technical specifications become visible design geometry.
+                The tool focuses on turning field-of-view calculations into model feedback that can be reviewed during
+                coordination.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Calculate viewing cones from sensor specifications</li>
+                <li>Visualize coverage in 2D and 3D</li>
+                <li>Update geometry as parameters change</li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <article id="jira-integration" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/jiratask/JiraTask.png" alt="Jira Integration plugin icon" width="120" height="120"
+              loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">Design issue coordination</p>
+              <h2>Jira Integration</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            Jira Integration connects model-review work with issue tracking. It is intended to reduce the context
+            switching involved in documenting a Revit issue, assigning it, and preserving a useful visual reference
+            for the wider project team.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Coordination issues often lose useful model context when they are recreated manually in another
+                system. A direct workflow helps keep issue descriptions, responsibility, and supporting images aligned
+                with the design task.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Create and update Jira issues from the workflow</li>
+                <li>Synchronize priorities and assignees</li>
+                <li>Attach screenshots for clearer design context</li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <article id="panel-schematics" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/panelschematics/PanelSchema.png" alt="Panel Schematics plugin icon" width="120"
+              height="120" loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">Electrical documentation</p>
+              <h2>Panel Schematics</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            Panel Schematics supports the creation and maintenance of electrical schematic content in Revit. It
+            organizes circuit or panel rows in a structured grid, then uses that information to place detail items and
+            keep electrical parameters aligned with the documented result.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Manual schematic assembly creates repeated placement and data-entry work. The tool focuses on a
+                repeatable flow from organized row data to Revit detail content, reducing inconsistency between the
+                model and the schematic view.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Manage schematic rows in a DataGrid interface</li>
+                <li>Place Revit detail items from structured data</li>
+                <li>Synchronize relevant electrical parameters</li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <article id="single-line-diagrams" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/singlelinediagrams/SingleLineDiagrams.png"
+              alt="Single Line Diagrams plugin icon" width="120" height="120" loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">Circuit documentation</p>
+              <h2>Single Line Diagrams</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            Single Line Diagrams explores circuit-driven generation of electrical diagram content. It uses Revit
+            circuit information as the basis for placing diagram elements with consistent level awareness and
+            controllable spacing.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Single-line diagrams are structured but time-consuming to assemble manually. A circuit-led workflow
+                can reduce repeated placement work while maintaining a clearer relationship between model data and
+                documentation.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Generate diagram content from circuit information</li>
+                <li>Account for project levels during placement</li>
+                <li>Apply consistent spacing controls</li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <article id="dialux-import" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/dialuximport/DialuxImport.png" alt="DIALux Import plugin icon" width="120"
+              height="120" loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">Lighting coordination</p>
+              <h2>DIALux Import</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            DIALux Import supports the transfer of lighting-design information into a Revit workflow. It focuses on
+            interpreting linked model content, matching or creating required types, and organizing repeated lighting
+            elements such as LED strips.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Moving lighting-design results into BIM can involve substantial checking and repetitive type
+                management. This workflow aims to reduce manual reconstruction while keeping the resulting Revit
+                elements organized for coordination.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Read relevant lighting content from linked models</li>
+                <li>Create missing Revit types when needed</li>
+                <li>Group LED strip elements intelligently</li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <article id="ifc-to-revit" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/convertifctorevit/JiraTask.png" alt="IFC to Revit tool icon" width="120"
+              height="120" loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">Model conversion</p>
+              <h2>IFC to Revit</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            IFC to Revit investigates a controlled approach to converting external model content into native Revit
+            placements. The workflow centers on category and type mapping, batch processing, and predictable placement
+            based on source-object geometry.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Coordination models often contain useful objects that are difficult to reuse directly. A mapping-led
+                conversion workflow can make selected content more practical inside Revit without treating every
+                imported object as the same generic case.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Map source categories and types to Revit content</li>
+                <li>Process multiple placements as a batch</li>
+                <li>Use bounding-box centers for consistent positioning</li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <article id="cable-catalogue" class="plugin-detail glass">
+          <header class="plugin-detail-header">
+            <img src="../resources/cablecatalogue/CableCatalogue.png" alt="Cable Catalogue plugin icon" width="120"
+              height="120" loading="lazy" decoding="async">
+            <div>
+              <p class="plugin-category">Cable selection and data</p>
+              <h2>Cable Catalogue</h2>
+            </div>
+          </header>
+          <p class="plugin-summary">
+            Cable Catalogue provides a structured way to browse and select cable types. It combines rule-based
+            selection with filtering and sorting so designers can narrow a larger catalogue to the options relevant to
+            the current electrical-design task.
+          </p>
+          <div class="plugin-detail-grid">
+            <section>
+              <h3>What it addresses</h3>
+              <p>
+                Cable data becomes difficult to navigate when naming, materials, and technical properties are spread
+                across a long undifferentiated list. The catalogue workflow makes selection criteria visible and
+                repeatable.
+              </p>
+            </section>
+            <section>
+              <h3>Workflow focus</h3>
+              <ul class="plugin-points">
+                <li>Apply rules to cable-type selection</li>
+                <li>Filter and sort catalogue entries</li>
+                <li>Present the workflow in a focused Material Design interface</li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <aside class="library-note glass" aria-labelledby="library-note-title">
+          <h2 id="library-note-title">A practical Revit engineering focus</h2>
+          <p>
+            RK Tools is shaped by extra-low-voltage and electrical-system design work. The goal is not automation for
+            its own sake: each plugin should make a recurring engineering decision clearer, faster, or easier to
+            review inside the project model.
+          </p>
+          <div class="library-note-links">
+            <a class="btn-primary" href="../">About RK Tools</a>
+            <a class="btn-text" href="../pulse/">Explore Pulse</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <span>© 2026 Raul Kalev · RK Tools</span>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../pulse/">Pulse</a>
+        <a href="../privacypolicy.html">Privacy</a>
+        <a href="mailto:raul.kalev@icloud.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+
+</html>

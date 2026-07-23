@@ -108,8 +108,9 @@ const strings = {
         <li>Developing custom <strong>C# & Python</strong> plugins to automate the mundane.</li>
         <li>Practical, field-tested understanding of installation vs. design.</li>
     `,
-        downloads_title: 'Work & Downloads', downloads_sub: 'Public tools, Revit plugins, and docs.',
-        download: 'Download', coming_soon: 'Coming soon', more_info: 'Expand', close_info: 'Close',
+        plugins_title: 'Revit Plugin Portfolio',
+        plugins_sub: 'Purpose-built tools for electrical design, BIM coordination, and documentation workflows.',
+        view_details: 'View details', more_info: 'Expand', close_info: 'Close',
         contact_title: 'Contact',
         footer: 'Raul Kalev',
         send: 'Send'
@@ -123,8 +124,9 @@ const strings = {
         <li>Arendan <strong>C# & Python</strong> pluginaid rutiini automatiseerimiseks.</li>
         <li>Praktiline ja objektil testitud kogemus paigalduse vallas.</li>
     `,
-        downloads_title: 'Tehtud tööd', downloads_sub: 'Tööriistad ja dokumendid.',
-        download: 'Laadi alla', coming_soon: 'Tulekul', more_info: 'Ava', close_info: 'Sulge',
+        plugins_title: 'Reviti pluginate portfoolio',
+        plugins_sub: 'Elektriprojekteerimise, BIM-koordineerimise ja dokumenteerimise tööriistad.',
+        view_details: 'Vaata lähemalt', more_info: 'Ava', close_info: 'Sulge',
         contact_title: 'Kontakt',
         footer: 'Raul Kalev',
         send: 'Saada'
