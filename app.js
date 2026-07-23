@@ -1,6 +1,8 @@
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // Initialize Lenis Smooth Scroll
 let lenis;
 
@@ -26,25 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
         yearEl.textContent = new Date().getFullYear();
     }
     // Check if Lenis loaded
-    if (typeof Lenis !== 'undefined') {
+    if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
         });
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-
         // Sync GSAP with Lenis
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0);
-    } else {
+    } else if (typeof Lenis === 'undefined') {
         console.warn('Lenis not loaded');
     }
 });
@@ -113,7 +109,7 @@ const strings = {
         <li>Practical, field-tested understanding of installation vs. design.</li>
     `,
         downloads_title: 'Work & Downloads', downloads_sub: 'Public tools, Revit plugins, and docs.',
-        download: 'Download', more_info: 'Expand', close_info: 'Close',
+        download: 'Download', coming_soon: 'Coming soon', more_info: 'Expand', close_info: 'Close',
         contact_title: 'Contact',
         footer: 'Raul Kalev',
         send: 'Send'
@@ -128,7 +124,7 @@ const strings = {
         <li>Praktiline ja objektil testitud kogemus paigalduse vallas.</li>
     `,
         downloads_title: 'Tehtud tööd', downloads_sub: 'Tööriistad ja dokumendid.',
-        download: 'Laadi alla', more_info: 'Ava', close_info: 'Sulge',
+        download: 'Laadi alla', coming_soon: 'Tulekul', more_info: 'Ava', close_info: 'Sulge',
         contact_title: 'Kontakt',
         footer: 'Raul Kalev',
         send: 'Saada'
@@ -465,6 +461,7 @@ document.addEventListener('click', (e) => {
         const dict = strings[lang] || strings.en;
 
         e.target.textContent = isExp ? dict.close_info : dict.more_info;
+        e.target.setAttribute('aria-expanded', String(isExp));
 
         if (isExp) {
             populateGallery(card);
@@ -484,13 +481,18 @@ function populateGallery(card) {
 
     const imagesStr = card.getAttribute('data-images') || '';
     const images = imagesStr.split(',').map(s => s.trim()).filter(Boolean);
+    const projectName = card.querySelector('.card-meta h3')?.textContent.trim() || 'Project';
 
     if (images.length === 0) return;
 
     images.forEach(src => {
         const img = document.createElement('img');
         img.src = src;
-        img.alt = "Project screenshot";
+        img.alt = `${projectName} interface screenshot`;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.width = 350;
+        img.height = 800;
         gallery.appendChild(img);
     });
 }
@@ -501,7 +503,7 @@ function populateGallery(card) {
 // ============================================
 (function initPulseCanvas() {
     const canvas = document.getElementById('pulse-canvas');
-    if (!canvas) return;
+    if (!canvas || prefersReducedMotion) return;
 
     const ctx = canvas.getContext('2d');
 

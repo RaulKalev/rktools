@@ -4,9 +4,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raul Kalev — RK Tools</title>
+  <title>RK Tools — Revit Plugins for Electrical Design | Raul Kalev</title>
   <meta name="description"
-    content="Raul Kalev — Extra Low Voltage systems engineer specializing in Revit. Builds Revit plugins and Windows software in C#/.NET and Python." />
+    content="Revit plugins and Windows tools by electrical systems engineer Raul Kalev, including CAD Manager, Panel Schematics, DIALux Import, and Cable Catalogue." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#07131f" />
+
+  <link rel="canonical" href="https://raulkalev.github.io/rktools/" />
+  <link rel="icon" type="image/png" sizes="32x32" href="resources/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="resources/apple-touch-icon.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="RK Tools" />
+  <meta property="og:title" content="RK Tools — Revit Plugins for Electrical Design" />
+  <meta property="og:description"
+    content="Practical Revit plugins and Windows tools built by electrical systems engineer Raul Kalev." />
+  <meta property="og:url" content="https://raulkalev.github.io/rktools/" />
+  <meta property="og:image"
+    content="https://raulkalev.github.io/rktools/resources/rk-tools-social-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="RK Tools — Revit plugins for electrical design" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RK Tools — Revit Plugins for Electrical Design" />
+  <meta name="twitter:description"
+    content="Practical Revit plugins and Windows tools built by electrical systems engineer Raul Kalev." />
+  <meta name="twitter:image"
+    content="https://raulkalev.github.io/rktools/resources/rk-tools-social-card.png" />
+  <meta name="twitter:image:alt" content="RK Tools — Revit plugins for electrical design" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,16 +42,126 @@
 
   <link rel="stylesheet" href="styles.css" />
 
-
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://raulkalev.github.io/rktools/#website",
+          "url": "https://raulkalev.github.io/rktools/",
+          "name": "RK Tools",
+          "description": "Revit plugins and Windows tools for electrical design workflows.",
+          "inLanguage": "en",
+          "publisher": {
+            "@id": "https://raulkalev.github.io/rktools/#raul-kalev"
+          }
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://raulkalev.github.io/rktools/#profile",
+          "url": "https://raulkalev.github.io/rktools/",
+          "name": "Raul Kalev — RK Tools",
+          "isPartOf": {
+            "@id": "https://raulkalev.github.io/rktools/#website"
+          },
+          "mainEntity": {
+            "@id": "https://raulkalev.github.io/rktools/#raul-kalev"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://raulkalev.github.io/rktools/#raul-kalev",
+          "name": "Raul Kalev",
+          "url": "https://raulkalev.github.io/rktools/",
+          "jobTitle": "Extra-Low Voltage Systems Engineer and Revit Plugin Developer",
+          "sameAs": [
+            "https://github.com/RaulKalev",
+            "https://ee.linkedin.com/in/raul-kalev-230630178"
+          ],
+          "knowsAbout": [
+            "Autodesk Revit",
+            "Revit API",
+            "Electrical design",
+            "Building information modeling",
+            "C#",
+            ".NET"
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://raulkalev.github.io/rktools/#available-tools",
+          "name": "Available RK Tools Revit plugins",
+          "numberOfItems": 4,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "SoftwareApplication",
+                "name": "CAD Manager",
+                "url": "https://raulkalev.github.io/rktools/#cad-manager",
+                "downloadUrl": "https://raulkalev.github.io/rktools/Installers/CADManagerInstaller.exe",
+                "operatingSystem": "Windows",
+                "applicationCategory": "DesignApplication",
+                "description": "Control DWG and layer visibility across Autodesk Revit views."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "SoftwareApplication",
+                "name": "Panel Schematics",
+                "url": "https://raulkalev.github.io/rktools/#panel-schematics",
+                "downloadUrl": "https://raulkalev.github.io/rktools/Installers/PanelSchematicsInstaller.exe",
+                "operatingSystem": "Windows",
+                "applicationCategory": "DesignApplication",
+                "description": "Create and synchronize electrical panel schematics in Autodesk Revit."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "SoftwareApplication",
+                "name": "DIALux Import",
+                "url": "https://raulkalev.github.io/rktools/#dialux-import",
+                "downloadUrl": "https://raulkalev.github.io/rktools/Installers/DialuxImportInstaller.exe",
+                "operatingSystem": "Windows",
+                "applicationCategory": "DesignApplication",
+                "description": "Import and organize DIALux lighting data in Autodesk Revit."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "SoftwareApplication",
+                "name": "Cable Catalogue",
+                "url": "https://raulkalev.github.io/rktools/#cable-catalogue",
+                "downloadUrl": "https://raulkalev.github.io/rktools/Installers/KaabliKataloogInstaller.exe",
+                "operatingSystem": "Windows",
+                "applicationCategory": "DesignApplication",
+                "description": "Manage and select cable types using rule-based filtering."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
 </head>
 
 <body>
+  <a class="skip-link" href="#work">Skip to tools</a>
+
   <!-- Animated Background -->
-  <div class="bg-gradient"></div>
-  <div class="bg-grain"></div>
-  <canvas id="pulse-canvas"></canvas>
+  <div class="bg-gradient" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+  <canvas id="pulse-canvas" aria-hidden="true"></canvas>
   <!-- Clickable overlay centred on the pulse circle -->
-  <a href="pulse/index.html" class="pulse-link" aria-label="Open Pulse"></a>
+  <a href="pulse/" class="pulse-link" aria-label="Explore Pulse by RK Tools"></a>
 
   <!-- Navigation -->
   <!-- Navigation Removed as requested. 
@@ -43,13 +179,14 @@
           <p class="hero-subtitle" data-i18n="subtitle">Extra-Low Voltage Systems Engineer · Revit Specialist · Plugin &
             App Developer</p>
           <div class="socials">
-            <a href="https://github.com/RaulKalev" class="social-link" aria-label="GitHub">
+            <a href="https://github.com/RaulKalev" class="social-link" aria-label="Raul Kalev on GitHub" rel="me">
               <svg viewBox="0 0 24 24">
                 <path
                   d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.35-1.77-1.35-1.77-1.1-.76.08-.74.08-.74 1.22.09 1.86 1.25 1.86 1.25 1.08 1.84 2.83 1.31 3.52 1 .11-.8.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.47-2.36 1.24-3.19-.12-.3-.54-1.5.12-3.12 0 0 1.01-.32 3.3 1.22a11.5 11.5 0 0 1 6 0c2.28-1.54 3.29-1.22 3.29-1.22.66 1.62.24 2.82.12 3.12.77.83 1.24 1.9 1.24 3.2 0 4.58-2.82 5.59-5.5 5.89.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.82.58A12 12 0 0 0 12 .5z" />
               </svg>
             </a>
-            <a href="https://ee.linkedin.com/in/raul-kalev-230630178" class="social-link" aria-label="LinkedIn">
+            <a href="https://ee.linkedin.com/in/raul-kalev-230630178" class="social-link"
+              aria-label="Raul Kalev on LinkedIn" rel="me">
               <svg viewBox="0 0 24 24">
                 <path
                   d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.95v5.66H9.37V9h3.41v1.56h.05c.47-.89 1.62-1.83 3.33-1.83 3.56 0 4.22 2.34 4.22 5.39v6.33zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
@@ -113,10 +250,11 @@
         <div class="projects-grid">
 
           <!-- CAD Manager -->
-          <article class="project-card glass"
+          <article id="cad-manager" class="project-card glass"
             data-images="resources/cad-manager/cad1.png,resources/cad-manager/cad2.png">
             <div class="card-top">
-              <img src="resources/cad-manager/CADManager.png" alt="CAD Manager" class="app-icon">
+              <img src="resources/cad-manager/CADManager.png" alt="CAD Manager plugin icon" class="app-icon"
+                width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>CAD Manager</h3>
                 <p>Optimized DWG Control</p>
@@ -128,8 +266,11 @@
               <li>Database-backed settings</li>
             </ul>
             <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
+              <button class="btn-text more-info" type="button" data-i18n="more_info" aria-expanded="false">
+                Expand
+              </button>
+              <a href="Installers/CADManagerInstaller.exe" class="btn-primary" data-i18n="download" download
+                aria-label="Download the CAD Manager installer">Download</a>
             </div>
             <div class="expandable-content">
               <div class="content-inner">
@@ -139,9 +280,10 @@
           </article>
 
           <!-- CircuitPath -->
-          <article class="project-card glass" data-images="resources/circuitpath/1.png,resources/circuitpath/2.png">
+          <article id="circuitpath" class="project-card glass">
             <div class="card-top">
-              <img src="resources/circuitpath/CircuitPath.png" alt="CircuitPath" class="app-icon">
+              <img src="resources/circuitpath/CircuitPath.png" alt="CircuitPath plugin icon" class="app-icon"
+                width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>CircuitPath</h3>
                 <p>One-Click Pathing</p>
@@ -152,21 +294,16 @@
               <li>Idempotent & Undo-friendly</li>
               <li>Instant project-wide fixes</li>
             </ul>
-            <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
-            </div>
-            <div class="expandable-content">
-              <div class="content-inner">
-                <div class="gallery"></div>
-              </div>
+            <div class="card-actions card-actions-end">
+              <span class="btn-primary is-disabled" data-i18n="coming_soon" aria-disabled="true">Coming soon</span>
             </div>
           </article>
 
           <!-- Camera FOV -->
-          <article class="project-card glass" data-images="resources/camera-fov/1.png,resources/camera-fov/2.png">
+          <article id="camera-fov" class="project-card glass">
             <div class="card-top">
-              <img src="resources/camerafov/CameraFOV.png" alt="Camera FOV" class="app-icon">
+              <img src="resources/camerafov/CameraFOV.png" alt="Camera FOV plugin icon" class="app-icon"
+                width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>Camera FOV</h3>
                 <p>Visual Coverage</p>
@@ -177,21 +314,16 @@
               <li>Live 3D/2D visualization</li>
               <li>Parametric updates</li>
             </ul>
-            <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
-            </div>
-            <div class="expandable-content">
-              <div class="content-inner">
-                <div class="gallery"></div>
-              </div>
+            <div class="card-actions card-actions-end">
+              <span class="btn-primary is-disabled" data-i18n="coming_soon" aria-disabled="true">Coming soon</span>
             </div>
           </article>
 
           <!-- Jira Task -->
-          <article class="project-card glass" data-images="resources/jira/1.png,resources/jira/2.png">
+          <article id="jira-integration" class="project-card glass">
             <div class="card-top">
-              <img src="resources/jiratask/JiraTask.png" alt="Jira" class="app-icon">
+              <img src="resources/jiratask/JiraTask.png" alt="Jira Integration plugin icon" class="app-icon"
+                width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>Jira Integration</h3>
                 <p>Task Management</p>
@@ -202,22 +334,16 @@
               <li>Sync priorities & assignees</li>
               <li>Screenshot attachment support</li>
             </ul>
-            <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
-            </div>
-            <div class="expandable-content">
-              <div class="content-inner">
-                <div class="gallery"></div>
-              </div>
+            <div class="card-actions card-actions-end">
+              <span class="btn-primary is-disabled" data-i18n="coming_soon" aria-disabled="true">Coming soon</span>
             </div>
           </article>
 
           <!-- Panel Schematics -->
-          <article class="project-card glass"
-            data-images="resources/panel-schematics/1.png,resources/panel-schematics/2.png">
+          <article id="panel-schematics" class="project-card glass">
             <div class="card-top">
-              <img src="resources/panelschematics/PanelSchema.png" alt="Panel Schematics" class="app-icon">
+              <img src="resources/panelschematics/PanelSchema.png" alt="Panel Schematics plugin icon" class="app-icon"
+                width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>Panel Schematics</h3>
                 <p>Schematic Helper</p>
@@ -228,21 +354,17 @@
               <li>Auto-place detail items</li>
               <li>Sync electrical params</li>
             </ul>
-            <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
-            </div>
-            <div class="expandable-content">
-              <div class="content-inner">
-                <div class="gallery"></div>
-              </div>
+            <div class="card-actions card-actions-end">
+              <a href="Installers/PanelSchematicsInstaller.exe" class="btn-primary" data-i18n="download" download
+                aria-label="Download the Panel Schematics installer">Download</a>
             </div>
           </article>
 
           <!-- Single Line Diagrams -->
-          <article class="project-card glass" data-images="resources/sld/1.png,resources/sld/2.png">
+          <article id="single-line-diagrams" class="project-card glass">
             <div class="card-top">
-              <img src="resources/singlelinediagrams/SingleLineDiagrams.png" alt="SLD" class="app-icon">
+              <img src="resources/singlelinediagrams/SingleLineDiagrams.png" alt="Single Line Diagrams plugin icon"
+                class="app-icon" width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>Single Line Diagrams</h3>
                 <p>Auto-Gen SLDs</p>
@@ -253,21 +375,16 @@
               <li>Level-aware placement</li>
               <li>Smart spacing controls</li>
             </ul>
-            <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
-            </div>
-            <div class="expandable-content">
-              <div class="content-inner">
-                <div class="gallery"></div>
-              </div>
+            <div class="card-actions card-actions-end">
+              <span class="btn-primary is-disabled" data-i18n="coming_soon" aria-disabled="true">Coming soon</span>
             </div>
           </article>
 
           <!-- Dialux Import -->
-          <article class="project-card glass" data-images="resources/dialux/1.png,resources/dialux/2.png">
+          <article id="dialux-import" class="project-card glass">
             <div class="card-top">
-              <img src="resources/dialuximport/DialuxImport.png" alt="Dialux" class="app-icon">
+              <img src="resources/dialuximport/DialuxImport.png" alt="DIALux Import plugin icon" class="app-icon"
+                width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>Dialux Import</h3>
                 <p>Lighting Bridge</p>
@@ -278,21 +395,17 @@
               <li>Auto-create missing types</li>
               <li>Smart LED strip grouping</li>
             </ul>
-            <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
-            </div>
-            <div class="expandable-content">
-              <div class="content-inner">
-                <div class="gallery"></div>
-              </div>
+            <div class="card-actions card-actions-end">
+              <a href="Installers/DialuxImportInstaller.exe" class="btn-primary" data-i18n="download" download
+                aria-label="Download the DIALux Import installer">Download</a>
             </div>
           </article>
 
           <!-- Converter -->
-          <article class="project-card glass" data-images="resources/ifc-converter/1.png,resources/ifc-converter/2.png">
+          <article id="ifc-to-revit" class="project-card glass">
             <div class="card-top">
-              <img src="resources/circuitpath/CircuitPath.png" alt="IFC" class="app-icon">
+              <img src="resources/convertifctorevit/JiraTask.png" alt="IFC to Revit tool icon" class="app-icon"
+                width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>IFC to Revit</h3>
                 <p>Conversion Tool</p>
@@ -303,22 +416,16 @@
               <li>Batch placement utility</li>
               <li>Center-of-bbox logic</li>
             </ul>
-            <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
-            </div>
-            <div class="expandable-content">
-              <div class="content-inner">
-                <div class="gallery"></div>
-              </div>
+            <div class="card-actions card-actions-end">
+              <span class="btn-primary is-disabled" data-i18n="coming_soon" aria-disabled="true">Coming soon</span>
             </div>
           </article>
 
           <!-- Cable Catalogue -->
-          <article class="project-card glass"
-            data-images="resources/cable-catalogue/1.png,resources/cable-catalogue/2.png">
+          <article id="cable-catalogue" class="project-card glass">
             <div class="card-top">
-              <img src="resources/cablecatalogue/CableCatalogue.png" alt="Cable Catalogue" class="app-icon">
+              <img src="resources/cablecatalogue/CableCatalogue.png" alt="Cable Catalogue plugin icon" class="app-icon"
+                width="120" height="120" loading="lazy" decoding="async">
               <div class="card-meta">
                 <h3>Cable Catalogue</h3>
                 <p>Wire Management</p>
@@ -329,14 +436,9 @@
               <li>Filter & Sort types</li>
               <li>Material Design UI</li>
             </ul>
-            <div class="card-actions">
-              <button class="btn-text more-info" data-i18n="more_info">Expand</button>
-              <a href="#" class="btn-primary" data-i18n="download">Download</a>
-            </div>
-            <div class="expandable-content">
-              <div class="content-inner">
-                <div class="gallery"></div>
-              </div>
+            <div class="card-actions card-actions-end">
+              <a href="Installers/KaabliKataloogInstaller.exe" class="btn-primary" data-i18n="download" download
+                aria-label="Download the Cable Catalogue installer">Download</a>
             </div>
           </article>
 
@@ -351,14 +453,19 @@
   <footer>
     <div class="container footer-content">
       <span>© <span id="year"></span> <span data-i18n="footer">Raul Kalev</span></span>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="pulse/">Pulse</a>
+        <a href="privacypolicy.html">Privacy</a>
+        <a href="mailto:raul.kalev@icloud.com">Contact</a>
+      </nav>
     </div>
   </footer>
 
   <!-- GSAP & Lenis -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
-  <script src="app.js?v=6"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="app.js?v=7" defer></script>
 </body>
 
 </html>

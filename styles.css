@@ -72,6 +72,31 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.skip-link {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg-1);
+  text-decoration: none;
+  font-weight: 600;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
 /* =====================
    Backgrounds
    ===================== */
@@ -187,6 +212,19 @@ body::-webkit-scrollbar {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary.is-disabled {
+  background: var(--card-border);
+  color: var(--muted);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.btn-primary.is-disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .btn-text {
@@ -678,6 +716,10 @@ img {
   z-index: 1;
 }
 
+.card-actions-end {
+  justify-content: flex-end;
+}
+
 /* Expandable logic */
 .expandable-content {
   display: grid;
@@ -710,6 +752,21 @@ img {
 .project-card.expanded .expandable-content .content-inner {
   padding-top: 32px;
   opacity: 1;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  background: var(--bg-1);
 }
 
 /* Typography Helpers for Animation */
@@ -793,6 +850,29 @@ footer {
   font-size: 0.9rem;
 }
 
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--text);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .nav-links {
@@ -811,5 +891,45 @@ footer {
   .navbar {
     width: 95%;
     max-width: none;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-content {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  #pulse-canvas,
+  .pulse-link {
+    display: none;
+  }
+
+  .hero-title,
+  .hero-subtitle,
+  .social-link,
+  .section-title,
+  .about-stats-container,
+  .project-card,
+  .char-inner {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
   }
 }
