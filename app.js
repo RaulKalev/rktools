@@ -82,7 +82,7 @@ const strings = {
         <li>Practical, field-tested understanding of installation vs. design.</li>
     `,
         plugins_title: 'Revit Plugin Portfolio',
-        plugins_sub: 'Purpose-built tools for electrical design, BIM coordination, and documentation workflows.',
+        plugins_sub: 'A growing library of 20+ purpose-built tools for electrical design, BIM coordination, and documentation, with more added every month.',
         view_details: 'View details', more_info: 'Expand', close_info: 'Close',
         contact_title: 'Contact',
         footer: 'Raul Kalev',
@@ -98,7 +98,7 @@ const strings = {
         <li>Praktiline ja objektil testitud kogemus paigalduse vallas.</li>
     `,
         plugins_title: 'Reviti pluginate portfoolio',
-        plugins_sub: 'Elektriprojekteerimise, BIM-koordineerimise ja dokumenteerimise tööriistad.',
+        plugins_sub: 'Kasvav kogu enam kui 20 elektriprojekteerimise, BIM-koordineerimise ja dokumenteerimise tööriistaga. Uusi lahendusi lisandub iga kuu.',
         view_details: 'Vaata lähemalt', more_info: 'Ava', close_info: 'Sulge',
         contact_title: 'Kontakt',
         footer: 'Raul Kalev',
