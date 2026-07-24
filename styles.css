@@ -743,14 +743,6 @@ img {
   padding: 0;
   background: transparent;
   box-shadow: none;
-  filter:
-    invert(94%)
-    sepia(17%)
-    saturate(745%)
-    hue-rotate(113deg)
-    brightness(105%)
-    contrast(97%)
-    drop-shadow(0 5px 14px rgba(180, 251, 240, 0.18));
 }
 
 .app-mark {
@@ -774,17 +766,6 @@ img {
 .project-card:hover .app-icon {
   transform: translateY(-2px) scale(1.035);
   filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.38));
-}
-
-.project-card:hover .cad-manager-icon {
-  filter:
-    invert(94%)
-    sepia(17%)
-    saturate(745%)
-    hue-rotate(113deg)
-    brightness(105%)
-    contrast(97%)
-    drop-shadow(0 8px 18px rgba(180, 251, 240, 0.28));
 }
 
 .project-card:hover .app-mark {
