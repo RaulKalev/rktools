@@ -51,8 +51,8 @@ Build a single, unambiguous, machine-readable identity hub for *you* — a real 
 `app.js` lines 74–107 contain a full `en`/`et` string dictionary, and the HTML carries `data-i18n` attributes. But the nav bar that held the language switcher was removed (`index.html:253-257`), so `#langDropdown` does not exist on any page. The Estonian content is dead code. Even if the switcher were restored, client-side `localStorage` switching produces **no separate URL**, so Google can only ever index the English version.
 *Impact:* you are invisible for Estonian-language name searches — which is precisely where the namesake is strongest.
 
-**C. You are on a project subpath of a shared-ish host.**
-`raulkalev.github.io/rktools/` puts your identity hub one directory deep, and the site "homepage" is not the host root. For a *person-name* query, an exact-match root domain is a materially stronger entity signal.
+**C. You own the ideal domain and it is currently contributing nothing.**
+`raulkalev.github.io/rktools/` puts your identity hub one directory deep, and the site "homepage" is not the host root. Meanwhile you own **`raulkalev.ee`** — an exact-match, country-appropriate domain — but it serves an internal company site. A `site:raulkalev.ee` query returns **zero indexed pages**, so the strongest name-matching asset you have is invisible to Google. See §4.1 for how to reclaim it.
 
 **D. Client-side `document.documentElement.lang` mutation.**
 `app.js:117` rewrites `lang` after load while the served HTML says `lang="en"`. Harmless today (the switcher is gone) but will send mixed signals if i18n is restored the same way.
@@ -106,17 +106,9 @@ You cannot tell whether any of this worked without a baseline.
 
 ### Phase 1 — Technical foundation (Week 1, ~3 hours)
 
-**1.1 Decide the domain question.** This is the one strategic fork in the plan.
+**1.1 Decide the domain question.** This is the one strategic fork in the plan. See §4.1 below for the full analysis — it is detailed enough to deserve its own section.
 
-| Option | Effort | Upside | Downside |
-|---|---|---|---|
-| **A.** Stay on `raulkalev.github.io/rktools/` | none | zero risk | name hub stays one level deep; robots.txt permanently broken |
-| **B.** Publish a second repo `raulkalev.github.io` as the *root* personal site, keep `/rktools/` as the product site | ~half a day | free; working root robots.txt; `raulkalev.github.io` is a clean personal URL; existing rankings untouched | two sites to maintain |
-| **C.** Buy `raulkalev.com` (or `.ee`) and point it at Pages | ~€12/yr + half a day | strongest possible entity signal; exact-match personal domain; full control forever | short-term ranking wobble during the 301 transition |
-
-**Recommendation: C, with B as the stepping stone.** An exact-match personal domain is the highest-leverage single change available for a name query, and GitHub Pages issues proper 301 redirects from the old `github.io` URL, so link equity carries over. Expect 2–6 weeks of noise, then a net gain. If you are not willing to accept that wobble, do B — it is free and strictly better than A.
-
-Everything else in this plan works regardless of which you pick.
+Everything else in this plan works regardless of which option you pick.
 
 **1.2 Fix robots.txt placement.** If you go with B or C, move `robots.txt` to the host root and keep the `Sitemap:` line. If you stay on A, delete the misleading file or leave it and rely on manual Search Console submission.
 
@@ -140,6 +132,46 @@ The description is written as a third-person factual statement on purpose — th
 **1.6 Add a `404.html`** that links back to `/` and `/about/`.
 
 **1.7 Move the `.exe` installers to GitHub Releases** and replace the in-repo files with links. Removes ~28 MB from the Pages deploy and eliminates the Safe Browsing risk.
+
+---
+
+### 4.1 The `raulkalev.ee` question
+
+You already own the best possible domain for this project. It is currently pointed at an internal company site, which means it is doing **nothing** for you in search.
+
+**What the DNS says today:**
+
+- `raulkalev.ee` → Cloudflare (`162.159.140.98`, `172.66.0.96`)
+- `www.raulkalev.ee` → `CNAME octopus-app-krosl.ondigitalocean.app` — a DigitalOcean App Platform deployment
+- `site:raulkalev.ee` → **zero indexed pages**
+
+Two useful conclusions. First, the internal site is already not indexed (auth-walled or noindexed) — that is correct and should stay that way. Second, DNS runs through Cloudflare and the app runs on DigitalOcean App Platform, which means **moving it to a subdomain is a configuration change, not a migration**: add the new hostname in the DO App Platform domain settings, repoint one CNAME in Cloudflare, update the app's allowed-hosts and any OAuth callback URLs, tell the handful of internal users. An afternoon at most.
+
+**The options, revised:**
+
+| Option | Effort | Upside | Downside |
+|---|---|---|---|
+| **A.** Stay on `raulkalev.github.io/rktools/` | none | zero risk | best domain you own stays idle; robots.txt permanently broken |
+| **B.** Personal site on a subdomain — `bim.raulkalev.ee` or `tools.raulkalev.ee` | ~2 h | no coordination with internal users; "raulkalev" is in the hostname; working root robots.txt is still out of reach | root domain still resolves to a login wall; you don't own the URL people actually type |
+| **C.** **Reclaim the root** — personal site at `raulkalev.ee`, internal app moves to `intra.raulkalev.ee` | ~half a day + internal coordination | strongest available entity signal; `.ee` directly contests the namesake's Estonian home turf; fixes robots.txt properly; you own the URL people type | brief ranking wobble; you must coordinate the internal move |
+
+**Recommendation: C.** For an Estonian person-name query, an exact-match `.ee` apex is a stronger signal than any `.com` you could buy — and you already own it, so **do not spend money on `raulkalev.com`**. The namesake's strength is concentrated in Estonian-language results; a `.ee` domain carrying your name is the most direct way to contest that.
+
+If the internal site genuinely cannot move — other people depend on the URL, it is tied to contracts or integrations, it is not really yours to reorganise — take **B**. A subdomain of a domain bearing your name still beats a github.io subpath, and it costs you nothing politically.
+
+**If you go with C, the migration checklist:**
+
+1. Add a `CNAME` file to the repo root containing `raulkalev.ee` (there is none today).
+2. In Cloudflare, CNAME-flatten the apex to `raulkalev.github.io` — cleaner than the four GitHub A records, and Cloudflare supports flattening at apex.
+3. Set Cloudflare SSL mode to **Full** (not Flexible) — Flexible in front of GitHub Pages causes redirect loops.
+4. Enable **Enforce HTTPS** in the repo's GitHub Pages settings once the certificate provisions.
+5. **Update 87 hardcoded absolute URLs.** They break down as: `index.html` (37), `plugins/index.html` (35), `pulse/index.html` (8), `sitemap.xml` (3), `privacypolicy.html` (2), `robots.txt` (1). These are canonicals, `og:url`, `twitter:` tags, JSON-LD `@id` values and `ItemList` URLs. The JSON-LD `@id`s matter most — if they don't match the new canonical, the entity graph fragments.
+6. Good news: **every asset reference is relative**, so no images, stylesheets or scripts break in the move.
+7. Leave the `github.io` URL alone — GitHub Pages issues automatic 301s to the custom domain, which carries the position-2 ranking across.
+8. Add the new domain as a Search Console property, submit the sitemap there, and keep the old property open to watch the traffic hand over.
+9. Re-verify the Google verification file resolves on the new host.
+
+**Regardless of which option you choose:** keep the internal site `noindex` and auth-walled. A corporate intranet indexed on a domain bearing your name is a muddying entity signal, and right now you have the clean version of that situation — don't lose it.
 
 ---
 
@@ -336,7 +368,8 @@ Re-screenshot the SERP monthly. Position for a name query is noisy week to week;
 - **Do not buy links or use a "reputation management" service.** For a name query with this little competition, they are pure downside risk.
 - **Do not mention the other Raul Kalev anywhere on the site.** It creates exactly the association you are trying to break.
 - **Do not create fake or duplicate profiles** to pad `sameAs`. Google detects thin identity spam, and a bad `sameAs` link is worse than a missing one.
-- **Do not migrate domains twice.** Pick A, B or C in Phase 1.1 and commit. Each migration costs weeks of turbulence.
+- **Do not migrate domains twice.** Pick A, B or C in §4.1 and commit. Each migration costs weeks of turbulence.
+- **Do not buy `raulkalev.com`.** You already own the better domain for this query. Spend the effort reclaiming it instead.
 - **Do not gate the plugin content behind JS.** Your current pages render server-side in the HTML, which is correct — keep it that way as the site grows.
 
 ---
@@ -351,7 +384,7 @@ If you want a single prioritised checklist, do it in this order:
 4. Complete the `Person` + `Organization` JSON-LD *(1–2 h)*
 5. Fix the Autodesk App Store publisher profile and the GitHub profile README *(1 h)*
 6. Add name bylines and `/about/` links to `/plugins/` and `/pulse/` *(30 min)*
-7. Decide the domain question and, if moving, move *(half a day)*
+7. Decide the `raulkalev.ee` question (§4.1) and, if moving, move *(half a day)*
 8. Ship `/et/` with real hreflang *(4 h)*
 9. Record 5 short plugin demo videos on YouTube *(half a day)*
 10. Start the blog; one post per month, distributed *(ongoing)*
