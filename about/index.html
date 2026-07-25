@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raul Kalev — Extra-Low Voltage Systems Engineer, Estonia</title>
+  <meta name="description"
+    content="Raul Kalev is an Estonian extra-low voltage systems engineer and Revit plugin developer. He designs fire alarm, CCTV and access control systems in Autodesk Revit and builds RK Tools, a library of 20+ Revit add-ins in C# and .NET." />
+  <meta name="author" content="Raul Kalev" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#07131f" />
+
+  <link rel="canonical" href="https://tools.raulkalev.ee/about/" />
+  <link rel="alternate" hreflang="en" href="https://tools.raulkalev.ee/about/" />
+  <link rel="alternate" hreflang="et" href="https://tools.raulkalev.ee/et/about/" />
+  <link rel="alternate" hreflang="x-default" href="https://tools.raulkalev.ee/about/" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../resources/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../resources/apple-touch-icon.png" />
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="RK Tools" />
+  <meta property="og:title" content="Raul Kalev — Extra-Low Voltage Systems Engineer, Estonia" />
+  <meta property="og:description"
+    content="Estonian extra-low voltage systems engineer and Revit plugin developer. Creator of RK Tools." />
+  <meta property="og:url" content="https://tools.raulkalev.ee/about/" />
+  <meta property="og:locale" content="en" />
+  <meta property="og:locale:alternate" content="et" />
+  <meta property="og:image" content="https://tools.raulkalev.ee/resources/raul-kalev.jpg" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:image:alt" content="Raul Kalev, extra-low voltage systems engineer and Revit plugin developer" />
+  <meta property="profile:first_name" content="Raul" />
+  <meta property="profile:last_name" content="Kalev" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Raul Kalev — Extra-Low Voltage Systems Engineer, Estonia" />
+  <meta name="twitter:description"
+    content="Estonian extra-low voltage systems engineer and Revit plugin developer. Creator of RK Tools." />
+  <meta name="twitter:image" content="https://tools.raulkalev.ee/resources/raul-kalev.jpg" />
+
+  <!-- Send Estonian-preferring first-time visitors to the Estonian page. Runs
+       before paint to avoid a flash. Deliberately one-directional: /et/about/
+       never redirects away, so it always stays crawlable and indexable. -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('rk-lang')) return;
+        var pref = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+        if (/^et\b/i.test(pref)) location.replace('../et/about/');
+      } catch (e) { /* private mode, blocked storage — stay on English */ }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=13" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "@id": "https://tools.raulkalev.ee/about/#webpage",
+          "url": "https://tools.raulkalev.ee/about/",
+          "name": "Raul Kalev — Extra-Low Voltage Systems Engineer, Estonia",
+          "inLanguage": "en",
+          "isPartOf": { "@id": "https://tools.raulkalev.ee/#website" },
+          "mainEntity": { "@id": "https://tools.raulkalev.ee/#raul-kalev" },
+          "primaryImageOfPage": "https://tools.raulkalev.ee/resources/raul-kalev.jpg"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://tools.raulkalev.ee/about/#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "RK Tools", "item": "https://tools.raulkalev.ee/" },
+            { "@type": "ListItem", "position": 2, "name": "About Raul Kalev", "item": "https://tools.raulkalev.ee/about/" }
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://tools.raulkalev.ee/#raul-kalev",
+          "name": "Raul Kalev",
+          "givenName": "Raul",
+          "familyName": "Kalev",
+          "url": "https://tools.raulkalev.ee/about/",
+          "mainEntityOfPage": "https://tools.raulkalev.ee/about/",
+          "image": "https://tools.raulkalev.ee/resources/raul-kalev.jpg",
+          "description": "Estonian extra-low voltage systems engineer and Revit plugin developer, creator of RK Tools.",
+          "jobTitle": "Extra-Low Voltage Systems Engineer and Revit Plugin Developer",
+          "email": "mailto:raul.kalev@icloud.com",
+          "nationality": { "@type": "Country", "name": "Estonia" },
+          "homeLocation": {
+            "@type": "Place",
+            "address": { "@type": "PostalAddress", "addressCountry": "EE" }
+          },
+          "worksFor": { "@id": "https://tools.raulkalev.ee/#rktools" },
+          "knowsLanguage": ["et", "en"],
+          "knowsAbout": [
+            "Autodesk Revit",
+            "Revit API",
+            "Extra-low voltage systems",
+            "Fire alarm system design",
+            "CCTV system design",
+            "Access control system design",
+            "Electrical design",
+            "Building information modeling",
+            "IFC",
+            "C#",
+            ".NET",
+            "WPF",
+            "Python"
+          ],
+          "sameAs": [
+            "https://github.com/RaulKalev",
+            "https://ee.linkedin.com/in/raul-kalev-230630178"
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://tools.raulkalev.ee/#rktools",
+          "name": "RK Tools",
+          "url": "https://tools.raulkalev.ee/",
+          "logo": "https://tools.raulkalev.ee/resources/LogoRK.png",
+          "founder": { "@id": "https://tools.raulkalev.ee/#raul-kalev" }
+        }
+      ]
+    }
+  </script>
+
+  <style>
+    /* ── About page–specific ───────────────────────────────── */
+    .about-page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 60px;
+      align-items: start;
+      padding-bottom: 100px;
+    }
+
+    .about-prose {
+      max-width: 68ch;
+    }
+
+    .about-prose h2 {
+      margin: 56px 0 18px;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      letter-spacing: -0.02em;
+    }
+
+    .about-prose h2:first-child {
+      margin-top: 0;
+    }
+
+    .about-prose p {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.75;
+    }
+
+    .about-prose p.lead {
+      color: var(--text);
+      font-size: 1.2rem;
+      line-height: 1.65;
+    }
+
+    .about-prose a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(180, 251, 240, 0.28);
+    }
+
+    .about-prose a:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    .about-prose ul {
+      margin: 0 0 22px 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .about-prose ul li {
+      margin-bottom: 9px;
+    }
+
+    .about-aside {
+      position: sticky;
+      top: 100px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .about-card {
+      padding: 26px;
+      border-radius: 20px;
+    }
+
+    .about-card h3 {
+      margin-bottom: 16px;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .about-portrait img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      display: block;
+    }
+
+    .about-links {
+      display: grid;
+      gap: 10px;
+    }
+
+    .about-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.98rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .about-links a:last-child {
+      border-bottom: none;
+    }
+
+    .about-links a:hover {
+      color: var(--accent);
+    }
+
+    .about-links span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* Language switch */
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 3px;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+    }
+
+    .lang-switch a {
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-switch a:hover {
+      color: var(--text);
+    }
+
+    .lang-switch a[aria-current="true"] {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .library-header-inner {
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .about-page-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 44px;
+      }
+
+      .about-aside {
+        position: static;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+    }
+  </style>
+</head>
+
+<body class="library-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="library-header">
+    <div class="container library-header-inner">
+      <a href="../" class="library-brand" aria-label="RK Tools home">
+        <img src="../resources/icon-192.png" alt="" width="42" height="42">
+        <span>RK Tools</span>
+      </a>
+      <nav class="library-nav" aria-label="Primary navigation">
+        <a href="../plugins/">Plugins</a>
+        <a href="../pulse/">Pulse</a>
+        <a href="mailto:raul.kalev@icloud.com">Contact</a>
+      </nav>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <a href="./" hreflang="en" aria-current="true">EN</a>
+        <a href="../et/about/" hreflang="et" data-set-lang="et">ET</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="library-hero">
+      <div class="container library-hero-inner">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="../">RK Tools</a>
+          <span aria-hidden="true">/</span>
+          <span>About</span>
+        </nav>
+        <p class="library-eyebrow">Extra-low voltage engineering · Revit development</p>
+        <h1>Raul Kalev</h1>
+        <p class="library-lead">
+          Raul Kalev is an extra-low voltage systems engineer and software developer based in Estonia. He designs
+          fire alarm, CCTV, access control and IT infrastructure systems in Autodesk Revit, and develops RK Tools —
+          a library of more than twenty Revit add-ins written in C# and .NET.
+        </p>
+      </div>
+    </section>
+
+    <div class="container about-page-grid">
+      <article class="about-prose">
+        <h2>From the site to the model</h2>
+        <p>
+          Most people who design extra-low voltage systems have never pulled the cable. Most people who pull the
+          cable never open the model. Raul Kalev has done both, and that route through the trade is the thing that
+          shapes how he works.
+        </p>
+        <p>
+          After more than five years of field experience on installation work, he moved into design — carrying with
+          him a specific, practical sense of what a drawing costs to build. A cable route that looks tidy in a plan
+          view and a cable route that can actually be installed in a ceiling void are not always the same route.
+          Knowing the difference is not something that can be picked up from a manual.
+        </p>
+        <p>
+          He holds a BSc in Architectural Technology and Construction Management, which supplies the other half:
+          the building as a coordinated whole rather than a set of disciplines that meet at a clash report.
+        </p>
+
+        <h2>What he works on</h2>
+        <p>
+          The day job is extra-low voltage design in Revit — the systems that make a building aware of itself:
+        </p>
+        <ul>
+          <li><strong>Fire detection and alarm</strong> — device layouts, loop and circuit design, addressing schemes and coordinated documentation.</li>
+          <li><strong>CCTV and video surveillance</strong> — camera placement driven by real field-of-view geometry rather than guesswork.</li>
+          <li><strong>Access control and security</strong> — door hardware, controller topology and cable schedules.</li>
+          <li><strong>IT and communications infrastructure</strong> — containment, outlets, racks and structured cabling.</li>
+          <li><strong>Lighting control</strong> — DALI addressing, line capacity and controller assignment.</li>
+        </ul>
+        <p>
+          Alongside that sits BIM coordination proper: model setup and project standards, IFC exchange with other
+          disciplines, clash resolution, and the unglamorous documentation work that determines whether a set of
+          drawings is actually usable on site.
+        </p>
+
+        <h2>Why the plugins exist</h2>
+        <p>
+          Revit is a capable tool that leaves a surprising amount of repetitive work on the table. Renumbering
+          devices by hand. Re-tagging a view after every layout change. Rebuilding a panel schematic because three
+          circuits moved. None of it is difficult; all of it is slow, and slow work is where mistakes come from.
+        </p>
+        <p>
+          <a href="../plugins/">RK Tools</a> is the accumulated response to that — a library of more than twenty
+          Revit add-ins, each one built to remove a specific piece of friction encountered on a real project.
+          <strong>CAD Manager</strong> handles DWG visibility per view, bypassing the limits of view templates, and
+          is published on the Autodesk App Store. <strong>Camera FOV</strong> computes coverage cones from actual
+          sensor specifications. <strong>SoundCalcs</strong> runs SPL and STI calculations from a speaker layout.
+          <strong>Renumber</strong>, <strong>SmartTags</strong>, <strong>Panel Schematics</strong> and the rest each
+          address a task that used to be done by hand.
+        </p>
+        <p>
+          More recently the work has moved toward AI-assisted design. The <strong>Revit MCP Connector</strong>
+          exposes a controlled set of tools that let assistants like Claude and Codex operate on a live Revit model,
+          and <a href="../pulse/">Pulse</a> is a Revit-first control centre for visualising, validating and
+          documenting addressable building systems.
+        </p>
+        <p>
+          The tools are built in C# and .NET against the Revit API, with WPF interfaces, plus Python and JavaScript
+          where they fit better. New ones are added most months, because new friction keeps turning up.
+        </p>
+
+        <h2>Selected tools</h2>
+        <p>
+          The full library lives on the <a href="../plugins/">plugins page</a>. A representative sample:
+        </p>
+        <ul>
+          <li><a href="../plugins/#cad-manager"><strong>CAD Manager</strong></a> — per-view DWG and layer control that works around view template limitations, with database-backed settings. Published on the Autodesk App Store.</li>
+          <li><a href="../plugins/#camera-fov"><strong>Camera FOV</strong></a> — surveillance coverage cones generated from real sensor specifications, updating parametrically in 2D and 3D.</li>
+          <li><a href="../plugins/#soundcalcs"><strong>SoundCalcs</strong></a> — SPL and STI calculations from a speaker layout, with octave-band and intelligibility heatmaps accounting for walls, reflections and reverberation.</li>
+          <li><a href="../plugins/#dali-manager"><strong>DALI Manager</strong></a> — controller and line organisation with live address and current-capacity monitoring.</li>
+          <li><a href="../plugins/#revit-mcp-connector"><strong>Revit MCP Connector</strong></a> — a controlled tool surface across ten workflow groups that lets AI assistants operate on a live Revit model.</li>
+          <li><a href="../plugins/#single-line-diagrams"><strong>Single Line Diagrams</strong></a> — circuit-based generation with level-aware placement and spacing control.</li>
+        </ul>
+
+        <h2>How he works</h2>
+        <p>
+          A tool earns its place by being used on a live project first. Everything in RK Tools began as something
+          that was needed on a deadline, which is a stricter filter than any feature list — and the reason the
+          library skews toward unglamorous, high-frequency tasks rather than impressive demonstrations.
+        </p>
+        <p>
+          Anything that touches a model is built to be reversible: undo-friendly, idempotent where possible, and
+          preview-before-commit where the change is significant. Trust in a tool that edits a shared model is hard
+          to earn and very easy to lose.
+        </p>
+
+        <h2>Get in touch</h2>
+        <p>
+          For questions about the plugins, licensing, or collaboration on Revit and extra-low voltage work, email
+          <a href="mailto:raul.kalev@icloud.com">raul.kalev@icloud.com</a>. Code is on
+          <a href="https://github.com/RaulKalev" rel="me noopener" target="_blank">GitHub</a> and professional
+          history on <a href="https://ee.linkedin.com/in/raul-kalev-230630178" rel="me noopener"
+            target="_blank">LinkedIn</a>.
+        </p>
+      </article>
+
+      <aside class="about-aside">
+        <figure class="about-portrait">
+          <img src="../resources/raul-kalev.jpg"
+            alt="Raul Kalev, extra-low voltage systems engineer and Revit plugin developer" width="1024"
+            height="1024" decoding="async">
+        </figure>
+
+        <div class="about-card glass">
+          <h3>At a glance</h3>
+          <ul class="stats-list">
+            <li>
+              <span class="stat-value">5+</span>
+              <span class="stat-label">Years field experience</span>
+            </li>
+            <li>
+              <span class="stat-value">BSc</span>
+              <span class="stat-label">Arch. Tech &amp; Construction</span>
+            </li>
+            <li>
+              <span class="stat-value">20+</span>
+              <span class="stat-label">Revit tools &amp; plugins</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="about-card glass">
+          <h3>Technical focus</h3>
+          <div class="skill-tags">
+            <span class="tag">Revit API</span>
+            <span class="tag">C# .NET</span>
+            <span class="tag">WPF</span>
+            <span class="tag">Python</span>
+            <span class="tag">IFC</span>
+            <span class="tag">DALI</span>
+            <span class="tag">BIM</span>
+          </div>
+        </div>
+
+        <div class="about-card glass">
+          <h3>Elsewhere</h3>
+          <div class="about-links">
+            <a href="https://github.com/RaulKalev" rel="me noopener" target="_blank">GitHub <span>@RaulKalev</span></a>
+            <a href="https://ee.linkedin.com/in/raul-kalev-230630178" rel="me noopener" target="_blank">LinkedIn
+              <span>Profile</span></a>
+            <a href="https://apps.autodesk.com/RVT/en/Detail/Index?id=8766226384091723452&amp;appLang=en&amp;os=Win64"
+              rel="noopener" target="_blank">Autodesk App Store <span>CAD Manager</span></a>
+            <a href="mailto:raul.kalev@icloud.com">Email <span>raul.kalev@icloud.com</span></a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <span>© <span id="year">2026</span> Raul Kalev · RK Tools</span>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../plugins/">Plugins</a>
+        <a href="../pulse/">Pulse</a>
+        <a href="../privacypolicy.html">Privacy</a>
+        <a href="mailto:raul.kalev@icloud.com">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('[data-set-lang]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        try { localStorage.setItem('rk-lang', el.getAttribute('data-set-lang')); } catch (e) { }
+      });
+    });
+  </script>
+</body>
+
+</html>
