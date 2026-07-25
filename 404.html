@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page not found — RK Tools</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#07131f" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/resources/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=13" />
+
+  <style>
+    .notfound {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    .notfound-code {
+      font-size: clamp(4rem, 14vw, 9rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: var(--accent);
+      opacity: 0.9;
+    }
+
+    .notfound h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      letter-spacing: -0.02em;
+    }
+
+    .notfound p {
+      max-width: 46ch;
+      margin: 0 auto 34px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .notfound-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .notfound-links a {
+      padding: 11px 22px;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.96rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .notfound-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-gradient" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+
+  <main class="notfound">
+    <div>
+      <p class="notfound-code" aria-hidden="true">404</p>
+      <h1>That page isn't here</h1>
+      <p>
+        The link may be out of date, or the page may have moved when the site changed address.
+        Everything below still works.
+      </p>
+      <nav class="notfound-links" aria-label="Recovery links">
+        <a href="/">Home</a>
+        <a href="/about/">About Raul Kalev</a>
+        <a href="/plugins/">Revit plugins</a>
+        <a href="/pulse/">Pulse</a>
+        <a href="mailto:raul.kalev@icloud.com">Contact</a>
+      </nav>
+    </div>
+  </main>
+</body>
+
+</html>
