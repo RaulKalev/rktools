@@ -4,6 +4,16 @@
   <url>
     <loc>https://tools.raulkalev.ee/</loc>
     <lastmod>2026-07-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.raulkalev.ee/"/>
+    <xhtml:link rel="alternate" hreflang="et" href="https://tools.raulkalev.ee/et/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.raulkalev.ee/"/>
+  </url>
+  <url>
+    <loc>https://tools.raulkalev.ee/et/</loc>
+    <lastmod>2026-07-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tools.raulkalev.ee/"/>
+    <xhtml:link rel="alternate" hreflang="et" href="https://tools.raulkalev.ee/et/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tools.raulkalev.ee/"/>
   </url>
   <url>
     <loc>https://tools.raulkalev.ee/about/</loc>
