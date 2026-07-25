@@ -1,7 +1,7 @@
 # SEO Plan — Ranking #1 for "Raul Kalev"
 
 **Target query:** `Raul Kalev` (and close variants: `Raul Kalev Revit`, `Raul Kalev BIM`, `Raul Kalev insener`)
-**Site:** https://raulkalev.github.io/rktools/
+**Site:** https://tools.raulkalev.ee/ (migrating from https://raulkalev.github.io/rktools/)
 **Plan date:** 2026-07-25
 
 ---
@@ -45,7 +45,7 @@ Build a single, unambiguous, machine-readable identity hub for *you* — a real 
 **A. `robots.txt` is in a location crawlers ignore.**
 `robots.txt` lives at `/rktools/robots.txt`. Per the robots exclusion standard, robots.txt is **only** honoured at the **host root** — i.e. `https://raulkalev.github.io/robots.txt`. Your file is invisible to every crawler, and so is the `Sitemap:` directive inside it.
 *Impact:* sitemap auto-discovery does not work. (Search Console submission still works, so this is not fatal — but it is a silent failure worth knowing about.)
-*Fix:* either submit `sitemap.xml` manually in Search Console (quick), or move to a root-level host (see 3.1.C — the real fix).
+*Fix:* **resolved by the move to `tools.raulkalev.ee`** — the site is served at that host's root, so `robots.txt` and sitemap auto-discovery both start working. Submit the sitemap manually in Search Console in the meantime.
 
 **B. Estonian translations exist but are unreachable — by users and by Google.**
 `app.js` lines 74–107 contain a full `en`/`et` string dictionary, and the HTML carries `data-i18n` attributes. But the nav bar that held the language switcher was removed (`index.html:253-257`), so `#langDropdown` does not exist on any page. The Estonian content is dead code. Even if the switcher were restored, client-side `localStorage` switching produces **no separate URL**, so Google can only ever index the English version.
@@ -97,7 +97,7 @@ The existing JSON-LD is genuinely good — `WebSite` + `ProfilePage` + `Person` 
 You cannot tell whether any of this worked without a baseline.
 
 1. **Confirm Search Console coverage.** The verification file (`googleeaa2d9fa4dfbe546.html`) verifies the URL-prefix property `https://raulkalev.github.io/rktools/`. Confirm that property exists and is collecting data.
-2. **Submit `sitemap.xml` manually** in Search Console (because of finding 3.1.A, auto-discovery is not happening).
+2. **Create a Search Console _Domain_ property for `raulkalev.ee`** (TXT record at zone.ee), not a URL-prefix property — it covers the apex and every subdomain, so the future apex move needs no property hand-off. Submit `sitemap.xml` there.
 3. **Record the baseline:** current average position and impressions for the query `raul kalev`, plus the top-10 SERP as it stands today. Screenshot it.
 4. **Check `site:raulkalev.github.io`** — confirm all three pages are indexed and no stray URLs (e.g. the verification file) are.
 5. **Run PageSpeed Insights** on `/` and record LCP/CLS/INP for mobile.
@@ -106,7 +106,7 @@ You cannot tell whether any of this worked without a baseline.
 
 ### Phase 1 — Technical foundation (Week 1, ~3 hours)
 
-**1.1 Decide the domain question.** This is the one strategic fork in the plan. See §4.1 below for the full analysis — it is detailed enough to deserve its own section.
+**1.1 Domain and hosting.** Decided: `tools.raulkalev.ee` on DigitalOcean App Platform. See §4.1 for the reasoning, the cutover runbook, and what a later apex move would cost.
 
 Everything else in this plan works regardless of which option you pick.
 
@@ -135,43 +135,70 @@ The description is written as a third-person factual statement on purpose — th
 
 ---
 
-### 4.1 The `raulkalev.ee` question
+### 4.1 Domain: `tools.raulkalev.ee` now, apex later
 
-You already own the best possible domain for this project. It is currently pointed at an internal company site, which means it is doing **nothing** for you in search.
+**Decision taken:** the site moves to `tools.raulkalev.ee`, hosted on DigitalOcean App Platform. The apex stays with the internal company site for now. This section records the reasoning, the cutover steps, and what a later apex move would cost.
 
-**What the DNS says today:**
+#### The facts
 
-- `raulkalev.ee` → Cloudflare (`162.159.140.98`, `172.66.0.96`)
-- `www.raulkalev.ee` → `CNAME octopus-app-krosl.ondigitalocean.app` — a DigitalOcean App Platform deployment
-- `site:raulkalev.ee` → **zero indexed pages**
+- Domain registered at **zone.ee**; nameservers are `ns.zone.eu`, `ns2.zone.ee`, `ns3.zonedata.net`. DNS records are managed in the zone.ee panel, **not** Cloudflare.
+- `raulkalev.ee` (apex) resolves to Cloudflare IPs; `www.raulkalev.ee` is a CNAME to `octopus-app-krosl.ondigitalocean.app`.
+- `site:raulkalev.ee` returns **zero indexed pages** — the internal site is already noindexed or auth-walled. Keep it that way.
+- `tools.raulkalev.ee` does not resolve yet.
 
-Two useful conclusions. First, the internal site is already not indexed (auth-walled or noindexed) — that is correct and should stay that way. Second, DNS runs through Cloudflare and the app runs on DigitalOcean App Platform, which means **moving it to a subdomain is a configuration change, not a migration**: add the new hostname in the DO App Platform domain settings, repoint one CNAME in Cloudflare, update the app's allowed-hosts and any OAuth callback URLs, tell the handful of internal users. An afternoon at most.
+#### Why a subdomain is a perfectly good choice
 
-**The options, revised:**
+For a person-name query the token that matters is `raulkalev`, and it is in the hostname either way. Google treats subdomains as largely separate sites for indexing, but the brand/entity association with a domain bearing your name still carries. The apex is stronger, but the gap is smaller than the gap between *any* `raulkalev.ee` hostname and a `github.io` subpath.
 
-| Option | Effort | Upside | Downside |
-|---|---|---|---|
-| **A.** Stay on `raulkalev.github.io/rktools/` | none | zero risk | best domain you own stays idle; robots.txt permanently broken |
-| **B.** Personal site on a subdomain — `bim.raulkalev.ee` or `tools.raulkalev.ee` | ~2 h | no coordination with internal users; "raulkalev" is in the hostname; working root robots.txt is still out of reach | root domain still resolves to a login wall; you don't own the URL people actually type |
-| **C.** **Reclaim the root** — personal site at `raulkalev.ee`, internal app moves to `intra.raulkalev.ee` | ~half a day + internal coordination | strongest available entity signal; `.ee` directly contests the namesake's Estonian home turf; fixes robots.txt properly; you own the URL people type | brief ranking wobble; you must coordinate the internal move |
+It also fixes a real bug for free: on `tools.raulkalev.ee` the site is served at the **host root**, so `robots.txt` finally works (finding 3.1.A).
 
-**Recommendation: C.** For an Estonian person-name query, an exact-match `.ee` apex is a stronger signal than any `.com` you could buy — and you already own it, so **do not spend money on `raulkalev.com`**. The namesake's strength is concentrated in Estonian-language results; a `.ee` domain carrying your name is the most direct way to contest that.
+#### Will a later move to the apex lose the progress?
 
-If the internal site genuinely cannot move — other people depend on the URL, it is tied to contracts or integrations, it is not really yours to reorganise — take **B**. A subdomain of a domain bearing your name still beats a github.io subpath, and it costs you nothing politically.
+**Not permanently — but it is not free, and the cost grows the longer you wait.**
 
-**If you go with C, the migration checklist:**
+What is preserved: 301 redirects pass essentially full link equity. Google has been explicit that no PageRank is lost through a permanent redirect. Your content, your structured data, your accumulated links all carry over.
 
-1. Add a `CNAME` file to the repo root containing `raulkalev.ee` (there is none today).
-2. In Cloudflare, CNAME-flatten the apex to `raulkalev.github.io` — cleaner than the four GitHub A records, and Cloudflare supports flattening at apex.
-3. Set Cloudflare SSL mode to **Full** (not Flexible) — Flexible in front of GitHub Pages causes redirect loops.
-4. Enable **Enforce HTTPS** in the repo's GitHub Pages settings once the certificate provisions.
-5. **Update 87 hardcoded absolute URLs.** They break down as: `index.html` (37), `plugins/index.html` (35), `pulse/index.html` (8), `sitemap.xml` (3), `privacypolicy.html` (2), `robots.txt` (1). These are canonicals, `og:url`, `twitter:` tags, JSON-LD `@id` values and `ItemList` URLs. The JSON-LD `@id`s matter most — if they don't match the new canonical, the entity graph fragments.
-6. Good news: **every asset reference is relative**, so no images, stylesheets or scripts break in the move.
-7. Leave the `github.io` URL alone — GitHub Pages issues automatic 301s to the custom domain, which carries the position-2 ranking across.
-8. Add the new domain as a Search Console property, submit the sitemap there, and keep the old property open to watch the traffic hand over.
-9. Re-verify the Google verification file resolves on the new host.
+What it costs:
 
-**Regardless of which option you choose:** keep the internal site `noindex` and auth-walled. A corporate intranet indexed on a domain bearing your name is a muddying entity signal, and right now you have the clean version of that situation — don't lose it.
+1. **2–8 weeks of re-crawl and ranking volatility** for a site this size. Unavoidable, temporary.
+2. **Every external link has to be updated by hand** — `sameAs` entries, LinkedIn, the GitHub profile, the Autodesk App Store listing, YouTube descriptions, forum signatures. This is the real cost, and it is the one that scales.
+3. **A redirect hop is added** to anything still pointing at the old host.
+
+Point 2 is the one that should drive your timing. **Right now roughly two external profiles point at the site. After Phase 4 there will be ten or more.** Migrating before you build the `sameAs` network is dramatically cheaper than migrating after it.
+
+So:
+
+- If there is a realistic chance you can free up the apex **within a few months**, consider waiting and doing one move instead of two.
+- If the apex is blocked for the foreseeable future, go to `tools.raulkalev.ee` now — which is the decision taken — and accept a modest one-time cost later.
+- Either way, **do not migrate twice more.** One more move, maximum.
+
+#### The one thing that makes the future move cheap
+
+**Create a Search Console _Domain_ property for `raulkalev.ee` now**, not a URL-prefix property.
+
+A Domain property covers the apex *and every subdomain* under one roof. That means `tools.raulkalev.ee` today and `raulkalev.ee` tomorrow are the same property — no hand-off, no split history, no Change of Address dance, and a continuous performance graph straight through the migration.
+
+Verify it with a DNS TXT record added in the zone.ee panel. Do this before anything else; the historical data only starts accumulating once the property exists.
+
+#### Cutover runbook
+
+Code changes are already committed on this branch. The remaining work is infrastructure:
+
+1. **Create the App Platform app** — `doctl apps create --spec .do/app.yaml`, or point the DO control panel at this repo as a static site. Static sites on App Platform are free or near-free; confirm against current pricing.
+2. **Read the CNAME target** App Platform shows for the domain (`<app>-<hash>.ondigitalocean.app`).
+3. **In the zone.ee DNS panel**, add: `tools` → `CNAME` → that target. A plain CNAME is all that is needed, because this is a subdomain — no ALIAS/ANAME record is required. (That constraint only bites at the apex; see below.)
+4. **Wait for TLS** — App Platform provisions a Let's Encrypt certificate automatically once the CNAME resolves.
+5. **Deploy the redirect stubs** from `github-pages-redirect/` to a `gh-pages-redirect` branch and switch GitHub Pages to serve it. See that directory's README — this step is what protects the position-2 ranking, so do not skip it.
+6. **Verify:** `tools.raulkalev.ee` serves over HTTPS; `raulkalev.github.io/rktools/` lands on the new host; `tools.raulkalev.ee/robots.txt` and `/sitemap.xml` both resolve.
+7. **In Search Console:** submit the sitemap under the new Domain property. Keep the old URL-prefix property open for a few months to watch traffic hand over.
+8. **Re-run the Rich Results Test** on all three pages — the JSON-LD `@id` values changed, so confirm the entity graph still resolves as one connected set.
+9. **Update the external profiles** — GitHub, LinkedIn, Autodesk App Store — to the new URL.
+
+#### When you do go to the apex
+
+One gotcha worth knowing in advance: **DigitalOcean App Platform at an apex domain needs an ALIAS/ANAME record, and zone.ee's DNS does not reliably offer one.** CNAMEs are not legal at a zone apex. The fix is to move DNS *hosting* to DigitalOcean's own DNS (free — keep the registration at zone.ee, just point the nameservers at `ns1/ns2/ns3.digitalocean.com`), which supports apex ALIAS for App Platform. Cloudflare DNS with CNAME flattening works too. Worth deciding before the move, not during it.
+
+Also remember to point `www.raulkalev.ee` at the apex at that time — today it serves the internal app, which would be confusing once the apex is your personal site.
 
 ---
 
@@ -368,7 +395,7 @@ Re-screenshot the SERP monthly. Position for a name query is noisy week to week;
 - **Do not buy links or use a "reputation management" service.** For a name query with this little competition, they are pure downside risk.
 - **Do not mention the other Raul Kalev anywhere on the site.** It creates exactly the association you are trying to break.
 - **Do not create fake or duplicate profiles** to pad `sameAs`. Google detects thin identity spam, and a bad `sameAs` link is worse than a missing one.
-- **Do not migrate domains twice.** Pick A, B or C in §4.1 and commit. Each migration costs weeks of turbulence.
+- **Do not migrate domains more than once more.** One further move (to the apex) is acceptable and recoverable; a third is not. See §4.1 on timing it before the `sameAs` network is built.
 - **Do not buy `raulkalev.com`.** You already own the better domain for this query. Spend the effort reclaiming it instead.
 - **Do not gate the plugin content behind JS.** Your current pages render server-side in the HTML, which is correct — keep it that way as the site grows.
 
@@ -384,7 +411,7 @@ If you want a single prioritised checklist, do it in this order:
 4. Complete the `Person` + `Organization` JSON-LD *(1–2 h)*
 5. Fix the Autodesk App Store publisher profile and the GitHub profile README *(1 h)*
 6. Add name bylines and `/about/` links to `/plugins/` and `/pulse/` *(30 min)*
-7. Decide the `raulkalev.ee` question (§4.1) and, if moving, move *(half a day)*
+7. Execute the `tools.raulkalev.ee` cutover — DO app, zone.ee CNAME, redirect stubs (§4.1) *(half a day)*
 8. Ship `/et/` with real hreflang *(4 h)*
 9. Record 5 short plugin demo videos on YouTube *(half a day)*
 10. Start the blog; one post per month, distributed *(ongoing)*
