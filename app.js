@@ -106,70 +106,19 @@ const strings = {
     }
 };
 
-const langRoot = document.getElementById('langDropdown');
-const langBtn = langRoot ? langRoot.querySelector('.lang-btn') : null;
-const langMenu = langRoot ? langRoot.querySelector('.lang-menu') : null;
-const currentFlag = document.getElementById('currentFlag');
-const savedLang = localStorage.getItem('rk-lang') || (navigator.language?.startsWith('et') ? 'et' : 'en');
-
-function applyLang(lang) {
-    const dict = strings[lang] || strings.en;
-    document.documentElement.lang = lang;
-
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-
-        if (dict[key]) {
-            // Special Handler for List (HTML Content)
-            if (key === 'about_list') {
-                el.innerHTML = dict[key];
-            }
-            // Simple Text
-            else {
-                el.textContent = dict[key];
-            }
-        }
-    });
-
-    localStorage.setItem('rk-lang', lang);
-    if (currentFlag) {
-        currentFlag.textContent = lang === 'et' ? '🇪🇪' : '🇬🇧';
-    }
-
-    // Update button states
-    document.querySelectorAll('.project-card.expanded .more-info').forEach(btn => {
-        btn.textContent = dict.close_info;
-    });
-    document.querySelectorAll('.project-card:not(.expanded) .more-info').forEach(btn => {
-        btn.textContent = dict.more_info;
-    });
-}
-
-// Language Interaction
-if (langBtn) {
-    langBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langMenu.classList.toggle('open');
-    });
-}
-if (langMenu) {
-    langMenu.addEventListener('click', (e) => {
-        const btn = e.target.closest('button[data-lang]');
-        if (!btn) return;
-        applyLang(btn.getAttribute('data-lang'));
-        langMenu.classList.remove('open');
-        // Reload page to reset GSAP animations with new text nodes?
-        // Or implement complex kill/refresh logic. For now, simple reload is robust.
-        // window.location.reload(); // Optional, but cleaner for animations
-    });
-}
-if (langMenu) {
-    document.addEventListener('click', () => langMenu.classList.remove('open'));
-}
-
-
-// Apply Language (Sets up DOM)
-applyLang(savedLang);
+// Language switching is intentionally NOT applied client-side.
+//
+// This block previously ran applyLang(savedLang) on every load, where savedLang
+// fell back to navigator.language. An Estonian-locale visitor therefore saw the
+// homepage swapped to Estonian, and <html lang> rewritten to "et", at a URL
+// whose served markup and canonical both say English. One URL cannot be two
+// languages: the Estonian version is invisible to search engines and the served
+// markup contradicts what the visitor sees.
+//
+// Estonian now lives at its own URL (/et/about/) with proper hreflang. The
+// `strings` dictionary above is kept as the source vocabulary for translating
+// the remaining pages; the [data-i18n] attributes in the HTML mark what still
+// needs translating.
 
 
 // ============================================
@@ -321,8 +270,7 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('more-info')) {
         const card = e.target.closest('.project-card');
         const isExp = card.classList.toggle('expanded');
-        const lang = localStorage.getItem('rk-lang') || 'en';
-        const dict = strings[lang] || strings.en;
+        const dict = strings.en;
 
         e.target.textContent = isExp ? dict.close_info : dict.more_info;
         e.target.setAttribute('aria-expanded', String(isExp));

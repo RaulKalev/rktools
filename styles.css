@@ -1684,3 +1684,51 @@ footer {
 .about-more {
   margin: 4px 0 18px;
 }
+
+/* ── Language switch (shared by all bilingual pages) ────── */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: rgba(10, 12, 16, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.lang-switch a {
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lang-switch a:hover {
+  color: var(--text);
+}
+
+.lang-switch a[aria-current="true"] {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* Floating variant for pages without a header bar */
+.lang-switch-floating {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 90;
+}
+
+@media (max-width: 640px) {
+  .lang-switch-floating {
+    top: 14px;
+    right: 14px;
+  }
+}
