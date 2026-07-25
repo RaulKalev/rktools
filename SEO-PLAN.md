@@ -57,8 +57,10 @@ Build a single, unambiguous, machine-readable identity hub for *you* — a real 
 **D. Client-side `document.documentElement.lang` mutation.**
 `app.js:117` rewrites `lang` after load while the served HTML says `lang="en"`. Harmless today (the switcher is gone) but will send mixed signals if i18n is restored the same way.
 
-**E. `.exe` installers served from the Pages site.**
-`Installers/*.exe` (~28 MB) are served directly. Unsigned executables on a `github.io` host are a Safe Browsing risk that, if ever flagged, would be catastrophic for rankings. Move them to GitHub Releases and link out.
+**E. `.exe` installers served from the Pages site.** *(resolved on this branch)*
+`Installers/*.exe` (~28 MB) were served directly. Unsigned executables on a Pages host are a Safe Browsing risk that, if ever flagged, would be catastrophic for rankings. Nothing on the site linked to them — they were orphaned files. `Installers/KaabliKatloog.bat` additionally published the company's internal Dropbox folder structure.
+
+*Action taken:* the directory is deleted. Re-publish the binaries as GitHub Release assets, which is what Releases are for, and link out from the plugin pages. Note that this trims the published site but **not** the repository — the blobs remain in git history, and removing them from there needs a `git filter-repo` rewrite, which is disruptive and probably not worth it.
 
 ### 3.2 Content gaps
 
