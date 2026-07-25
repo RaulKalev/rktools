@@ -106,7 +106,7 @@ You cannot tell whether any of this worked without a baseline.
 
 ### Phase 1 — Technical foundation (Week 1, ~3 hours)
 
-**1.1 Domain and hosting.** Decided: `tools.raulkalev.ee` on DigitalOcean App Platform. See §4.1 for the reasoning, the cutover runbook, and what a later apex move would cost.
+**1.1 Domain and hosting.** Decided: `tools.raulkalev.ee`, served by GitHub Pages with a custom domain. See §4.1 for the zone.ee records, the cutover runbook, and what a later apex move would cost.
 
 Everything else in this plan works regardless of which option you pick.
 
@@ -137,7 +137,7 @@ The description is written as a third-person factual statement on purpose — th
 
 ### 4.1 Domain: `tools.raulkalev.ee` now, apex later
 
-**Decision taken:** the site moves to `tools.raulkalev.ee`, hosted on DigitalOcean App Platform. The apex stays with the internal company site for now. This section records the reasoning, the cutover steps, and what a later apex move would cost.
+**Decision taken:** the site moves to `tools.raulkalev.ee`, served by **GitHub Pages** with a custom domain. No DigitalOcean, no separate host. The apex stays with the internal company site for now.
 
 #### The facts
 
@@ -145,6 +145,18 @@ The description is written as a third-person factual statement on purpose — th
 - `raulkalev.ee` (apex) resolves to Cloudflare IPs; `www.raulkalev.ee` is a CNAME to `octopus-app-krosl.ondigitalocean.app`.
 - `site:raulkalev.ee` returns **zero indexed pages** — the internal site is already noindexed or auth-walled. Keep it that way.
 - `tools.raulkalev.ee` does not resolve yet.
+- The repo is public with Pages already enabled, which is all a custom domain needs.
+
+#### Why GitHub Pages rather than DigitalOcean
+
+Pages hosts a custom domain natively and throws in the two things that matter most here:
+
+- **A real server-issued 301** from `raulkalev.github.io/rktools/*` to `tools.raulkalev.ee/*`, automatically, the moment the custom domain is configured. This is what protects the position-2 ranking, and it is strictly better than the meta-refresh workaround any other host would require.
+- **Automatic Let's Encrypt TLS**, renewed without intervention.
+
+It also removes the entire deployment layer: no App Platform app, no `doctl`, no OAuth grant, no second dashboard. Push to `main`, Pages redeploys. And as noted below, it makes the eventual apex move *easier* rather than harder.
+
+DigitalOcean remains the right home for the internal company app. It is simply the wrong tool for a four-page static site.
 
 #### Why a subdomain is a perfectly good choice
 
@@ -180,23 +192,72 @@ A Domain property covers the apex *and every subdomain* under one roof. That mea
 
 Verify it with a DNS TXT record added in the zone.ee panel. Do this before anything else; the historical data only starts accumulating once the property exists.
 
+#### What to set up in zone.ee
+
+Open the zone.ee control panel → your domain → DNS / nameserver records. Labels vary slightly by panel version, but the records are these.
+
+**Required — one CNAME:**
+
+| Field | Value |
+|---|---|
+| Type | `CNAME` |
+| Host / name | `tools` (some panels want the full `tools.raulkalev.ee`) |
+| Target / value | `raulkalev.github.io.` |
+| TTL | default (3600); optionally drop to 300 during cutover |
+
+Three things people get wrong here:
+
+- The target is **`raulkalev.github.io`** — the Pages host, with no `/rktools` path. DNS has no concept of paths. GitHub works out which repo to serve from the `CNAME` file in the repository.
+- Include the **trailing dot** if the panel expects fully-qualified names, so it is not silently expanded to `raulkalev.github.io.raulkalev.ee`.
+- Do **not** also add an A record for `tools`. A CNAME cannot coexist with other records on the same name.
+
+**Recommended — Search Console Domain property:**
+
+| Field | Value |
+|---|---|
+| Type | `TXT` |
+| Host / name | `@` (the apex, `raulkalev.ee`) |
+| Value | `google-site-verification=…` (token from Search Console) |
+
+**Optional — GitHub domain verification**, which prevents anyone else from claiming the subdomain on Pages. GitHub gives the token under Settings → Pages → Verify domain:
+
+| Field | Value |
+|---|---|
+| Type | `TXT` |
+| Host / name | `_github-pages-challenge-raulkalev` |
+| Value | token from GitHub |
+
+Leave the existing apex and `www` records alone — those are the internal site.
+
 #### Cutover runbook
 
-Code changes are already committed on this branch. The remaining work is infrastructure:
+Code changes are committed on this branch, including the `CNAME` file. Order matters:
 
-1. **Create the App Platform app** — `doctl apps create --spec .do/app.yaml`, or point the DO control panel at this repo as a static site. Static sites on App Platform are free or near-free; confirm against current pricing.
-2. **Read the CNAME target** App Platform shows for the domain (`<app>-<hash>.ondigitalocean.app`).
-3. **In the zone.ee DNS panel**, add: `tools` → `CNAME` → that target. A plain CNAME is all that is needed, because this is a subdomain — no ALIAS/ANAME record is required. (That constraint only bites at the apex; see below.)
-4. **Wait for TLS** — App Platform provisions a Let's Encrypt certificate automatically once the CNAME resolves.
-5. **Deploy the redirect stubs** from `github-pages-redirect/` to a `gh-pages-redirect` branch and switch GitHub Pages to serve it. See that directory's README — this step is what protects the position-2 ranking, so do not skip it.
-6. **Verify:** `tools.raulkalev.ee` serves over HTTPS; `raulkalev.github.io/rktools/` lands on the new host; `tools.raulkalev.ee/robots.txt` and `/sitemap.xml` both resolve.
-7. **In Search Console:** submit the sitemap under the new Domain property. Keep the old URL-prefix property open for a few months to watch traffic hand over.
-8. **Re-run the Rich Results Test** on all three pages — the JSON-LD `@id` values changed, so confirm the entity graph still resolves as one connected set.
-9. **Update the external profiles** — GitHub, LinkedIn, Autodesk App Store — to the new URL.
+1. **Add the CNAME record at zone.ee** (above). For a few minutes `tools.raulkalev.ee` will resolve to GitHub and return a 404, because Pages does not yet know the domain. Harmless — nobody has the URL yet.
+2. **Merge this branch to `main`.** Pages reads the `CNAME` file, begins serving `tools.raulkalev.ee`, and starts 301-ing the old github.io URLs. The rewritten canonicals land in the same commit, so the markup and the live hostname never disagree.
+3. **Wait for the certificate.** Repo → Settings → Pages shows the status; usually minutes, occasionally up to an hour. Then tick **Enforce HTTPS**.
+4. **Verify:**
+   ```bash
+   curl -sI https://raulkalev.github.io/rktools/   # expect 301 → tools.raulkalev.ee
+   curl -sI https://tools.raulkalev.ee/            # expect 200
+   curl -s  https://tools.raulkalev.ee/robots.txt  # now actually honoured
+   ```
+5. **In Search Console:** submit the sitemap under the new Domain property. Keep the old URL-prefix property open for a few months to watch traffic hand over.
+6. **Re-run the Rich Results Test** on all three pages — the JSON-LD `@id` values changed, so confirm the entity graph still resolves as one connected set.
+7. **Update the external profiles** — GitHub, LinkedIn, Autodesk App Store — to the new URL.
 
 #### When you do go to the apex
 
-One gotcha worth knowing in advance: **DigitalOcean App Platform at an apex domain needs an ALIAS/ANAME record, and zone.ee's DNS does not reliably offer one.** CNAMEs are not legal at a zone apex. The fix is to move DNS *hosting* to DigitalOcean's own DNS (free — keep the registration at zone.ee, just point the nameservers at `ns1/ns2/ns3.digitalocean.com`), which supports apex ALIAS for App Platform. Cloudflare DNS with CNAME flattening works too. Worth deciding before the move, not during it.
+Choosing Pages quietly removed the biggest obstacle here. DigitalOcean App Platform would have needed an **ALIAS/ANAME** record at the apex — which CNAMEs cannot provide and zone.ee does not reliably offer, meaning a nameserver migration first. **GitHub Pages uses plain A records at an apex**, which zone.ee supports natively:
+
+```
+A    @    185.199.108.153
+A    @    185.199.109.153
+A    @    185.199.110.153
+A    @    185.199.111.153
+```
+
+(Optionally the matching `AAAA` records for IPv6.) So the future move is: free the apex, swap the `CNAME` file to `raulkalev.ee`, add those A records, done — no change of DNS provider.
 
 Also remember to point `www.raulkalev.ee` at the apex at that time — today it serves the internal app, which would be confusing once the apex is your personal site.
 
@@ -411,7 +472,7 @@ If you want a single prioritised checklist, do it in this order:
 4. Complete the `Person` + `Organization` JSON-LD *(1–2 h)*
 5. Fix the Autodesk App Store publisher profile and the GitHub profile README *(1 h)*
 6. Add name bylines and `/about/` links to `/plugins/` and `/pulse/` *(30 min)*
-7. Execute the `tools.raulkalev.ee` cutover — DO app, zone.ee CNAME, redirect stubs (§4.1) *(half a day)*
+7. Execute the `tools.raulkalev.ee` cutover — one zone.ee CNAME, then merge (§4.1) *(under an hour)*
 8. Ship `/et/` with real hreflang *(4 h)*
 9. Record 5 short plugin demo videos on YouTube *(half a day)*
 10. Start the blog; one post per month, distributed *(ongoing)*
