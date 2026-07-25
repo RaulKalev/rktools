@@ -58,7 +58,7 @@
           }
         },
         {
-          "@type": "ProfilePage",
+          "@type": "WebPage",
           "@id": "https://tools.raulkalev.ee/#profile",
           "url": "https://tools.raulkalev.ee/",
           "name": "Raul Kalev — RK Tools",
@@ -73,8 +73,41 @@
           "@type": "Person",
           "@id": "https://tools.raulkalev.ee/#raul-kalev",
           "name": "Raul Kalev",
-          "url": "https://tools.raulkalev.ee/",
+          "givenName": "Raul",
+          "familyName": "Kalev",
+          "url": "https://tools.raulkalev.ee/about/",
+          "mainEntityOfPage": "https://tools.raulkalev.ee/about/",
+          "image": "https://tools.raulkalev.ee/resources/raul-kalev.jpg",
+          "description": "Extra-low voltage systems engineer and Revit plugin developer in Tallinn, Estonia, creator of RK Tools.",
           "jobTitle": "Extra-Low Voltage Systems Engineer and Revit Plugin Developer",
+          "email": "mailto:raul.kalev@icloud.com",
+          "nationality": { "@type": "Country", "name": "Estonia" },
+          "homeLocation": {
+            "@type": "Place",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Tallinn",
+              "addressCountry": "EE"
+            }
+          },
+          "workLocation": {
+            "@type": "Place",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Tallinn",
+              "addressCountry": "EE"
+            }
+          },
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "KEA \u2013 Copenhagen School of Design and Technology",
+            "url": "https://kea.dk/en"
+          },
+          "worksFor": [
+            { "@id": "https://tools.raulkalev.ee/#eule" },
+            { "@id": "https://tools.raulkalev.ee/#rktools" }
+          ],
+          "knowsLanguage": ["et", "en"],
           "sameAs": [
             "https://github.com/RaulKalev",
             "https://ee.linkedin.com/in/raul-kalev-230630178"
@@ -82,11 +115,38 @@
           "knowsAbout": [
             "Autodesk Revit",
             "Revit API",
+            "Extra-low voltage systems",
+            "Fire alarm system design",
+            "CCTV system design",
+            "Access control system design",
             "Electrical design",
             "Building information modeling",
+            "IFC",
             "C#",
-            ".NET"
+            ".NET",
+            "WPF",
+            "Python"
           ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://tools.raulkalev.ee/#eule",
+          "name": "Eule O\u00dc",
+          "url": "https://eule.ee/",
+          "description": "Estonian engineering studio designing electrical, security, IT and building automation systems in BIM.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Tallinn",
+            "addressCountry": "EE"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://tools.raulkalev.ee/#rktools",
+          "name": "RK Tools",
+          "url": "https://tools.raulkalev.ee/",
+          "logo": "https://tools.raulkalev.ee/resources/LogoRK.png",
+          "founder": { "@id": "https://tools.raulkalev.ee/#raul-kalev" }
         },
         {
           "@type": "ItemList",
