@@ -32,6 +32,46 @@ That reframing drives everything below.
 
 ---
 
+## Status — 2026-07-25
+
+| Phase | State |
+|---|---|
+| 0 — Measure | **Done.** Search Console verified, sitemap submitted, pages requested for indexing, baseline recorded in `SEO-BASELINE.md` |
+| 1 — Technical foundation | **Done.** Domain moved, robots.txt effective, name-first titles, author tags, 404 page, installers removed |
+| 2 — Entity page | **Done.** `/about/` and `/et/about/` |
+| 3 — Entity graph | **Done.** Person, Organization ×2, alumniOf, worksFor, author attribution |
+| 4 — `sameAs` network | **Done.** 4 profiles, reciprocal `rel="me"` links, all profile-side fields corrected |
+| 5 — Estonian | **Done as scoped.** `/et/` and `/et/about/` with reciprocal hreflang |
+| 6 — Content engine | **Descoped.** See below |
+
+### Scope decisions
+
+**`/plugins/` and `/pulse/` stay English-only.** They are 48 KB and 41 KB; translating them would make every future plugin addition a two-language edit, and they serve product queries rather than the name query this plan targets. They deliberately carry **no** hreflang — annotating an alternate that does not exist is worse than omitting it.
+
+**No blog, no CV page.** The goal is an overview of the person, which `/about/` already is. This removes the "one substantial post per month" element of Phase 6. That was the main freshness-and-links engine, so the honest consequence is that domain authority will grow slowly, from profiles and whatever links arrive unprompted, rather than compounding from published work. Given the competition on this query is a Goodreads page and an inactive namesake, that is a reasonable trade — but it is a real one, not a free saving.
+
+### Phase 4 — the `sameAs` network, closed out
+
+All three outstanding profile edits are done:
+
+1. **Autodesk publisher profile.** About text now leads with "Raul Kalev", names Tallinn and RK Tools; both website links point at `tools.raulkalev.ee/about/`; logo replaced.
+2. **LinkedIn headline.** Updated to match the job-title string used everywhere else on site; site link added to Featured and the contact panel.
+3. **YouTube.** Channel renamed to "Raul Kalev — RK Tools" (handle `@revit_mep` unchanged), description rewritten to lead with the name and location, and — beyond what was asked — links added to all three other `sameAs` profiles (site, Autodesk, GitHub), not just the site. That turns the network from a hub-and-spoke shape into a mesh: every profile now corroborates every other one, not only the central site.
+
+All four `sameAs` entries are now reciprocal in both directions: the site links out with `rel="me"`, and every profile links back to `/about/`.
+
+### What is actually left
+
+Nothing load-bearing. The plan's core phases (0 through 5) are complete or deliberately descoped. What remains is optional:
+
+- **Self-host the fonts, GSAP and Lenis.** Three render-blocking third-party origins remain (cdnjs, unpkg, fonts.googleapis). A Core Web Vitals tiebreaker, about an hour, and it does not involve writing anything.
+- **A bio or team page link from `eule.ee`.** A link from an Estonian AEC company domain, in Estonian, pointed at `/about/`. This is the single highest-value link available and it is one internal conversation, not a content programme.
+- **"Best Revit plugins" roundups.** Revizto, DiRoots and others publish these annually and already rank. Getting RK Tools listed is outreach, not authorship.
+
+**Ongoing:** the monthly log in `SEO-BASELINE.md`.
+
+---
+
 ## 2. Strategy in one paragraph
 
 Build a single, unambiguous, machine-readable identity hub for *you* — a real `/about/` entity page, a complete `Person` graph, and a dense web of `sameAs` links to profiles you control — then push enough fresh, linkable content and off-site corroboration through it that Google's confidence in "Raul Kalev = Revit/BIM electrical engineer from Estonia" grows past the legacy namesake signals. Owning position 1 *and* 2 and 3 (site + LinkedIn + GitHub) is the realistic win condition; a Knowledge Panel is the stretch goal.
@@ -391,7 +431,7 @@ The namesake's strength is concentrated in Estonian-language results (Wikipedia,
 
 ---
 
-### Phase 6 — Content and links (Month 2 onward, ~4 hours/month)
+### Phase 6 — Content and links (Month 2 onward, ~4 hours/month) — *blog element descoped, see Status above*
 
 Rankings for a competitive name ultimately follow domain authority, and authority follows links. You have almost none.
 
