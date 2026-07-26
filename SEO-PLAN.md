@@ -40,7 +40,7 @@ That reframing drives everything below.
 | 1 — Technical foundation | **Done.** Domain moved, robots.txt effective, name-first titles, author tags, 404 page, installers removed |
 | 2 — Entity page | **Done.** `/about/` and `/et/about/` |
 | 3 — Entity graph | **Done.** Person, Organization ×2, alumniOf, worksFor, author attribution |
-| 4 — `sameAs` network | **Code side done** (4 profiles, reciprocal `rel="me"` links). Three profile field edits outstanding — see below |
+| 4 — `sameAs` network | **Done.** 4 profiles, reciprocal `rel="me"` links, all profile-side fields corrected |
 | 5 — Estonian | **Done as scoped.** `/et/` and `/et/about/` with reciprocal hreflang |
 | 6 — Content engine | **Descoped.** See below |
 
@@ -50,15 +50,19 @@ That reframing drives everything below.
 
 **No blog, no CV page.** The goal is an overview of the person, which `/about/` already is. This removes the "one substantial post per month" element of Phase 6. That was the main freshness-and-links engine, so the honest consequence is that domain authority will grow slowly, from profiles and whatever links arrive unprompted, rather than compounding from published work. Given the competition on this query is a Goodreads page and an inactive namesake, that is a reasonable trade — but it is a real one, not a free saving.
 
+### Phase 4 — the `sameAs` network, closed out
+
+All three outstanding profile edits are done:
+
+1. **Autodesk publisher profile.** About text now leads with "Raul Kalev", names Tallinn and RK Tools; both website links point at `tools.raulkalev.ee/about/`; logo replaced.
+2. **LinkedIn headline.** Updated to match the job-title string used everywhere else on site; site link added to Featured and the contact panel.
+3. **YouTube.** Channel renamed to "Raul Kalev — RK Tools" (handle `@revit_mep` unchanged), description rewritten to lead with the name and location, and — beyond what was asked — links added to all three other `sameAs` profiles (site, Autodesk, GitHub), not just the site. That turns the network from a hub-and-spoke shape into a mesh: every profile now corroborates every other one, not only the central site.
+
+All four `sameAs` entries are now reciprocal in both directions: the site links out with `rel="me"`, and every profile links back to `/about/`.
+
 ### What is actually left
 
-**Yours — three profile field edits (Phase 4, roughly 30 minutes):**
-
-1. **Autodesk publisher profile.** The page currently carries no occurrence of "Raul Kalev" except the support email, the publisher reads "RK Tools", the logo is blank, and both website links still point at the pre-migration `raulkalev.github.io/rktools/` URL.
-2. **LinkedIn headline.** Reads "BIM Engineer, Low Current Systems Designer" — a different job-title string from every other surface, and it omits the plugin-developer half entirely.
-3. **YouTube channel name.** The handle `@revit_mep` carries no name; the channel *name* field is separate and free to change.
-
-**Optional, non-content, still worth doing:**
+Nothing load-bearing. The plan's core phases (0 through 5) are complete or deliberately descoped. What remains is optional:
 
 - **Self-host the fonts, GSAP and Lenis.** Three render-blocking third-party origins remain (cdnjs, unpkg, fonts.googleapis). A Core Web Vitals tiebreaker, about an hour, and it does not involve writing anything.
 - **A bio or team page link from `eule.ee`.** A link from an Estonian AEC company domain, in Estonian, pointed at `/about/`. This is the single highest-value link available and it is one internal conversation, not a content programme.
